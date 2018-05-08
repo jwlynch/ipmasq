@@ -12,6 +12,17 @@
 # v3.5.19 2004-01-03, OA: Applied patch by Alexander Zangerl <az@debian.org>
 # v3.5.28 2004-01-08, OA: exit if /usr is not available
 # v3.5.34 2004-04-10, OA: exit always with 0
+
+### BEGIN INIT INFO
+# Provides:          ipmasq
+# Required-Start:    $remote_fs $network $syslog
+# Required-Stop:     $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start ipmasq
+# Description:       Look at interfaces and create one or more NATs to the ext iface
+### END INIT INFO
+
 ##########
 # Options
 
