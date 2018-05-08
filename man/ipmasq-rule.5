@@ -1,0 +1,139 @@
+.TH IPMASQ-RULE 5
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+ipmasq-rule \- rules file used to set up IP Masquerading
+.SH SYNOPSIS
+.B /etc/ipmasq/rules/*.{rul,def}
+.SH "DESCRIPTION"
+This manual page documents the rules files used by the
+.B ipmasq
+command.  
+.B ipmasq
+sources these rules files using
+.BR sh (1).
+Only those files ending with the extensions
+.I \.rul
+or
+.I \.def
+are sourced, so as to prevent old rules (for example, left around by editor backups) from being put back into service.
+.PP
+.B ipmasq
+sources the rules files by listing the files in the directory
+.I /etc/ipmasq/rules
+with the extensions
+.I \.rul
+or
+.IR \.def \.
+This list is sorted, and for each basename, the
+.I \.rul
+rule is sourced if it exists, otherwise the
+.I \.def
+rule is sourced.
+.SH "ENVIRONMENT VARIABLES AVAILABLE TO RULES"
+The following environment variables are available to rules:
+.IP PATH
+The
+.I PATH
+for rules is explicitly set to "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin".
+.IP EXTERNAL_OUT
+Names of the interfaces currently sending packets outbound from the system
+to external networks.
+.IP EXTERNAL_IN
+Names of the interfaces currently receiving packets inbound to the system
+from external networks.
+.IP EXTERNAL
+Names of the interfaces currently connected to external networks.  This is
+a combination of
+.B EXTERNAL_OUT
+and
+.BR EXTERNAL_IN .
+.IP INTERNAL
+Names of all the interfaces on the system currently up and configured with an
+IP address and netmask, with the exception of the loopback interface (lo), and
+.BR EXTERNAL .
+.IP IPFWADM
+Path to the ipfwadm utility.  Use of this variable is recommended, as its use
+will automatically support the --display, --no-act, and --verbose options of
+.BR ipmasq (8).
+.IP IPCHAINS
+Path to the ipchains utility.  Use of this variable is recommended, as its use
+will automatically support the --display, --no-act, and --verbose options of
+.BR ipmasq (8).
+.IP IPTABLES
+Path to the iptables utility.  Use of this variable is recommended, as its use
+will automatically support the --display, --no-act, and --verbose options of
+.BR ipamsq (8).
+.IP MASQMETHOD
+One of
+.IR ipfwadm ,
+.I ipchains
+or
+.I netfilter
+depending on the interface of the currently running kernel.
+.IP SHOWRULES
+Set to
+.I yes
+if
+.BR ipmasq (8)
+has been called with either the
+.I --display
+or the
+.I --verbose
+flag, indicating the user wishes rules to be displayed.
+.IP NOACT
+Set to
+.I yes
+if
+.BR ipmasq (8)
+has been called with either the
+.I --display
+or the
+.I --no-act
+flag, indicating the user wishes rules not to be executed.
+.SH "SHELL FUNCTIONS AVAILABLE TO RULES"
+The following shell functions are available to rules:
+.IP ipnm_cache
+In order to speed the creation of the ruleset, the IP address and netmask
+of the interfaces listed in
+.B INTERNAL
+and
+.B EXTERNAL
+are cached.  Call
+.B ipnm_cache
+.I interface
+to retrieve the cached information.  The IP address, netmask, point-to-point
+peer, and broadcast address are returned in the environment variables
+.BR IPOFIF ,
+.BR NMOFIF ,
+.BR PEEROFIF ,
+and
+.B BCOFIF
+respectively.
+.SH FILES
+.I /etc/ipmasq/rules/*.def
+.RS
+Package defined default rules files.  Do not edit, instead create a
+.I \.rul
+file.
+.RE
+.I /etc/ipmasq/rules/*.rul
+.RS
+User defined rules files.  Each overrides the corresponding
+.I \.def
+file.
+.SH CAVEATS
+Previous versions of
+.BR ipmasq (8)
+guaranteed that rule files would be sourced using
+.BR bash (1).
+However, since
+.BR bash (1)
+is a resource hog, especially on systems often used as ipmasq boxes, this
+guarantee was removed as of ipmasq version 3.3.3.  Check your rules files
+for ``bashisms.''
+.SH "SEE ALSO"
+.BR ipmasq "(8), " sh "(1), " ipofif "(8), " nmofif "(8), " peerofif "(8), " bcofif "(8), " default-if "(8), " enumerate-if "(8), " ipfwadm "(8), " ipchains "(8), " iptables (8)
+.SH AUTHOR
+This manual page was written by Brian Bassett <brianb@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).

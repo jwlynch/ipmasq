@@ -1,0 +1,36 @@
+Source: ipmasq
+Section: net
+Priority: extra
+Maintainer: Daniel Baumann <daniel@debian.org>
+Standards-Version: 3.7.2
+Build-Depends: debhelper (>= 4.1.16)
+Build-Depends-Indep: debiandoc-sgml
+
+Package: ipmasq
+Architecture: all
+Pre-Depends: debconf (>= 0.5.00) | debconf-2.0
+Depends: iptables (>= 1.2.1-1) | ipchains | ipfwadm
+Conflicts: iptables (<< 1.2.1-1)
+Suggests: midentd | oidentd, mc, bridge-utils
+Description: securely initializes IP Masquerade forwarding/firewalling 
+ This package contains scripts to initialize IP Masquerade for use as a 
+ firewall.  IP Masquerade is a feature of Linux that allows an entire network
+ of computers to be connected to another network (usually the Internet) with
+ only one network address on the other network.  IP Masquerade is often
+ referred to as NAT (Network Address Translation) on other platforms.
+ .
+ By default, this package configures the system as a basic forwarding
+ firewall, with IP spoofing and stuffed routing protection.  The firewall
+ will allow hosts behind the firewall to get to the Internet, but not allow
+ connections from the Internet to reach the hosts behind the firewall.
+ However, ipmasq now features a very flexible framework where you can
+ override any of the predefined rules if you so choose.  It also allows you
+ to control if the rules are reinterpreted when pppd brings a link up or
+ down.
+ .
+ This package should be installed on the firewall host and not on the
+ hosts behind the firewall.
+ .
+ IP Masquerade requires the kernel to be compiled with masquerading support
+ (please see documentation for specific kernel options required).
+

@@ -1,0 +1,201 @@
+#!/bin/sh
+#
+# ipmasq-kmod    Set up IP Masquerading kernel modules for Debian systems
+#
+#                v3.3.0 26 January 1999
+#                v3.4.0 4 August 1999
+#                v3.5.18 2004-01-03T10:50:30 CET Osamu Aoki
+#                       Support 2.4 and later version of kernel.
+#                       If anyone really wants to tweek modules by the 
+#                       optios etc., please consider editting mostly
+#                       /etc/modules and possibly disabling optional 
+#                       modules here.  (/etc/ipmasq/modules is valid 
+#                       only for 2.0 and 2.2 kernel)
+#                v3.5.28 2004-01-08T20:29:10 CET Osamu
+#                2005-09-03: ported on kernel 2.6 S. Bortzmeyer
+#     This is here as an easy helper for the ipmasq introduction.
+#                
+
+##########
+# Options
+
+MODULES=/etc/ipmasq/modules
+MODPROBE=/sbin/modprobe
+MOD_DIR=/lib/modules/$(uname -r)
+LSMOD=/sbin/lsmod
+KL_VER=`uname -r|sed -e 's/^\([^.]*\.[^.]*\)\..*/\1/g' `
+LC_ALL=C
+export LC_ALL
+
+##########
+# Parse commandline options
+
+while [ $# -gt 0 ]; do
+    case $1 in
+    -v|--verbose)
+        SHOWRULES=yes
+        ;;
+    -n|--no-act)
+        NOACT=yes
+        ;;
+    -d|--display)
+        SHOWRULES=yes
+        NOACT=yes
+        ;;
+    -V|--version)
+        echo @VERSION@
+        exit 0
+        ;;
+    -h|--help)
+        echo "ipmasq @VERSION@ (c) 1997-2002 Brian Bassett"
+        echo "Usage:"
+        echo "  ipmasq-kmod            reload IP Masquerade kernel modules" 
+        echo "  ipmasq-kmod --verbose  show what modules are being loaded"
+        echo "  ipmasq-kmod --no-act   do not actually load any modules"
+        echo "  ipmasq-kmod --display  show what modules would be loaded"
+        echo "  ipmasq-kmod --version  print version number and exit"
+        echo "  ipmasq-kmod --help     show this help message and exit"
+        exit 0
+        ;;
+    esac
+    shift
+done
+
+##########
+# exit if config file is not present
+if [ ! -f $MODULES ]; then
+    exit 0
+fi
+
+# exit if the kernel is not modular
+if [ ! -e /proc/modules ]; then
+    exit 0
+fi
+
+##########
+# functions
+load_kmod () {
+    # return if called with no parameters
+    if [ $# -eq 0 ]; then
+        return 0
+    fi
+
+    # return if module already loaded
+    for i in $LOADED; do
+        if [ "$1" = "$i" ]; then
+            return 0
+        fi
+    done
+
+    # compute module string
+    buf="ip_masq_$1"
+    shift
+    if [ $# -gt 0 ]; then
+        buf="$buf $@"
+    fi
+    
+    # load the module
+    $MODPROBE $buf
+}
+
+add_mod () { 
+
+if [ -z "$($LSMOD|grep -e "^$1 " )" ]; then
+  # Even if modules do not exist, exit OK
+  if [ -e $MOD_DIR/kernel/net/ipv4/netfilter/$1.$MODEXT ]; then
+    $MODPROBE $1 2>/dev/null || true
+  fi
+else
+  : # echo "module $1 already exists"
+fi
+}
+
+load_all () {
+    # get list of all ip_masq_ modules
+    MODULES=$(cd $MOD_DIR/ipv4/; ls ip_masq_* | sed -e 's/ip_masq_\(.*\)\.o/\1/g')
+
+    # load them all
+    for i in $MODULES ; do
+        load_kmod $i
+    done
+
+    # quit ipmasq-kmod
+    exit 0
+}
+
+showanddo () {
+    echo "$@"
+    "$@"
+}
+
+##########
+# Handle the -d, -n, and -v options
+
+if [ "$SHOWRULES" = "yes" ]; then
+    if [ "$NOACT" = "yes" ]; then
+        MODPROBE="echo $MODPROBE"
+    else
+        MODPROBE="showanddo $MODPROBE"
+    fi
+else
+    if [ "$NOACT" = "yes" ]; then
+        MODPROBE=": #"
+    fi
+fi
+
+##########
+if [ "$KL_VER" = "2.6" ]; then
+  MODEXT="ko"
+else
+  MODEXT="o"
+fi
+
+if [ "$KL_VER" = "2.0" -o "$KL_VER" = "2.2" ]; then
+
+# Do the modules for 2.0 and 2.2 using Brian's code
+
+LOADED=$($LSMOD | cut -f 1 -d ' ' | grep '^ip_masq_' | sed -e 's/^ip_masq_//')
+CONFIG=$(cat $MODULES | sed -e 's/#.*$//' -e 's/$/ |/')
+
+buffer=""
+for i in $CONFIG; do
+    if [ "$i" = "|" ]; then
+        if [ "$buffer" = " all" ]; then
+            load_all
+        else
+            load_kmod $buffer
+            buffer=""
+        fi
+    else
+        buffer="$buffer $i"
+    fi
+done
+
+#### These are here as reminder.
+# For 2.0 and 2.2 kernel
+# modules loaded here to avoid auto-loading timing issue
+#MODLIST_BASE=""
+# If you do not like optional modules to be activated, edit this.
+#MODLIST_OPT="ip_masq_ftp ip_masq_irc ip_masq_raudio ip_masq_quake ip_masq_cuseeme ip_masq_vdolive"
+# If you want all Quake games, modify above as (untested):
+# MODLIST_OPT="ip_masq_ftp ip_masq_irc ip_masq_raudio \"ip_masq_quake 26000,27000,27910,27960\" ip_masq_cuseeme ip_masq_vdolive"
+
+else
+
+# For 2.4 kernel
+# some modules loaded here to avoid auto-loading timing issue
+MODLIST_BASE="ip_tables ip_conntrack iptable_nat"
+# If you do not like optional modules to be activated, edit this.
+MODLIST_OPT="ip_conntrack_ftp ip_conntrack_irc ip_nat_ftp ip_nat_irc"
+
+MODLIST="$MODLIST_BASE $MODLIST_OPT"
+
+for i in $MODLIST; do
+  add_mod "$i"
+done
+
+fi
+
+##########
+# End of ipmasq-kmod
+

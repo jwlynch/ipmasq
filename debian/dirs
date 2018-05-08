@@ -1,0 +1,8 @@
+etc/init.d
+etc/ppp/ip-down.d
+etc/ppp/ip-up.d
+etc/ipmasq/rules
+etc/ipmasq/ipmasq-down
+usr/sbin
+usr/share/ipmasq
+usr/share/lintian/overrides

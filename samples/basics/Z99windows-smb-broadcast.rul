@@ -1,0 +1,58 @@
+# Accept Windows SMB broadcasts, so as to avoid spurious syslog entries from
+# ZZZdenyandlog.def
+#
+# Since hosts behind masq'ed hosts has little reason to have access to
+# samba outside, you may change latter half to DROP packet.
+
+if [ -n "$INTERNAL" ]; then
+    for i in $INTERNAL; do
+        ipnm_cache $i
+        # SAMBA uses 255.255.255.255 for broadcast
+        BCOFIF="255.255.255.255"
+        case $MASQMETHOD in
+        ipfwadm)
+	    if [ -n "$BCOFIF" ]; then
+                $IPFWADM -I -a accept -W ${i%%:*} -S $IPOFIF/$NMOFIF -D $BCOFIF/32 137:139
+	    fi
+            ;;
+        ipchains)
+	    if [ -n "$BCOFIF" ]; then
+                $IPCHAINS -A input -j ACCEPT -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 137:139 -p tcp
+                $IPCHAINS -A input -j ACCEPT -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 137:139 -p udp
+	    fi
+            ;;
+	netfilter)
+	    if [ -n "$BCOFIF" ]; then
+		$IPTABLES -A INPUT -j ACCEPT -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 -p tcp --dport 137:139
+		$IPTABLES -A INPUT -j ACCEPT -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 -p udp --dport 137:139
+	    fi
+        esac
+    done
+fi
+
+if [ -n "$EXTERNAL" ]; then
+    for i in $EXTERNAL; do
+        ipnm_cache $i
+        # SAMBA uses 255.255.255.255 for broadcast
+        BCOFIF="255.255.255.255"
+        case $MASQMETHOD in
+        ipfwadm)
+	    if [ -n "$BCOFIF" ]; then
+                $IPFWADM -I -a accept -W ${i%%:*} -S $IPOFIF/$NMOFIF -D $BCOFIF/32 137:139
+	    fi
+            ;;
+        ipchains)
+	    if [ -n "$BCOFIF" ]; then
+                $IPCHAINS -A input -j ACCEPT -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 137:139 -p tcp
+                $IPCHAINS -A input -j ACCEPT -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 137:139 -p udp
+	    fi
+            ;;
+	netfilter)
+	    if [ -n "$BCOFIF" ]; then
+		$IPTABLES -A INPUT -j DROP -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 -p tcp --dport 137:139
+		$IPTABLES -A INPUT -j DROP -i ${i%%:*} -s $IPOFIF/$NMOFIF -d $BCOFIF/32 -p udp --dport 137:139
+	    fi
+        esac
+    done
+fi
+

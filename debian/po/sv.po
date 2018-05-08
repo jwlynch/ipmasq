@@ -1,0 +1,230 @@
+# Translators, if you are not familiar with the PO format, gettext
+# documentation is worth reading, especially sections dedicated to
+# this format, e.g. by running:
+# info -n '(gettext)PO Files'
+# info -n '(gettext)Header Entry'
+# Some information specific to po-debconf are available at
+# /usr/share/doc/po-debconf/README-trans
+# or http://www.debian.org/intl/l10n/po-debconf/README-trans
+# Developers do not need to manually edit POT or PO files.
+# , fuzzy
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ipmasq 4.0.5\n"
+"Report-Msgid-Bugs-To: ipmasq@packages.debian.org\n"
+"POT-Creation-Date: 2008-05-02 07:47+0200\n"
+"PO-Revision-Date: 2006-01-11 19:00+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid "/etc/ipmasq/rules now conffiles"
+msgstr "/etc/ipmasq/rules nu konfigurationsfiler"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid ""
+"The rules files located in /etc/ipmasq/rules have been placed under package "
+"manager control as of version 3.4.0.  It is safe (and recommended) to allow "
+"dpkg to replace your version."
+msgstr ""
+"Regelfilerna som fanns under /etc/ipmasq/rules har placerats under "
+"pakethanterarens kontroll från och med version 3.4.0. Det är säkert (och "
+"rekommenderat) att tillåta dpkg att byta ut din version."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "External interface rules moved; move them?"
+msgstr "Regler för externt gränssnitt flyttade; flytta dom?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The rules files I50external.def and O50external.def have changed position to "
+"I90external.def and O90external.def, respectively.  May I move these rules "
+"files (and their corresponding .rul files) to their new positions?"
+msgstr ""
+"Regelfilerna I50external.def och O50external.def har ändrat position till "
+"I90external.def och O90external.def, respektive. Får jag flytta dessa "
+"regelfiler (och deras korresponderande .rul-fil) till deras nya positioner?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Delete outdated boot script?"
+msgstr "Ta bort föråldrat startskript?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"Should I delete the old, no longer used /etc/rc.boot/ipmasq boot script?"
+msgstr ""
+"Ska jag ta bort det gamla, som inte används längre, uppstartsskriptet /etc/"
+"rc.boot/ipmasq?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid "Delete outdated configuration file?"
+msgstr "Ta bort föråldrad konfigurationsfil?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"The configuration file /etc/ipmasq.conf is no longer used and the "
+"information it contains is determined automatically by ipmasq.  Should I "
+"delete the file /etc/ipmasq.conf?"
+msgstr ""
+"Konfigurationsfilen /etc/ipmasq.conf används inte längre och information som "
+"den innehåller bestäms automatiskt av ipmasq. Ska jag ta bort filen /etc/"
+"ipmasq.conf?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Move custom rules file to new location?"
+msgstr "Flytta egendefinierade regelfiler till nya platsen?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid ""
+"Should I move your /etc/ipmasq.rules into the /etc/ipmasq/rules directory?"
+msgstr "Ska jag flytta in /etc/ipmasq.rules in i mappen /etc/ipmasq/rules ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid "Should PPP connections recompute the firewall?"
+msgstr "Ska PPP-förbindelser ändras för i brandväggen?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid ""
+"Do you wish to have ipmasq recompute the firewall rules when pppd brings up "
+"or takes down a link?"
+msgstr ""
+"Vill du att ipmasq ändrar brandväggsreglerna när pppd tar upp eller ner en "
+"förbindelse?"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid "PPP recomputation controlled by file /etc/ipmasq/ppp"
+msgstr "Ändringar i brandväggen för PPP kontrolleras av filen /etc/ipmasq/ppp"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid ""
+"Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is "
+"present."
+msgstr ""
+"Ipmasq kommer att ändra brandväggsreglerna om filen /etc/ipmasq/ppp finns "
+"tillgänglig."
+
+#. Type: note
+#. Description
+#: ../templates:7001
+msgid ""
+"Create the file /etc/ipmasq/ppp to have ipmasq recompute the firewall when "
+"pppd brings up or takes down a link."
+msgstr ""
+"Skapa filen /etc/ipmasq/ppp för att få ipmasq att ändra i brandväggen när "
+"pppd tar upp eller ner förbindelsen."
+
+#. Type: note
+#. Description
+#: ../templates:8001
+msgid ""
+"Delete the file /etc/ipmasq/ppp to stop having ipmasq recompute the firewall "
+"when pppd brings up or takes down a link."
+msgstr ""
+"Ta bort filen /etc/ipmasq/ppp för att få ipmasq att sluta ändra i "
+"brandväggen när pppd tar upp eller ner en förbindelse."
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Start ipmasq?"
+msgstr "Starta ipmasq?"
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Should I start IP Masquerading?"
+msgstr "Ska jag starta IP Masquerading?"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Disable"
+msgstr "Stäng av"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network interfaces are brought up"
+msgstr "Efter att nätverksgränssnitten är uppe"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network filesystems are mounted"
+msgstr "Efter nätverksfilsystemen är monterade"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network services have been started"
+msgstr "Efter nätverkstjänsterna har startats upp"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Keep current set up"
+msgstr "Behåll nuvarande konfiguration"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid "When should ipmasq be started?"
+msgstr "När ska ipmasq startas upp?"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid ""
+"Ipmasq can be told initially to compute the firewall rules at one of a "
+"number of points in the boot process.  This question asks at which point "
+"ipmasq should start."
+msgstr ""
+"Ipmasq kan instrueras att initialt beräkna brandväggsreglerna på en av de "
+"antal punkter i uppstartsprocessen. Denna fråga frågar vid vilken punkt som "
+"ipmasq ska startas."
+
+#~ msgid ""
+#~ "Disable, After network interfaces are brought up, After network "
+#~ "filesystems are mounted, After network services have been started, Keep "
+#~ "current set up"
+#~ msgstr ""
+#~ "Stäng av, Efter att nätverksgränssnitten är uppe, Efter "
+#~ "nätverksfilsystemen är monterade, Efter nätverkstjänsterna har startats "
+#~ "upp, Behåll nuvarande konfiguration"

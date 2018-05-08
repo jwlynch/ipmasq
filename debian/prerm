@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+if [ "$1" = "remove" ]; then
+    # If firewall is on, turn off first
+    /usr/sbin/ipmasq --rules /etc/ipmasq/ipmasq-down || \
+      { echo "Error while executing ipmasq with --rules /etc/ipmasq/ipmasq-down ($?)." ; \
+        echo "Your network may be open for attack." ; \
+        echo "Check your network situation after purging ipmasq package." ; \
+      } >&2
+fi
+
+#DEBHELPER#
+

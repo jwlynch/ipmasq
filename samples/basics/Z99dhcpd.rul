@@ -1,0 +1,17 @@
+#######
+# Sample rule file
+#######
+
+#######
+# enable a DHCP/BOOTP server on eth1 to work
+case $MASQMETHOD in
+ipfwadm)
+    $IPFWADM -I -a accept -S 0/0 68 -D 0/0 67 -W eth1 -P udp
+    $IPFWADM -O -a accept -D 0/0 68 -S 0/0 67 -W eth1 -P udp
+    ;;
+ipchains)
+    $IPCHAINS -A input -j ACCEPT -s 0/0 68 -d 0/0 67 -i eth1 -p udp
+    $IPCHAINS -A output -j ACCEPT -d 0/0 68 -s 0/0 67 -i eth1 -p udp
+    ;;
+esac
+

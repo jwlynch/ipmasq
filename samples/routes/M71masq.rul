@@ -1,0 +1,22 @@
+#: Masquerade packets from routed networks
+if [ -n "$ROUTES" -a -n "$EXTERNAL_OUT" ]; then
+    for j in $EXTERNAL_OUT; do
+        for route in $ROUTES; do
+	    i=${route%%:*}
+	    dest=${route##*:}
+            case $MASQMETHOD in
+            ipfwadm)
+                $IPFWADM -F -a masq -W ${j%%:*} -S $dest
+                ;;
+            ipchains)
+                $IPCHAINS --no-warnings -A forward -j MASQ -i ${j%%:*} -s $dest
+                ;;
+	    netfilter)
+		$IPTABLES -t nat -A POSTROUTING -o ${j%%:*} -s $dest -j MASQUERADE
+		$IPTABLES -A FORWARD -i ${i%%:*} -o ${j%%:*} -s $dest -j ACCEPT
+	        ;;
+            esac
+        done
+    done
+fi
+

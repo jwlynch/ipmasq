@@ -1,0 +1,29 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+# disply if -d
+if [ "$SHOWRULES" = "yes" ]; then
+    echo "#: Interfaces found:"
+fi
+
+# precompute ips and netmasks
+if [ -n "$EXTERNAL_OUT" -o -n "$EXTERNAL_IN" -o -n "$INTERNAL" ]; then
+    for i in $EXTERNAL_OUT $EXTERNAL_IN $INTERNAL; do
+        ii=$(echo $i | sed -e 's/\:/_/g' -e 's/\./__/g')
+        ip=$(ipofif $i)
+        nm=$(nmofif $i)
+        peer=$(peerofif $i)
+	bc=$(bcofif $i)
+        eval "IPOFIF_$ii=$ip"
+        eval "NMOFIF_$ii=$nm"
+        eval "PEEROFIF_$ii=$peer"
+	eval "BCOFIF_$ii=$bc"
+        if [ "$SHOWRULES" = "yes" ]; then
+            echo -e "#:   $i\t$ip/$nm"
+        fi
+    done
+fi
+

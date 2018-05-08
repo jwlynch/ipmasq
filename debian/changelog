@@ -1,0 +1,880 @@
+ipmasq (4.0.8-7) unstable; urgency=low
+
+  * Re-adding accidentally removed translations (Closes: #502902).
+
+ -- Daniel Baumann <daniel@debian.org>  Thu, 23 Oct 2008 16:03:00 +0200
+
+ipmasq (4.0.8-6) unstable; urgency=low
+
+  * Setting default for ipmasq/start to false (Closes: #440610).
+
+ -- Daniel Baumann <daniel@debian.org>  Sun, 19 Oct 2008 16:37:00 +0200
+
+ipmasq (4.0.8-5) unstable; urgency=medium
+
+  * Added patch from Simon Addareyss <simon.addareyss@libertysurf.fr> to make
+    rules not depend on source directory name (Closes: #404523).
+  * Added patch from Lex Spoon <lex@debian.org> to make A01interfaces
+    accidentally declare interfaces containing the 'lo' string as local
+    interfaces (Closes: #415324).
+  * Renaming debconf "_Choices" to "__Choices" (Closes: #413089).
+  * Updating Galician debconf translation from Jacobo Tarrio <jacobo@tarrio.org>
+    (Closes: #481116).
+  * Updating Basque debconf translation from Piarres Beobide
+    <pi+debian@beobide.net> (Closes: #481160).
+  * Updating Finnish debconf translation from Esko Arajarvi <edu@iki.fi>
+    (Closes: #482106).
+
+ -- Daniel Baumann <daniel@debian.org>  Sat, 31 May 2008 11:54:00 +0200
+
+ipmasq (4.0.8-4) unstable; urgency=medium
+
+  * Added Spanish debconf translation from Manuel Porras Peralta
+    <venturi.debian@gmail.com> (Closes: #414047).
+
+ -- Daniel Baumann <daniel@debian.org>  Thu,  8 Mar 2007 22:50:00 +0100
+
+ipmasq (4.0.8-3) unstable; urgency=medium
+
+  * Added Japanese debconf translation from Kobayashi Noritada
+    <nori1@dolphin.c.u-tokyo.ac.jp> (Closes: #413118).
+
+ -- Daniel Baumann <daniel@debian.org>  Fri,  2 Mar 2007 17:33:00 +0100
+
+ipmasq (4.0.8-2) unstable; urgency=low
+
+  * Added Dutch debconf translation from Vincent Zweije <zweije@xs4all.nl>
+    (Closes: #91306).
+
+ -- Daniel Baumann <daniel@debian.org>  Fri,  6 Oct 2006 01:59:00 +0200
+
+ipmasq (4.0.8-1) unstable; urgency=low
+
+  * New maintainer (Closes: #243172).
+  * Adding Brasilian debconf translation from Ricardo Silva <ardoric@gmail.com>
+    (Closes: #380320).
+  * Bumped policy version.
+
+ -- Daniel Baumann <daniel@debian.org>  Sat, 29 Jul 2006 11:44:00 +0200
+
+ipmasq (4.0.8-0.1) unstable; urgency=low
+
+  * NMU.
+  * debian/control: Reverting that Osamu made me maintainer.  See #243172.
+  * debian/lintian: Added lintian override for manpage ipmasq-rule.5.
+  * debian/control: Fixed lintian message
+    build-depends-indep-should-be-build-depends debhelper.
+  * debian/control: Standards version.
+
+ -- Bart Martens <bartm@knars.be>  Wed, 10 May 2006 18:28:06 +0200
+
+ipmasq (4.0.8) unstable; urgency=low
+
+  * Fixed bashism in A01route.rul. (closes: #351513)
+  * Add Bart Martens as the new maintainer.  (closes: #243172)
+  * Fixed conffile. (closes: #356931)
+  * Fixed ipmasq-modules man page typo. (closes: #350364)
+  * Updated Russian debconf template. (closes: #361654)
+  * Added overrides for lintian messages
+    duplicate-updaterc.d-calls-in-postinst using patch from 
+    Bart Martens.
+  * This will be the last version to support 2.0 and 2.2 kernels.
+
+ -- Osamu Aoki <osamu@debian.org>  Fri,  5 May 2006 16:59:53 +0900
+
+ipmasq (4.0.7) unstable; urgency=low
+
+  * Made to launch debconf-updatepo. Clsoes: Bug#349992
+
+ -- Osamu Aoki <osamu@debian.org>  Thu, 26 Jan 2006 16:15:01 +0900
+
+ipmasq (4.0.6) unstable; urgency=low
+
+  * Added problem of using 'ip' command (iproute package) to 
+    README.Debian. (closes: #309389)
+  * Updated Swedish debconf po file. (closes: #347606)
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 14 Jan 2006 23:56:46 +0900
+
+ipmasq (4.0.5) unstable; urgency=low
+
+  * Added Swedish debconf po file. (closes: #338509)
+
+ -- Osamu Aoki <osamu@debian.org>  Sun,  1 Jan 2006 21:03:37 +0900
+
+ipmasq (4.0.4) unstable; urgency=low
+
+  * Depend now also on debconf-2.0
+  * Fixed typo in bug number (312027) below.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun,  2 Oct 2005 11:02:29 +0900
+
+ipmasq (4.0.3) unstable; urgency=low
+
+  * Fixed ipmasq-kmod to be compatible with 2.6 kernel using patch from
+    Stephane Bortzmeyer. (closes: #326518)
+  * Fixed routes examples using patch from Mark Purcell and Frederic
+    LEHOBEY. (closes: #309629)
+  * Added Vetnamese debconf po file. (closes: #312027)
+  * Added Czech debconf po file. (closes: #295978)
+  * Fixed English debconf message and synced all languages. (closes: #312028)
+  * Removed debian/po/messages.mo from source.
+  * Changed to DH_COMPAT=4 and adjust debian/rules . 
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 24 Sep 2005 09:00:19 +0900
+
+ipmasq (4.0.2) unstable; urgency=low
+
+  * Warn implication of NFS root etc. (closes: #300308) 
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 25 Apr 2005 19:18:44 +0200
+
+ipmasq (4.0.1) unstable; urgency=low
+
+  * Bump version to 4.0.1 since I upload 4.0.0 test package by mistake.
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 03 Jan 2005 18:36:24 +0100
+
+ipmasq (3.5.46) unstable; urgency=low
+
+  * Fix POSTROUTING rule in O80firewall.def of stronger examples
+    to use DROP per Clemens Buchacher. (closes: #287784)
+  * Convert debian/changelog to UTF-8.
+  * Fix debian/control: description-synopsis-starts-with-a-capital-letter.
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 03 Jan 2005 17:40:53 +0100
+
+ipmasq (3.5.45) unstable; urgency=low
+
+  * Cleaned DNAT scripts per Daniel Burrows with warning. (closes: #281322)
+  * Update German debconf translation (closes: #281078)
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 20 Nov 2004 18:20:47 +0100
+
+ipmasq (3.5.44) unstable; urgency=high
+
+  * Changed "true" to "echo ... >&2" for the maintainer script errors 
+    to help user with the real situation.
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 06 Aug 2004 18:09:49 +0200
+
+ipmasq (3.5.43) unstable; urgency=high
+
+  * Add explanation to set up "bridge" for internal network cards.
+  * Add Suggests: bridge-utils .
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 02 Aug 2004 01:01:56 +0200
+
+ipmasq (3.5.42) unstable; urgency=low
+
+  * In case of bridge interfaces, examples need some changes too.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 01 Aug 2004 15:53:55 +0200
+
+ipmasq (3.5.41) unstable; urgency=low
+
+  * In case of bridge interface, forward to itself (closes: #260518).
+  * Now 100% free from even a wishlist bug!
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 01 Aug 2004 08:48:09 +0200
+
+ipmasq (3.5.40) unstable; urgency=low
+
+  * Documented needs for /usr/bin in README.Debian (closes: #227284).
+  * Documentation (README.Debian and examples/*) updated.
+  * Add mc to Suggests:.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 31 Jul 2004 11:14:12 +0200
+
+ipmasq (3.5.39) unstable; urgency=low
+
+  * Add DNAT example by Milan Kocin <milon@wq.cz> and its 
+    simplified POSIX compliant example.  (closes: #226855)
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 31 Jul 2004 01:46:44 +0200
+
+ipmasq (3.5.38) unstable; urgency=low
+
+  * Code cleanup for routes/A01routes.rul.
+
+ -- Osamu Aoki <osamu@debian.org>  Wed, 28 Jul 2004 23:22:31 +0200
+
+ipmasq (3.5.37) unstable; urgency=low
+
+  * Documentation updated to indicate post sarge changes and limitation.
+  * Routing example for ppp connected internal net.  (closes: #177043)
+  * All current bugs mentioned in README.Debian.
+
+ -- Osamu Aoki <osamu@debian.org>  Tue, 27 Jul 2004 22:03:44 +0200
+
+ipmasq (3.5.36) unstable; urgency=low
+
+  * debian/conffiles updated.
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 30 Apr 2004 03:19:36 +0200
+
+ipmasq (3.5.35) unstable; urgency=low
+
+  * Update German debconf po file. (closes: #244518)
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 23 Apr 2004 22:56:32 +0200
+
+ipmasq (3.5.34) unstable; urgency=low
+
+  * Sanity check for init scripts added.  (closes: #242048)
+  * Enhance --verbose output and add example scripts for VPN.  
+    (closes: #238810)
+  * Fix more exit code to exit with 0.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 10 Apr 2004 22:29:02 +0200
+
+ipmasq (3.5.33) unstable; urgency=low
+
+  * Add missing target to example script.  (closes: #236684)
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 08 Mar 2004 22:51:41 +0100
+
+ipmasq (3.5.32) unstable; urgency=low
+
+  * Fix exit code of the init scripts existed before I took over.
+    (closes: #234632)
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 29 Feb 2004 22:44:18 +0100
+
+ipmasq (3.5.31) unstable; urgency=high
+
+  * Rebuild with newer tar (GNU tar) 1.13.92 (closes: #231088)
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 07 Feb 2004 10:00:17 +0100
+
+ipmasq (3.5.30) unstable; urgency=low
+
+  * Fix sanity of sanity check (closes: #230721, #230799, #230721)
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 02 Feb 2004 22:05:16 +0100
+
+ipmasq (3.5.29) unstable; urgency=low
+
+  * Update french debconf template (closes: #227430)
+  * Sanity check to echo a message upon error (closes: #229996)
+
+ -- Osamu Aoki <osamu@debian.org>  Wed, 28 Jan 2004 23:08:59 +0100
+
+ipmasq (3.5.28) unstable; urgency=low
+
+  * Add more checks to ipmasq-kmod to reduce noise for postinst/prerm 
+    scripts (closes: #226702)
+  * internal <--> internal is not MASQERADed in 2.4 kernel too. 
+    (as discussed in Bug#173992)
+
+ -- Osamu Aoki <osamu@debian.org>  Thu, 08 Jan 2004 20:51:48 +0100
+
+ipmasq (3.5.27) unstable; urgency=low
+
+  * Add more "|| true" to avoid failing postinst/prerm scripts
+  * Add oidentd to Suggests:.
+
+ -- Osamu Aoki <osamu@debian.org>  Wed, 07 Jan 2004 01:49:11 +0100
+
+ipmasq (3.5.26) unstable; urgency=low
+
+  * ipmasq-kmod for 2.4 kernel was introduced in 3.5.18 but did not
+    functioned as expected due to the missing spaces.  This caused
+    somewhat random kernel module timing issues with iptables.
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 05 Jan 2004 22:49:31 +0100
+
+ipmasq (3.5.25) unstable; urgency=low
+
+  * Removed sanity check for ipmasq -r /etc/ipmasq/ipmasq-down
+    since this is pointless and also "add ||" true in prerm 
+    (closes: #226269)
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 05 Jan 2004 22:04:37 +0100
+
+ipmasq (3.5.24) unstable; urgency=low
+
+  * 2 examples from Johannes Martin: A05clampmss.rul, I89tproxy.rul
+  * Cleaned code and used xargs. (no grep|sed but just sed)
+  * Considering /etc/init.d/ipmasq may not be installed by the choice 
+    of debconf, I have removed its use as a part of scripts and put 
+    the direct call to /usr/sbin/ipmasq.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 04 Jan 2004 16:01:57 +0100
+
+ipmasq (3.5.23) unstable; urgency=medium
+
+  * ipmasq now be started by /etc/init.d/ipmasq (closes: #226080)
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 04 Jan 2004 11:40:13 +0100
+
+ipmasq (3.5.22) unstable; urgency=medium
+
+  * Fix in the 3.5.20 broke ipchains/ipfwadm. Fixed. (closes: #226063)
+  * Updated documents focusing on ifupdown.  Spells are checked.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 04 Jan 2004 09:25:00 +0100
+
+ipmasq (3.5.21) unstable; urgency=low
+
+  * Add example F30internal.rul which can address internal-internal 
+    connection variation issues (closes: #153674)
+  * All bugs fixed and wishlist addressed for sarge.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 04 Jan 2004 02:15:01 +0100
+
+ipmasq (3.5.20) unstable; urgency=low
+
+  * I accidentally broke M70masq.def in 3.5.19. Fixed and cleaned.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 03 Jan 2004 21:33:19 +0100
+
+ipmasq (3.5.19) unstable; urgency=low
+
+  * PPP also should use --state RELATED,ESTABLISHED in M70masq.def
+  * Exit if previous instances of ipmasq exist. (closes: #157220)
+  * SAMBA uses 255.255.255.255 for broadcast.  Updated example script
+    Z99windows-smb-broadcast.rul. (closes: #161928)
+  * Handy use of --display documented in README.Debian. (closes: #177046)
+  * Updated all scripts in /usr/share/doc/ipmasq/examples/stronger/ 
+    from the discussion on Bug#224022.  Added I79ident.def
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 03 Jan 2004 16:20:01 +0100
+
+ipmasq (3.5.18) unstable; urgency=low
+
+  * Add 2.4 kernel module support in ipmasq-kmod. (closes: #174305)
+  * For update-rc.d in postinst, add option for "keep" in debconf.
+  * Consider system without /etc/init.d/ipmasq-kmod and 
+    /etc/init.d/ipmasq in inst-script.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 03 Jan 2004 11:37:12 +0100
+
+ipmasq (3.5.17) unstable; urgency=low
+
+  * Updated document for required kernel support. (closes: #224667)
+  * Updated README.Debian per J.D. Hood. (closes: #224628)
+  * Documented way to use ifupdown in README.Debian. (closes: #222078)
+  * For update-rc.d in postinst, disable them first. (closes: #188306)
+  * Updated stronger ???firewall.rul examples. (closes: #205497)
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 02 Jan 2004 22:21:44 +0100
+
+ipmasq (3.5.16) unstable; urgency=low
+
+  * Port based firewall rules /etc/ipmasq/rules/[AIO]80firewall.def
+    is put back to example. (closes: #224276, #224022)
+  * Documented inter-operation issues with ifupdown and other issues in 
+    the newly added README.Debian.
+  * gettext-based debconf templates. (closes: #202726)
+
+ -- Osamu Aoki <osamu@debian.org>  Wed, 17 Dec 2003 20:42:02 +0100
+
+ipmasq (3.5.15) unstable; urgency=low
+
+  * Port based firewall rules /etc/ipmasq/rules/[AIO]80firewall.def
+    were added in the previous upload. Bug fixed. (closes: #63623, #224011)
+  * There will be some code clean up expected. If it happens, you may need 
+    to adjust your customization file accordingly.  See its progress in 
+    bug #224022.
+  * Example for port forwarding added. (closes: #173174)
+
+ -- Osamu Aoki <osamu@debian.org>  Tue, 16 Dec 2003 02:11:19 +0100
+ 
+ipmasq (3.5.14) unstable; urgency=high
+
+  * Follow 3rd NMU by the Security Team to fix  CAN-2003-0785
+    [rules/M70masq.def] Only allow ESTABLISHED or RELATED traffic to be
+    forwarded inside from outside. (closes: #203940, #163302)
+  * Fix "showanddo" (closes: #195287)
+  * remove CVS/* from source package. 
+  * No advantage of running ipmasq while downing ppp.  
+    Script removed with benefit to ISDN users (closes: #153191)
+  * Remove old netbase from Depends: in control.
+  * Update Maintainer name in control too.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 13 Dec 2003 23:23:04 +0100
+ 
+ipmasq (3.5.13) unstable; urgency=low
+
+  *  Use explicit protocol numbers (closes: #182158)
+  *  Fix "y" --> "yes" (closes: #161333)
+  *  Adopt package (closes: #219173)
+
+ -- Osamu Aoki <osamu@debian.org>  Tue, 29 Apr 2003 10:35:27 -0700
+
+ipmasq (3.5.12) unstable; urgency=high
+
+  * [SECURITY] Fix problem that allows an attacker to get packets through to
+    the other side under netfilter.  (closes: #184803)
+
+ -- Brian Bassett <brianb@debian.org>  Tue, 29 Apr 2003 10:35:27 -0700
+
+ipmasq (3.5.11) unstable; urgency=low
+
+  * The "Flaming Luau" release.
+  * Add documentation about DHCP to main documentation.  (closes:
+    #129223, #131842)
+    + Add example script for interfacing with DHCP (via dhclient). 
+      Contributed by Simon Higgs (simonhiggs@ntlworld.com).
+  * Add support and documentation about handling asymmetric routing.
+    (closes: #147551)
+  * rules-down/A02masqmethod.def: Use : instead of # for doing nothing.
+  * Add sed script for converting spaces to newlines for use by rules files.
+  * Add support for munging vlan interface names (i.e. eth0.0) properly.
+    Patch from Doug Balmer (doug@digitalbrain.com). (closes: #118371)
+  * doc/ipmasq.sgml: Tweak docs to reflect vlan name mangling.
+  * Clean up ruleset when odd netmasks are used. (closes: #148564)
+  * debian/config: Fixed mistake in invokation of update-rc.d.
+    (closes: #145824)
+  * rules-down/A02masqmethod.def: Missed an instance of /usr/sbin/iptables.
+    (closes: #129636, #147888)
+  * debian/templates*: Split apart debconf templates so that translators
+    are benefited.  Add Russian (Ilgiz Kalmetev (ilgiz@bashtelecom.ru))
+    (closes: #136593) and French (Philippe Batailler) (closes: #151716)
+    translations.
+
+ -- Brian Bassett <brianb@debian.org>  Wed, 17 Jul 2002 22:39:38 -0700
+
+ipmasq (3.5.10) unstable; urgency=low
+
+  * The "Merry New Year" release.
+  * Add check to ipmasq-kmod to exit gracefully if running a 2.4/netfilter
+    kernel, as we currently don't support it.
+  * Update 'stronger' example to newer upstream.  Fixes problems with
+    OUTPUT rules caring about input interface under netfilter
+    (closes: #125893).
+  * Update samples/A10dhcpd.rul with netfilter invokations. 
+
+ -- Brian Bassett <brianb@debian.org>  Tue,  1 Jan 2002 13:24:37 -0800
+
+ipmasq (3.5.9) unstable; urgency=medium
+
+  * Oops... O30intbcast and O90extbcast were adding rules for netfilter
+    that specified OUTPUT rules that cared about the input interface.
+    (closes: #125783)
+
+ -- Brian Bassett <brianb@debian.org>  Wed, 19 Dec 2001 00:42:11 -0800
+
+ipmasq (3.5.8) unstable; urgency=medium
+
+  * Re-add the netbase dependency (but version it correctly) such that
+    we can install this package on stable systems with a minimum of
+    fuss.
+  * Fix the netfilter invocation of the M70masq rules such that they
+    chop off any aliases (i.e. eth0:0 -> eth0). (closes: #117263)
+  * Be more specific about the version of iptables on the system.
+    (closes: #93726)
+  * Correct for the Musical Pathname Syndrome in iptables.
+    (closes: #121855)
+  * rules-down/A03fulsh.def: Switch to accepting on input/output
+    instead of denying.  Won't leave the network fscked after stopping
+    the init script. (closes: #87175)
+  * rules/A01interfaces.def: Tighten down even further the regex for
+    removing external interfaces from $INTERNAL.  Patch submitted by
+    Sebastian Wahl <wahl@simplethings.de>.
+  * Allow dumb broadcast packets to be output.  Fixes problems with
+    pump contacting dhcp servers. (closes: #85767)
+  * Update documentation to indicate required kernel options for all
+    supported kernel revisions. (closes: #95170)
+  * Make sure to actually drop lo-spoofed packets under netfilter.
+    (closes: #121495)
+  * Tweak debconf config script to allow for boot-positioning changes.
+  * Update documentation to deal with new debconf tweaks, better
+    descriptions of pcmcia and diald interactions.
+    (closes: #92448, #99641, #106162)
+  * Add example stronger ruleset as
+    '/usr/share/doc/ipmasq/examples/stronger/' (closes: #87499)
+  * Attempt to load kernel modules (under netfilter) needed for
+    masquerading if we would have reported that the current kernel does
+    not have masquerading support. (closes: #113712)
+  * Add example ZZZ|Lipac.rul for users of ipac and ipac-ng.
+    (closes: #122703)
+  * Closing bugs against 3.4.4 (version currently in stable):
+    + closes: #104026 (Fixed in 3.5.0)
+    + closes: #87347 (Fixed in 3.5.0)
+
+ -- Brian Bassett <brianb@debian.org>  Mon, 17 Dec 2001 23:23:37 -0800
+
+ipmasq (3.5.7.1) unstable; urgency=medium
+
+  * NMU.
+  * Fixed some rules that didn't let the system very usable when
+    ipmasq shuts down (closes: #87175).
+
+ -- David Martínez Moreno <david.martinez@rediris.es>  Sun, 11 Nov 2001 04:20:15 +0100
+
+ipmasq (3.5.7) unstable; urgency=low
+
+  * Replace netbase dependency with one of the three packet mangling
+    interface commands (mainly so I can version the dependency on
+    iptables, as they changed the location of the command, which I
+    hardcode.)
+  * Replace # with : in no-act command expansion. (closes: #89117)
+  * Add patch containing german debconf templates. (closes: #86786)
+
+ -- Brian Bassett <brianb@debian.org>  Mon, 19 Mar 2001 22:13:50 -0800
+
+ipmasq (3.5.6) unstable; urgency=high
+
+  * Fix problems introduced when I changed something in postinst and
+    reverted said change incorrectly. (closes: #85781)
+
+ -- Brian Bassett <brianb@debian.org>  Mon, 12 Feb 2001 18:51:34 -0800
+
+ipmasq (3.5.5) unstable; urgency=medium
+
+  * Use the correct kind of quotes when removing external interfaces
+    from $INTERNAL. (closes: #85654, #85192)
+
+ -- Brian Bassett <brianb@debian.org>  Sun, 11 Feb 2001 18:07:15 -0800
+
+ipmasq (3.5.4) unstable; urgency=low
+
+  * Update sample Z99windows-smb-broadcast.rul to use specific protocols
+    (which is required if you want to use ports).  (closes: #85126)
+  * Helper scripts that required parsing of engligh text were being
+    confused by LANG and LANGUAGE localization variables.  Handle them
+    in the same manner as LC_ALL. (closes: #84005)
+  * Fix comments on I30intbcast.def and I90extbcast.def to reflect
+    that they deal with dumb broadcast packets. (closes: #85127)
+  * Call ipchains with the `--no-warnings' option when manipulating the
+    forward chain with kernel forwarding disabled. (closes: #85121)
+
+ -- Brian Bassett <brianb@debian.org>  Sat, 10 Feb 2001 12:13:30 -0800
+
+ipmasq (3.5.3) unstable; urgency=high
+
+  * Use DROP instead of DENY in O70masq.def for netfilter. (closes: #85097)
+
+ -- Brian Bassett <brianb@debian.org>  Tue,  6 Feb 2001 11:10:19 -0800
+
+ipmasq (3.5.2) unstable; urgency=high
+
+  * Fix shell quoting in A01interfaces. (closes: #84915)
+  * Make it so output from ipmasq --verbose is a valid shell script.
+
+ -- Brian Bassett <brianb@debian.org>  Sun,  4 Feb 2001 22:28:09 -0800
+
+ipmasq (3.5.1) unstable; urgency=high
+
+  * Fix stupid mistake in debconf.
+
+ -- Brian Bassett <brianb@debian.org>  Sun,  4 Feb 2001 11:02:56 -0800
+
+ipmasq (3.5.0) unstable; urgency=low
+
+  * Added netfilter support (found in later 2.3.x and 2.4 kernels), patch
+    provided by Arthur Peters <amep@softhome.net>. (closes: #68447, #69755)
+    + Note that this support does not work if you have netfilter compiled
+      as modules.
+  * Clarify the comments regarding the multicast address range.
+    (closes: #69545)
+    + Split out mulitcast rules into I32intmcast.def and O32intmcastt.def.
+  * Clean up interface aliasing issues. (closes: #57872, #62280, #64204,
+    #80568)
+  * Correct ipchains -i option in I15losppof.def. (closes: #65302)
+  * Tighten up sed expression for constructing the INTERNAL list of
+    interfaces. (closes: #64885)
+  * Deal with dumb broadcasts correctly. (closes: #64061, #82636)
+    + Split out dumb broadcast rules into I30intbcast.def and I90extbcast.def
+  * Debconfiscated package. (closes: #72259)
+  * Allow for variation in boot positioning so as to play nicer with all
+    sorts of other network subsytems. (closes: #55295, #64688, #69584)
+  * Stop ipmasq on package removal. (closes: #69020)
+  * Disable kernel level forwarding before flushing ruleset. (closes:
+    #68838, #70611)
+
+ -- Brian Bassett <brian@admiral.bbassett.net>  Sun, 28 Jan 2001 12:06:57 -0800
+
+ipmasq (3.4.4) frozen unstable; urgency=low
+
+  * Fixed internal-ppp-peer bug. (closes: #58448)
+  * Added sample Z99windows-smb-broadcast.rul designed to silence Windows
+    SMB broadcasts from filling up syslog. (closes: #56334)
+  * Added sample Z91kerneldynaddr.rul designed to let the kernel know about
+    dynamic addresses (from the IP-Masquerade HOWTO)
+  * Added rule Z92timeouts.def to clean up TCP/UDP timeouts. (from the
+    IP-Masquerade HOWTO)
+  * Moved I50external and O50external to I90 and O90, respectively.  This
+    closes a loophole in which a spoofed packet could be accepted before
+    it is denied. (closes: #54973)
+  * Closing bugs fixed in documentation - closes: #35218, #35597
+  * Closing unreproducable bugs - closes: #32044
+
+ -- Brian Bassett <brianb@debian.org>  Sat, 19 Feb 2000 16:26:10 -0800
+
+ipmasq (3.4.3) unstable; urgency=medium
+
+  * Back out of patch to nmofif and I30internal.def. (closes: #54616,
+    #54630, reopens: #35218)
+
+ -- Brian Bassett <brianb@debian.org>  Mon, 10 Jan 2000 14:57:07 -0800
+
+ipmasq (3.4.2) unstable; urgency=low
+
+  * Now allow the external interface to recieve and send via the
+    broadcast address (closes: #54395)
+  * Fixed interface-aliases-onto-multiple-subnets-in-2.0 bug
+    (Patch courtesy of Piotr Roszatycki <dexter@debian.org>) (closes:
+    #35218)
+
+ -- Brian Bassett <brianb@debian.org>  Sat,  8 Jan 2000 15:09:15 -0800
+
+ipmasq (3.4.1) unstable; urgency=low
+
+  * Moved informative prompt about conffiles from postinst to preinst
+    (closes: #48482)
+  * Removed Suggests for 'ipportfw,' as 'ipportfw' has been removed
+    from the distribution (closes: #49112)
+  * Fixed default-if so that it will not report duplicates (closes:
+    #47171)
+  * Added I15lospoof.def to squash packets which have a source of
+    127.0.0.0/8 trying to come in over non-loopback interfaces
+    (closes: #47172)
+
+ -- Brian Bassett <brianb@debian.org>  Sat,  6 Nov 1999 16:16:59 -0800
+
+ipmasq (3.4.0) unstable; urgency=low
+
+  * Updated to Standards-Version 3.0.1, FHS.
+  * ipmasq and crew now live in /usr/sbin (as opposed to /sbin).  They
+    depend on cut and sort, which live in /usr/bin.
+    + As a result, ipmasq has been moved until later in the boot sequence
+      (i.e. after we know /usr (which could be NFS-mounted) is there).
+      It now starts at 46 instead of at 41.
+  * Added documentation. (closes: #40289)
+    + Properly documents how to deal with odball networks (closes:
+      #38213, #37433), diald (closes: #35862, #43970), and pcmcia
+      (closes: #37636).
+  * Fixed typo in O30internal.def (closes: #42121)
+  * Internal point-to-point interfaces under 2.2 kernels now handled
+    correctly.  Thanks go to Eric Stern <egstern@enteract.com> for the
+    patch (closes: #41319)
+  * --display is now the composition of --verbose and --no-act
+    (closes: #40504)
+    + As a side effect, the short option for --version is now -V.  Not a
+      problem, as the short options are not canonical.
+  * Added ZZZdenyandlog.def to log all denied packets to syslog.
+    (closes: #40286)
+  * Added ability to use rules files from directories other than
+    /etc/ipmasq/rules by using the --rules switch.  Greatly simplifies
+    testing and maintenance.
+    + As a side effect, we can now implement `/etc/init.d/ipmasq stop`
+      rather easily.  It removes all firewall rules, leaving the machine
+      open.  Customize with rules files in the /etc/ipmasq/ipmasq-down
+      directory.  (closes: #40290)
+  * Change the wording of the header of the rules files to discourage
+    editing instead of forbidding it.  Also bring the rules under dpkg
+    conffile control.  (closes: #37406, #38218)
+  * Closing bugs against 3.2.5 (slink version):
+    + closes: #41351 (Fixed in 3.3.0)
+    + closes: #41392 (Fixed in 3.3.0)
+    + closes: #41643 (Fixed in 3.3.0)
+    + closes: #41828 (Fixed in 3.3.0)
+    + closes: #43037 (Fixed in 3.3.0)
+
+ -- Brian Bassett <brianb@debian.org>  Sun, 10 Oct 1999 00:01:03 -0700
+
+ipmasq (3.3.5) unstable; urgency=low
+
+  * Fix A00path.rul (should be .def) (#39411)
+  * Added patch for --debug (shows which files are being executed)
+  * Replaced all ocurrences of `foo` with $(foo), which is nestable
+    (not to mention, a bit more understandable)
+
+ -- Brian Bassett <brianb@debian.org>  Sat, 12 Jun 1999 22:02:42 -0700
+
+ipmasq (3.3.4) unstable; urgency=low
+
+  * Add locales fix needed if default locale is not the "C" locale.
+    (Reported by Erich Schubert <erich.schubert@gmx.de>)
+  * Fix a pair of stupid errors. 
+
+ -- Brian Bassett <brianb@debian.org>  Sat, 12 Jun 1999 14:26:10 -0700
+
+ipmasq (3.3.3) unstable; urgency=low
+
+  * O30internal.def now allows multicasting to internal hosts
+    (#37482)
+  * --display flag now works for non-root users (#37484, part of
+    #37481)
+  * Added A00path.def to clean the path to a minimal "/bin:/sbin".
+    Documented the change in ipmasq-rule.5 (the other part of #37481)
+  * Removed vestigal traces of bashisms (#35991)
+  * Closing bugs against 3.2.5 (slink version):
+    + #36276 (Fixed in 3.3.0)
+    + #36277 (Fixed in 3.3.0)
+    + #36278 (Fixed in 3.3.2)
+
+ -- Brian Bassett <brianb@debian.org>  Tue, 18 May 1999 18:15:05 -0700
+
+ipmasq (3.3.2) unstable; urgency=low
+
+  * Fixed interface-aliases-onto-multiple-subnets bug (#33339)
+  * Rewrote description to reduce confusion (#33288)
+  * Added Suggests: line for midentd
+  * Removed Suggests: line for redir | socket | rinetd
+
+ -- Brian Bassett <brianb@debian.org>  Sun, 14 Feb 1999 13:21:06 -0800
+
+ipmasq (3.3.1) unstable; urgency=medium
+
+  * Fixed A00sanitycheck.def & 2.2 bug (#33239)
+  * Added another example dhcpd rule (#33236)
+
+ -- Brian Bassett <brianb@debian.org>  Thu, 11 Feb 1999 18:38:36 -0800
+
+ipmasq (3.3.0) unstable; urgency=low
+
+  * Fixed `function' bashism in A04functions.def (reported by Shaleh
+    <shaleh@livenet.net>)
+  * Fixed bashism in debian/postinst (#32360)
+  * Fixed sed magic to remove semicolons (#31285)
+  * Added --help and --version flags to ipmasq
+  * Implement loading of modules with the ipmasq-kmod script and
+    /etc/ipmasq/modules file (#26754)
+  * Cleaned up double-grep in default-if (Thanks to Piotr Roszatycki
+    <dexter@fnet.pl>)
+  * Added A00sanitycheck.def to check if the needed kernel features
+    have been enabled (Thanks to Karsten Mueller <karsten@mail.nadir.org>)
+  * Added patch to A01interfaces.def to display interface info if
+    $SHOWRULES is yes (Thanks again, Karsten)
+  * Fixed A01interfaces.def to eliminate duplicates (Karsten, yet again)
+
+ -- Brian Bassett <brianb@debian.org>  Wed, 10 Feb 1999 17:53:07 -0800
+
+ipmasq (3.2.5) frozen unstable; urgency=low
+
+  * Fix ip/netmask caching of aliased interfaces (#29250)
+
+ -- Brian Bassett <brianb@debian.org>  Sat, 14 Nov 1998 19:51:30 -0800
+
+ipmasq (3.2.4) frozen unstable; urgency=low
+
+  * Fixed typo in F30internal.def (#28179) 
+
+ -- Brian Bassett <brianb@debian.org>  Wed, 21 Oct 1998 19:14:14 -0700
+
+ipmasq (3.2.3) unstable; urgency=low
+
+  * Added forward-between-multiple-internal-interfaces patch
+    (F30internal.def) from Gus <gus@getsystems.com>
+  * Renamed ip-{up,down} scripts from ipmasq to 00ipmasq, as other
+    scripts in those directories may depend on access to the PPP
+    connection.  (#27977)
+
+ -- Brian Bassett <brianb@debian.org>  Thu, 15 Oct 1998 13:48:23 -0700
+
+ipmasq (3.2.2) unstable; urgency=low
+
+  * Updated ipmasq-rule.5 to mention $SHOWRULES
+  * Fixed quoting typo (#27222)
+
+ -- Brian Bassett <brianb@debian.org>  Tue, 29 Sep 1998 15:09:24 -0700
+
+ipmasq (3.2.1) unstable; urgency=low
+
+  * Fixed and/or typo (#27207)
+
+ -- Brian Bassett <brianb@debian.org>  Tue, 29 Sep 1998 09:46:14 -0700
+
+ipmasq (3.2.0) unstable; urgency=low
+
+  * Added -d display rules flag
+  * Applied speedup patch from Manoj Srivastava <srivasta@datasync.com>
+  * Fixed ipofif (#27011)
+  * Added TODO
+
+ -- Brian Bassett <brianb@debian.org>  Thu, 24 Sep 1998 09:02:03 -0700
+
+ipmasq (3.1.3) unstable; urgency=low
+
+  * Fixed execute twice if .rul present bug (#26230)
+  * Fixed lintian error init.d-script-does-not-implement-required-option
+
+ -- Brian Bassett <brianb@debian.org>  Sat, 29 Aug 1998 16:21:09 -0700
+
+ipmasq (3.1.2) unstable; urgency=low
+
+  * Fixed postrm handling of /etc/ipmasq/ppp
+  * Fixed default-if when no default exists (#25738)
+  * Fixed missing switch in M70masq.def (#25631)
+
+ -- Brian Bassett <brianb@debian.org>  Mon, 24 Aug 1998 19:36:35 -0700
+
+ipmasq (3.1.1) unstable; urgency=low
+
+  * Fized a small typo in ipmasq which prevented sourcing of .rul files
+    when no .def existed
+  * Added ipalias patch from Piotr Roszatycki <dexter@fnet.pl>. 
+    Hopefully fixes #25315
+
+ -- Brian Bassett <brianb@debian.org>  Sat,  8 Aug 1998 21:33:28 -0700
+
+ipmasq (3.1.0) unstable; urgency=low
+
+  * Split ipmasq into overridable rules files.  Thanks go to Manoj
+    Srivasta <srivasta@datasync.com> for the idea and the patch.
+  * Added user control to ppp ip-up/down scripts (#25071)
+  * Postinst no longer automatically starts ipmasq (#25008)
+  * Fixed small race condition with flushing tables (#25470)
+  * Fixed typo in ipmasq which causes ipchains error (#25479)
+  * Actually install ipmasq.8
+
+ -- Brian Bassett <brianb@debian.org>  Sat,  8 Aug 1998 16:03:41 -0700
+
+ipmasq (3.0) unstable; urgency=low
+
+  * Gave ipmasq some smarts about interfaces and default routes
+  * Added man page for ipmasq(8) (#18042)
+  * Now robust enough to handle PPP dialup connections (#18545)
+  * Fixed typos in package description (#18916)
+  * Added support for 2.1.101 and higher kernels (patch from Paul Miller
+    <paul@3dillusion.com>) (#23526)
+  * Changed maintainer address
+
+ -- Brian Bassett <brianb@debian.org>  Sun, 19 Jul 1998 19:56:14 -0700
+
+ipmasq (2.5) unstable; urgency=low
+
+  * Fixed "test -x" problem (#18011)
+  * Made sure debian/copyright installed (#17279)
+
+ -- Brian Bassett <brian@butterfly.ml.org>  Mon,  9 Feb 1998 21:37:43 -0800
+
+ipmasq (2.4) unstable; urgency=low
+
+  * Moved from section admin to section net (Don't ask me why I decided
+      admin was the place for this package... ;-)
+  * Added undocumented.7 manpages for ipmasq and ipmasqconf
+  * Fixed debian/rules to properly call dh_installdocs
+
+ -- Brian Bassett <brian@butterfly.ml.org>  Mon,  9 Feb 1998 14:56:00 -0800
+
+ipmasq (2.3) unstable; urgency=low
+
+  * Added "Configure now?" to postinst. (#15941)
+  * Switched from debmake to debhelper.
+
+ -- Brian Bassett <brian@butterfly.ml.org>  Sat, 13 Dec 1997 15:27:02 -0800
+
+ipmasq (2.2) unstable; urgency=low
+
+  * Fixed bash/spaces bug. (#15756)
+  * Fixed postinst re-prompting for configuration.
+
+ -- Brian Bassett <brian@butterfly.ml.org>  Thu, 11 Dec 1997 14:56:03 -0800
+
+ipmasq (2.1) unstable; urgency=low
+
+  * Added Suggests line for redir | socket | rinetd
+
+ -- Brian Bassett <brian@butterfly.ml.org>  Mon,  8 Dec 1997 21:24:01 -0800
+
+ipmasq (2.0) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Brian Bassett <brian@butterfly.ml.org>  Tue, 18 Nov 1997 22:51:25 -0800
+

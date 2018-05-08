@@ -1,0 +1,33 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Disallow and log packets trying to come in over external interfaces
+#: from hosts claiming to be internal
+if [ -n "$INTERNAL" -a -n "$EXTERNAL_IN" ]; then
+    for j in $EXTERNAL_IN; do
+	for i in $INTERNAL; do
+	    ipnm_cache $i
+	    if [ "$NMOFIF" != "0.0.0.0" ]; then
+		case $MASQMETHOD in
+		ipfwadm)
+		    $IPFWADM -I -a deny -W ${j%%:*} -S $IPOFIF/$NMOFIF -o
+		    ;;
+		ipchains)
+		    $IPCHAINS -A input -j DENY -i ${j%%:*} -s $IPOFIF/$NMOFIF -l
+		    ;;
+		netfilter)
+		    $IPTABLES -A INPUT -j LOG -i ${j%%:*} -s $IPOFIF/$NMOFIF
+		    $IPTABLES -A INPUT -j DROP -i ${j%%:*} -s $IPOFIF/$NMOFIF
+                    # Concerned about Bug #203940 and latest stable securutyn fix use different way.
+		    #$IPTABLES -t nat -A PREROUTING -j LOG -i ${j%%:*} -s $IPOFIF/$NMOFIF
+		    #$IPTABLES -t nat -A PREROUTING -j DROP -i ${j%%:*} -s $IPOFIF/$NMOFIF
+		    ;;
+		esac
+	    fi
+	done
+    done
+fi
+

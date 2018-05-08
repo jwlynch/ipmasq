@@ -1,0 +1,24 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Allow dumb broadcast packets to leave on external interfaces
+if [ -n "$EXTERNAL_OUT" ]; then
+    for i in $EXTERNAL_OUT; do
+	ipnm_cache $i
+        case $MASQMETHOD in
+        ipfwadm)
+	    $IPFWADM -O -a accept -W ${i%%:*} -D 255.255.255.255/32
+            ;;
+        ipchains)
+	    $IPCHAINS -A output -j ACCEPT -i ${i%%:*} -d 255.255.255.255/32
+            ;;
+	netfilter)
+	    $IPTABLES -A OUTPUT -j ACCEPT -o ${i%%:*} -d 255.255.255.255/32
+	    ;;
+        esac
+    done
+fi
+

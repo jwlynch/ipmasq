@@ -1,0 +1,6 @@
+This file controls the automatic startup of IP Masquerading facilities.
+If it is present, the rules will be reloaded whenever pppd brings the
+link up or down
+
+For more information, see the ipmasq(8) manpage and the documentation
+installed on your system in /usr/share/doc/ipmasq.

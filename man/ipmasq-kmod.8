@@ -1,0 +1,51 @@
+.TH IPMASQ-KMOD 8 
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+ipmasq-kmod \- set up IP Masquerading kernel modules
+.SH SYNOPSIS
+.B ipmasq-kmod [-dbnhv]
+.SH "DESCRIPTION"
+This manual page very briefly documents the
+.B ipmasq-kmod
+command.
+.PP
+.B ipmasq-kmod
+sets up IP Masquerading kernel modules using the
+.B insmod
+command.
+.PP
+.B ipmasq-kmod
+understands the following options:
+.TP
+.BR -v ", " --verbose
+Display the 
+.BR insmod (8)
+commands that will be run.
+.TP
+.BR -n ", " --no-act
+Do not change any firewall rules.
+.TP
+.BR -d ", " --display
+Shorthand for
+.I --verbose --no-act
+\.
+.TP
+.BR -V ", " --version
+Print the version of the ipmasq package to the standard output and exit.
+.TP
+.BR -h ", " --help
+Print a help message to the standard output and exit.
+.SH FILES
+.I /etc/ipmasq/modules
+.RS
+Configuration file detailing what modules to load.  See
+.BR ipmasq-modules (5).
+.SH BUGS
+.TP
+Does not understand kernel 2.4 (netfilter) module naming.
+.SH "SEE ALSO"
+.BR ipmasq "(8), " insmod "(8), " ipmasq-modules (5)
+.SH AUTHOR
+This manual page was written by Brian Bassett <brianb@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).

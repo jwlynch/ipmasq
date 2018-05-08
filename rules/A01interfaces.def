@@ -1,0 +1,42 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+# find interface names
+EXTERNAL_OUT=$(default-if | sort -u)
+EXTERNAL_IN="$EXTERNAL_OUT"
+INTERNAL=$(enumerate-if | sort -u | grep -vx lo)
+if [ -n "$EXTERNAL_OUT$EXTERNAL_IN" ]; then
+    for i in $EXTERNAL_OUT $EXTERNAL_IN; do
+        INTERNAL=$(echo $INTERNAL | sed -e "s/\(  *\|^\)$i\(  *\|$\)/\1/")
+    done
+fi
+
+# remove interfaces that don't have networks attached to them
+if [ -n "$INTERNAL" ]; then
+    for i in $INTERNAL; do
+	nm=$(nmofif $i)
+	if [ -z "${nm}" ]; then
+	    INTERNAL=$(echo $INTERNAL | sed -e "s/\(  *\|^\)$i\(  *\|$\)/\1/")
+	fi
+    done
+fi
+if [ -n "$EXTERNAL_OUT" ]; then
+    for i in $EXTERNAL_OUT; do
+	nm=$(nmofif $i)
+	if [ -z "${nm}" ]; then
+	    EXTERNAL_OUT=$(echo $EXTERNAL_OUT | sed -e "s/\(  *\|^\)$i\(  *\|$\)/\1/")
+	fi
+    done
+fi
+if [ -n "$EXTERNAL_IN" ]; then
+    for i in $EXTERNAL_IN; do
+	nm=$(nmofif $i)
+	if [ -z "${nm}" ]; then
+	    EXTERNAL_IN=$(echo $EXTERNAL_IN | sed -e "s/\(  *\|^\)$i\(  *\|$\)/\1/")
+	fi
+    done
+fi
+

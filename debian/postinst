@@ -1,0 +1,72 @@
+#!/bin/bash -e
+	
+. /usr/share/debconf/confmodule
+
+db_get ipmasq/start-location
+case "$RET" in
+    "Disable")
+	update-rc.d -f ipmasq remove >/dev/null 2>&1
+	update-rc.d -f ipmasq-kmod remove >/dev/null 2>&1
+	;;
+    "After network interfaces are brought up")
+	update-rc.d -f ipmasq remove >/dev/null 2>&1
+	update-rc.d -f ipmasq-kmod remove >/dev/null 2>&1
+	update-rc.d ipmasq start 41 S . >/dev/null 2>&1
+	update-rc.d ipmasq-kmod start 42 S . >/dev/null 2>&1
+	;;
+    "After network filesystems are mounted")
+	update-rc.d -f ipmasq remove >/dev/null 2>&1
+	update-rc.d -f ipmasq-kmod remove >/dev/null 2>&1
+	update-rc.d ipmasq start 46 S . >/dev/null 2>&1
+	update-rc.d ipmasq-kmod start 47 S . >/dev/null 2>&1
+	;;
+    "After network services have been started")
+	update-rc.d -f ipmasq remove >/dev/null 2>&1
+	update-rc.d -f ipmasq-kmod remove >/dev/null 2>&1
+	update-rc.d ipmasq defaults 21 >/dev/null 2>&1
+	update-rc.d ipmasq-kmod defaults 22 >/dev/null 2>&1
+	;;
+    *)
+	: # Do nothing
+	;;
+esac
+
+if [ "$1" = "configure" ]; then
+    db_get ipmasq/old-rc.boot-file
+    if [ -e /etc/rc.boot/ipmasq -a "$RET" = "true" ]; then
+	rm -f /etc/rc.boot/ipmasq
+    fi
+    
+    db_get ipmasq/old-ipmasq.conf
+    if [ -e /etc/ipmasq.conf -a "$RET" = "true" ]; then
+	rm -f /etc/ipmasq.conf
+    fi
+
+    db_get ipmasq/move-ipmasq.rules
+    if [ -e /etc/ipmasq.rules -a "$RET" = "true" ]; then
+	mv /etc/ipmasq.rules /etc/ipmasq/rules/Z99ipmasqrules.rul
+    fi
+
+    db_get ipmasq/ppp-recompute
+    if [ "$RET" = "true" ]; then
+        if [ -e /usr/share/ipmasq/etc-ipmasq-ppp-message ]; then
+            cp /usr/share/ipmasq/etc-ipmasq-ppp-message /etc/ipmasq/ppp
+	else
+	    touch /etc/ipmasq/ppp
+        fi
+    else
+        if [ -e /etc/ipmasq/ppp ]; then
+            rm /etc/ipmasq/ppp
+        fi
+    fi
+
+    db_get ipmasq/start
+    if [ "$RET" = "true" ]; then
+        # Make followings run always without error
+        /usr/sbin/ipmasq-kmod || echo "Error while executing ipmasq-kmod ($?)." >&2
+	/usr/sbin/ipmasq || echo "Error while executing ipmasq ($?)." >&2
+    fi
+fi
+
+#DEBHELPER#
+

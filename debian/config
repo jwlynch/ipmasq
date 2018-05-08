@@ -1,0 +1,110 @@
+#!/bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+if [ "$1" = "configure" ]; then
+	# Rules .def now under dpkg conffiles control
+	case $2 in
+	3.[123]*)	# Version 3.1.0 - 3.3.5
+		db_input medium ipmasq/dpkg-conffiles || true
+		;;
+	esac
+
+	# Get cute about things and put the file deletions/moves in one block
+	db_beginblock || true
+	
+	# Deal with /etc/rc.boot/ipmasq
+	if [ -e /etc/rc.boot/ipmasq ]; then
+		db_input medium ipmasq/old-rc.boot-file || true
+	fi
+
+	# Deal with /etc/ipmasq.conf
+	if [ -e /etc/ipmasq.conf ]; then
+		db_input medium ipmasq/old-ipmasq.conf || true
+	fi
+	
+	# Deal with /etc/ipmasq.rules
+	if [ -e /etc/ipmasq.rules ]; then
+		db_input medium ipmasq/move-ipmasq.rules || true
+	fi
+
+	# External rules moved
+	case $2 in
+	3.[123]*|3.4.[0123])	# Version 3.1.0 - 3.4.3
+		db_input medium ipmasq/external-rules-moved || true
+		;;
+	esac
+
+	# End being cute
+	db_endblock || true
+
+	# Ask what we've buffered up
+	db_go || true
+fi
+
+# Deal with PPP
+db_get ipmasq/ppp-recompute
+OLD=$RET
+db_input medium ipmasq/ppp-recompute || true
+db_go || true
+db_get ipmasq/ppp-recompute
+if [ "$RET" = "true" ]; then
+	if [ -e /usr/share/ipmasq/etc-ipmasq-ppp-message ]; then
+		cp /usr/share/ipmasq/etc-ipmasq-ppp-message /etc/ipmasq/ppp
+	fi
+	if [ "$RET" != "$OLD" ]; then
+		db_fset ipmasq/ppp-turn-off seen false || true
+	fi
+	db_input medium ipmasq/ppp-turn-off || true
+else
+	if [ -e /etc/ipmasq/ppp ]; then
+		rm /etc/ipmasq/ppp
+	fi
+	if [ "$RET" != "$OLD" ]; then
+		db_fset ipmasq/ppp-turn-on seen false || true
+	fi
+	db_input medium ipmasq/ppp-turn-on || true
+fi
+db_go || true
+if [ "$1" = "reconfigure" ]; then
+	db_get ipmasq/ppp-recompute
+	if [ "$RET" = "true" ]; then
+		if [ -e /usr/share/ipmasq/etc-ipmasq-ppp-message ]; then
+			cp /usr/share/ipmasq/etc-ipmasq-ppp-message /etc/ipmasq/ppp
+		else
+			touch /etc/ipmasq/ppp
+		fi
+	else
+		if [ -e /etc/ipmasq/ppp ]; then
+			rm -f /etc/ipmasq/ppp
+		fi
+	fi
+fi
+
+# Deal with starting.
+db_input medium ipmasq/start-location || true
+if [ "$1" = "configure" ]; then
+	db_input medium ipmasq/start || true
+fi
+db_go || true
+if [ "$1" = "reconfigure" ]; then
+	db_get ipmasq/start-location
+	case "$RET" in
+	"Disable")
+		update-rc.d -f ipmasq remove >/dev/null 2>&1
+		update-rc.d -f ipmasq-kmod remove >/dev/null 2>&1
+		;;
+	"After network interfaces are brought up")
+		update-rc.d ipmasq start 41 S . >/dev/null 2>&1
+		update-rc.d ipmasq-kmod start 42 S . >/dev/null 2>&1
+		;;
+	"After network filesystems are mounted")
+		update-rc.d ipmasq start 46 S . >/dev/null 2>&1
+		update-rc.d ipmasq-kmod start 47 S . >/dev/null 2>&1
+		;;
+	"After network services have been started")
+		update-rc.d ipmasq defaults 21 >/dev/null 2>&1
+		update-rc.d ipmasq-kmod defaults 22 >/dev/null 2>&1
+		;;
+	esac
+fi

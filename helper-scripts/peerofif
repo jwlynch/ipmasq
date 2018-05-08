@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# peerofif	Determines the IP address of the peer of the point-to-point
+#		interface given on the commandline
+#
+# v1.0	15 July 1999
+# v1.1	10 February 2001
+# v2.0  2004-01-04T16:29:38 CET Osamu Aoki
+#####
+
+export LC_ALL="C"
+export LANG="C"
+export LANGUAGE="C"
+
+( /sbin/ifconfig $1 | sed -n -e'/P-t-P:/s/^.*P-t-P:\([0-9.]*\).*$/\1/p' ) 2>/dev/null
+true

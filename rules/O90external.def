@@ -1,0 +1,33 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Allow packets for external networks leave over external interfaces
+if [ -n "$EXTERNAL_OUT" ]; then
+    for i in $EXTERNAL_OUT; do
+	ipnm_cache $i
+        case $MASQMETHOD in
+        ipfwadm)
+            $IPFWADM -O -a accept -W ${i%%:*} -S $IPOFIF/32
+	    if [ -n "$BCOFIF" ]; then
+		$IPFWADM -O -a accept -W ${i%%:*} -S $BCOFIF/32
+	    fi
+            ;;
+        ipchains)
+            $IPCHAINS -A output -j ACCEPT -i ${i%%:*} -s $IPOFIF/32
+	    if [ -n "$BCOFIF" ]; then
+		$IPCHAINS -A output -j ACCEPT -i ${i%%:*} -s $BCOFIF/32
+	    fi
+	    ;;
+	netfilter)
+	    $IPTABLES -A OUTPUT -j ACCEPT -o ${i%%:*} -s $IPOFIF/32
+	    if [ -n "$BCOFIF" ]; then
+		$IPTABLES -A OUTPUT -j ACCEPT -o ${i%%:*} -s $BCOFIF/32
+	    fi
+	    ;;
+        esac
+    done
+fi
+

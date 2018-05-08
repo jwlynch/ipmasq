@@ -1,0 +1,19 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+# No point checking this when you are bringing down ipmasq
+# Disabling this ipmasq 3.5.25 by Osamu Aoki
+
+## check to see if kernel has masquerade built in
+#if [ ! -e /proc/net/ip_forward -a ! -e /proc/sys/net/ipv4/ip_forward ]; then
+#    echo "IP Forwarding has not been enabled in the kernel."
+#    exit 1
+#fi
+#
+#if [ ! -e /proc/net/ip_masquerade -a ! -e /proc/net/ip_tables_names ]; then
+#    echo "IP Masquerade has not been enabled in the kernel."
+#    exit 1
+#fi

@@ -1,0 +1,88 @@
+.TH IPMASQ 8 
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+ipmasq \- set up IP Masquerading
+.SH SYNOPSIS
+.B ipmasq [-dbngrhv]
+.SH "DESCRIPTION"
+This manual page very briefly documents the
+.B ipmasq
+command.
+.PP
+.B ipmasq
+sets up IP Masquerading firewall rules using the
+.BR ipfwadm ,
+.B ipchains
+or 
+.B iptables
+command, depending on the kernel version.
+.PP
+.B ipmasq
+understands the following options:
+.TP
+.BR -v ", " --verbose
+Display the 
+.BR ipfwadm (8)
+or
+.BR ipchains (8)
+commands that will be run.
+.TP
+.BR -n ", " --no-act
+Do not change any firewall rules.
+.TP
+.BR -d ", " --display
+Shorthand for
+.I --verbose --no-act
+\.
+.TP
+.BR -g ", " --debug
+Display the names of the rules files as they are being executed.
+.TP
+.B -r 
+.IR rules-dir ,
+.B --rules
+.I rules-dir
+Use the rules files found in
+.I rules-dir
+instead of
+.I /etc/ipmasq/rules
+\.
+.TP
+.BR -V ", " --version
+Print the version of the ipmasq package to the standard output and exit.
+.TP
+.BR -h ", " --help
+Print a help message to the standard output and exit.
+.SH CAVEATS
+.B ipmasq
+"takes over" the firewall rules table.  To add firewall rules such that 
+they will survive a refresh of the rules table, add them a file in the 
+.I /etc/ipmasq/rules
+directory with a
+.I .rul
+extension.  See
+.BR ipmasq-rule (5).
+.SH FILES
+.I /etc/ipmasq/rules/*.{rul,def}
+.RS
+Rules files.  See
+.BR ipmasq-rule (5).
+.RE
+.I /etc/ipmasq/ppp
+.RS
+Empty file, which if present, gives ipmasq permission to automatically refresh the
+rules table automatically when pppd brings a link up or down.
+.RE
+.I /etc/ipmasq.rules
+.RS
+Deprecated.  Additional rules to apply after the default rules.  Deprecated.  Use a
+.I \.rul
+file in
+.I /etc/ipmasq/rules
+instead.
+.SH "SEE ALSO"
+.BR ipmasq-kmod "(8), " ipfwadm "(8), " ipchains "(8), " ipofif "(8), " nmofif "(8), " peerofif "(8), " default-if "(8), " enumerate-if "(8), " ipmasq-rule (5)
+.SH AUTHOR
+This manual page was written by Brian Bassett <brianb@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).

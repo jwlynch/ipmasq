@@ -1,0 +1,46 @@
+.TH IPMASQ-MODULES 5
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+ipmasq-modules \- configuration file used to set up IP Masquerading kernel modules
+.SH SYNOPSIS
+.B /etc/ipmasq/modules
+.SH "DESCRIPTION"
+This manual page documents the configuration files used by the
+.B ipmasq-kmod
+command.  
+.PP
+The
+.B /etc/ipmasq/modules
+configuration file utilizes a simple syntax.  Shell-script style comments are
+used (from a
+.B #
+to the end of line).  Remaining lines are directives to load a particular
+kernel module, one directive per line.  These directives are the names of the
+kernel modules to load
+(minus the
+.I ip_masq_
+prefix).  Any additional parameters are considered to be parameters to the
+kernel module.  The special directive
+.B all
+indicates that all 
+.I ip_masq_*
+modules in the
+.B /lib/modules/`uname -r`/ipv4
+directory will be loaded.  The
+.B all
+directive ends processing of the
+.B /etc/ipmasq/modules
+configuration file.
+.SH FILES
+.I /etc/ipmasq/modules
+.RS
+The configuration file whose format is defined here.
+.SH BUGS
+.TP
+Does not understand kernel 2.4 (netfilter) module naming.
+.SH "SEE ALSO"
+.BR ipmasq-kmod (8)
+.SH AUTHOR
+This manual page was written by Brian Bassett <brianb@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).

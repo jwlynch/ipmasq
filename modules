@@ -1,0 +1,14 @@
+#
+# /etc/ipmasq/modules	Configuration file for ipmasq-kmod(8)
+#			v3.3.0 9 Feb 1999
+#			Brian Bassett
+########
+
+##
+# Sample to load the ip_masq_ftp modules to run on ports 21 and 2100
+#ftp		ports=21,2100
+
+##
+# Sample to load all the ip_masq_ modules
+#all
+

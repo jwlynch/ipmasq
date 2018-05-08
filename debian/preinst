@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+. /usr/share/debconf/confmodule
+
+if [ "$1" = "upgrade" ]; then
+    case $2 in
+    3.[123]*|3.4.[0123])	#version 3.1.0 - 3.4.3
+	db_get ipmasq/external-rules-moved
+	if [ "$RET" = "true" ]; then
+    	    RULES=/etc/ipmasq/rules
+	    mv $RULES/I50external.def $RULES/I90external.def 2>/dev/null || true
+	    mv $RULES/I50external.rul $RULES/I90external.rul 2>/dev/null || true
+	    mv $RULES/O50external.def $RULES/O90external.def 2>/dev/null || true
+	    mv $RULES/O50external.rul $RULES/O90external.rul 2>/dev/null || true
+    	fi
+    esac
+fi
+
+#DEBHELPER#
+

@@ -1,0 +1,233 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ipmasq 3.5.27\n"
+"Report-Msgid-Bugs-To: ipmasq@packages.debian.org\n"
+"POT-Creation-Date: 2008-05-02 07:47+0200\n"
+"PO-Revision-Date: 2004-01-12 10:53+0100\n"
+"Last-Translator: Philippe Batailler <philippe.batailler@free.fr>\n"
+"Language-Team: French <debian-l10n-french@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid "/etc/ipmasq/rules now conffiles"
+msgstr "Les /etc/ipmasq/rules sont maintenant des fichiers de configuration"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid ""
+"The rules files located in /etc/ipmasq/rules have been placed under package "
+"manager control as of version 3.4.0.  It is safe (and recommended) to allow "
+"dpkg to replace your version."
+msgstr ""
+"Les fichiers de règles situés dans /etc/ipmasq/rules ont été placés sous le "
+"contrôle du gestionnaire de paquet, depuis la version 3.4.0. Laisser dpkg "
+"changer votre version est sans danger et même recommandé."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "External interface rules moved; move them?"
+msgstr "Faut-il déplacer les fichiers de règles pour l'interface externe ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The rules files I50external.def and O50external.def have changed position to "
+"I90external.def and O90external.def, respectively.  May I move these rules "
+"files (and their corresponding .rul files) to their new positions?"
+msgstr ""
+"Les fichiers de règles I50external.def et O50external.def sont devenus, "
+"respectivement, I90external.def et O90external.def. Les noms de ces fichiers "
+"et des fichiers .rul correspondants peuvent-ils être modifiés ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Delete outdated boot script?"
+msgstr "Faut-il supprimer l'ancien script de démarrage ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"Should I delete the old, no longer used /etc/rc.boot/ipmasq boot script?"
+msgstr ""
+"Faut-il supprimer l'ancien script de démarrage /etc/rc.boot/ipmasq qui n'est "
+"plus utilisé ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid "Delete outdated configuration file?"
+msgstr "Faut-il supprimer l'ancien fichier de configuration ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"The configuration file /etc/ipmasq.conf is no longer used and the "
+"information it contains is determined automatically by ipmasq.  Should I "
+"delete the file /etc/ipmasq.conf?"
+msgstr ""
+"Le fichier de configuration /etc/ipmasq.conf n'est plus utilisé et les "
+"informations qu'il contient sont déterminées automatiquement par ipmasq. "
+"Faut-il supprimer le fichier /etc/ipmasq.conf ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Move custom rules file to new location?"
+msgstr "Faut-il déplacer votre fichier de règles à sa nouvelle place ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid ""
+"Should I move your /etc/ipmasq.rules into the /etc/ipmasq/rules directory?"
+msgstr ""
+"Faut-il déplacer le fichier /etc/ipmasq.rules dans le répertoire /etc/ipmasq/"
+"rules ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid "Should PPP connections recompute the firewall?"
+msgstr "Les connexions PPP doivent-elles recalculer les règles du pare-feu ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid ""
+"Do you wish to have ipmasq recompute the firewall rules when pppd brings up "
+"or takes down a link?"
+msgstr ""
+"Souhaitez-vous qu'ipmasq recalcule les règles du pare-feu quand le démon "
+"pppd établit ou interrompt une liaison ?"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid "PPP recomputation controlled by file /etc/ipmasq/ppp"
+msgstr "Le fichier /etc/ipmasq/ppp contrôle la façon de recalculer"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid ""
+"Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is "
+"present."
+msgstr ""
+"Ipmasq recalcule les règles du pare-feu si le fichier /etc/ipmasq/ppp existe."
+
+#. Type: note
+#. Description
+#: ../templates:7001
+msgid ""
+"Create the file /etc/ipmasq/ppp to have ipmasq recompute the firewall when "
+"pppd brings up or takes down a link."
+msgstr ""
+"Le fichier /etc/ipmasq/ppp doit être créé pour qu'ipmasq recalcule les "
+"règles du pare-feu quand le démon pppd établit ou interrompt une liaison."
+
+#. Type: note
+#. Description
+#: ../templates:8001
+msgid ""
+"Delete the file /etc/ipmasq/ppp to stop having ipmasq recompute the firewall "
+"when pppd brings up or takes down a link."
+msgstr ""
+"Il faut supprimer le fichier /etc/ipmasq/ppp pour qu'ipmasq cesse de "
+"recalculer les règles du pare-feu quand le démon pppd établit ou interrompt "
+"une liaison."
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Start ipmasq?"
+msgstr "Faut-il démarrer ipmasq ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Should I start IP Masquerading?"
+msgstr "Faut-il lancer le masquage des adresses IP ?"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Disable"
+msgstr "Désactivation"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network interfaces are brought up"
+msgstr "Une fois les interfaces réseau établies"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network filesystems are mounted"
+msgstr "Une fois les systèmes de fichiers réseau montés"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network services have been started"
+msgstr "Une fois les services réseau démarrés"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Keep current set up"
+msgstr "Garder la configuration actuelle"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid "When should ipmasq be started?"
+msgstr "Quand faut-il lancer ipmasq ?"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid ""
+"Ipmasq can be told initially to compute the firewall rules at one of a "
+"number of points in the boot process.  This question asks at which point "
+"ipmasq should start."
+msgstr ""
+"Il est possible de demander à ipmasq de faire le premier calcul des règles "
+"du pare-feu à plusieurs moments du processus de démarrage. À quel moment ce "
+"calcul doit-il prendre place ?"
+
+#~ msgid ""
+#~ "Disable, After network interfaces are brought up, After network "
+#~ "filesystems are mounted, After network services have been started, Keep "
+#~ "current set up"
+#~ msgstr ""
+#~ "Désactivation, Une fois les interfaces réseau établies, Une fois les "
+#~ "systèmes de fichiers réseau montés, Une fois les services réseau "
+#~ "démarrés, Garder la configuration actuelle"

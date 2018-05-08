@@ -1,0 +1,55 @@
+.TH IPOFIF 8
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+ipofif, nmofif, peerofif, bcofif, default-if, enumerate-if \- helper scripts for ipmasq(8)
+.SH SYNOPSIS
+.B ipofif
+.I interface
+
+.B nmofif
+.I interface
+
+.B peerofif
+.I interface
+
+.B bcofif
+.I interface
+
+.B default-if
+
+.B enumerate-if
+.SH "DESCRIPTION"
+This manual page very briefly documents the helper scripts used by the
+.B ipmasq
+command.
+.PP
+.B ipofif
+prints to the standard output the IP address of the given interface.
+.PP
+.B nmofif
+prints to the standard output the netmask of the given interface.
+.PP
+.B peerofif
+prints to the standard output the IP address of the point-to-point peer of
+the given interface, or nothing if the given interface is not a
+point-to-point interface.
+.PP
+.B bcofif
+prints to the standard output the broadcast address of the given interface,
+or nothing if
+.B ifconfig
+does not display a broadcast address (this is the case for point-to-point
+interfaces).
+.PP
+.B default-if
+prints to the standard output the interfaces which the default route utilize,
+or nothing if there is no default route.
+.PP
+.B enumerate-if
+prints to the standard output all of the currently up interfaces.
+.SH "SEE ALSO"
+.BR ipmasq (8)
+.SH AUTHOR
+This manual page was written by Brian Bassett <brianb@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).

@@ -1,0 +1,57 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+# export command paths
+export IPFWADM=/sbin/ipfwadm
+export IPCHAINS=/sbin/ipchains
+export IPTABLES=/sbin/iptables
+
+# determine rule method
+if [ -e /proc/net/ip_tables_names ]; then
+    if [ ! -x $IPTABLES ]; then
+        echo "Please install iptables package"
+        exit 1
+    fi
+    MASQMETHOD=netfilter
+elif [ -e /proc/net/ip_fwchains ]; then
+    if [ ! -x $IPCHAINS ]; then
+        echo "Please install ipchains package"
+        exit 1
+    fi
+    MASQMETHOD=ipchains
+else
+    if [ ! -x $IPFWADM ]; then
+        echo "Please install ipfwadm package"
+        exit 1
+    fi
+    MASQMETHOD=ipfwadm
+fi
+export MASQMETHOD
+
+# modify command paths to deal with --display, --no-act, and --verbose
+if [ "$SHOWRULES" = "yes" ]; then
+    if [ "$NOACT" = "yes" ]; then
+        IPFWADM="echo $IPFWADM"
+        IPCHAINS="echo $IPCHAINS"
+	IPTABLES="echo $IPTABLES"
+    else
+        showanddo () {
+            echo "$@"
+            "$@"
+        }
+
+        IPFWADM="showanddo $IPFWADM"
+        IPCHAINS="showanddo $IPCHAINS"
+	IPTABLES="showanddo $IPTABLES"
+    fi
+else
+    if [ "$NOACT" = "yes" ]; then
+        IPFWADM=":"
+        IPCHAINS=":"
+	IPTABLES=":"
+    fi
+fi
+

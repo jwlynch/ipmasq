@@ -1,0 +1,38 @@
+C50dnat.rul
+
+This script is a simplified example of DNAT of submitted by 
+milon@wq.cz with below mail.  Please file bug to Debian package 
+for any issues or suggestions to this one.  (despite what he said.)
+
+Osamu made this script to be POSIX script while Daniel tested and 
+refined the script.  You can trust Daniel better than me :-)
+
+But this may still have problems since even Daniel has problem getting
+this to work.  
+
+Please edit this script for your need.
+
+Osamu Aoki <osamu@debian.org> 2004-11-19T20:58:50 CET
+
+----------------------------
+Quote from milon@wq.cz mail:
+----------------------------
+C50dnat_many.rul
+ GPL 2.0
+ Milan Kocian <milon@wq.cz>
+
+Sample rules for enabling DNAT with iptables using packet's marking.
+This example is limited for fixed external IP but can handle multiple
+DNAT using BASH array.
+
+Due to the routing changes in iptables section with security concern, 
+only set DNAT is not enough.
+
+I am not shell scripter, so excuse my shell constructions :-))
+
+All changes address to ipmasq maintainer, please milon@wq.cz
+
+Since ipmasq should be POSIX shell script, there may be some issues
+using BASH if you set /bin/sh to non-BASH.
+
+(These scrits are sourced by ipmasq)

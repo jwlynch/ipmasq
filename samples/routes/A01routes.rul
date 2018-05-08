@@ -1,0 +1,52 @@
+# find routes that are not accounted for through internal & external interfaces
+find_network() {
+    DST=$1
+    MSK=$2
+    NWORK=""
+    for index in 1 2 3 4 ; do
+	dst=${DST%%.*}
+	msk=${MSK%%.*}
+	tmp="$(($dst & $msk))"
+	if [ -n "$NWORK" ] ; then
+	    NWORK="$NWORK.$tmp";
+        else
+            NWORK="$tmp";
+	fi
+	DST=${DST#*.}
+	MSK=${MSK#*.}
+    done
+    return
+}
+
+routelines=`route -n | grep '^[1-9]'`
+
+# Following BASHism (C like for-loop) is removed but untested.
+#for (( i=1 ; $i <= `echo "$routelines" | wc -l` ; i++ )) do
+#    route=`echo "$routelines" | head -n $i | tail -n 1`
+IFS='
+'
+for route in `echo "$routelines"` ; do
+    unset IFS
+    IFACE=$( echo $route | { read X X X X X X X Y ; echo $Y ; } )
+            if echo $INTERNAL | grep -q $IFACE; then
+                # $IFACE is in $INTERNAL
+                NDEST=$( echo $route | { read Y X X X X X X X ; echo $Y ; } )
+                NMASK=$( echo $route | { read X X Y X X X X X ; echo $Y ; } )
+		eval "IPOFIF=\$IPOFIF_$IFACE"
+		eval "NMOFIF=\$NMOFIF_$IFACE"
+   		eval "PEEROFIF=\$PEEROFIF_$IFACE"
+		if [ -n "$PEEROFIF" ] ; then
+	            	find_network $PEEROFIF $NMOFIF
+		elif [ -n "$IPOFIF" ] ; then
+	    	        find_network $IPOFIF $NMOFIF
+                fi
+		NWOFIF=$NWORK
+		find_network $NDEST $NMASK
+		if [ "$NWOFIF" != "$NWORK" ] ; then
+	            ROUTES="$ROUTES $IFACE:$NWORK/$NMASK"
+                fi
+            fi
+done
+if [ "$SHOWRULES" = "yes" ]; then
+    echo "#: Routes found: $ROUTES"
+fi

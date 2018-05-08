@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Script example for rerunning ipmasq when dhclient changes an 
+# ip address on the system.
+# Contributed by Simon Higgs (simonhiggs@ntlworld.com)
+
+# In case of dhcp3-client, you can use this too.
+#
+# If you want to use any dhcp client through ifupdown infrastructure,
+# you need to set up /etc/network/interfaces or similar and you do not 
+# need to install this script.
+#
+# Osamu Aoki 2004
+
+if [ -n "$old_ip_address" ]; then
+    if ! [ "$old_ip_address" = "$new_ip_address" ]; then
+        # /etc/init.d/ipmasq may not be installed or 
+        # user may have changed it.
+        #
+	/usr/sbin/ipmasq
+    fi
+fi
+

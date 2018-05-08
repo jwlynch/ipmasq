@@ -1,0 +1,16 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+# define used functions
+ipnm_cache () {
+    privatei=$(echo $1 | sed -e 's/\:/_/g' -e 's/\./__/g')
+    eval "IPOFIF=\$IPOFIF_$privatei"
+    eval "NMOFIF=\$NMOFIF_$privatei"
+    eval "PEEROFIF=\$PEEROFIF_$privatei"
+    eval "BCOFIF=\$BCOFIF_$privatei"
+    return
+}
+

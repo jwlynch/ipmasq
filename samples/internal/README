@@ -1,0 +1,15 @@
+Routing policy between internal interfaces can be one of the 3 options:
+
+Option  Rule
+   1)   simple forwarding (DEFAULT)
+   2)   no forwarding     (Remove F30internal.rul.  Add F30bridge.rul from examples.)
+   3)   masquerading      (Remove F30internal.rul.  Add F30masq.rul and F30bridge.rul from examples.)
+
+Files are added to and removed from /etc/ipmasq/rules .
+
+F30bridge.rul is needed if you have bridge set up (br?).
+
+These examples should work but not tested on my box.
+
+Osamu Aoki
+Sun 01 Aug 2004 03:50:50 PM CEST

@@ -1,0 +1,231 @@
+# translation of ipmasq_4.0.7_ru.po to Russian
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans#
+#    Developers do not need to manually edit POT or PO files.
+# Yuri Kozlov <kozlov.y@gmail.com>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ipmasq_4.0.7\n"
+"Report-Msgid-Bugs-To: ipmasq@packages.debian.org\n"
+"POT-Creation-Date: 2008-05-02 07:47+0200\n"
+"PO-Revision-Date: 2006-04-09 15:18+0300\n"
+"Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
+"Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid "/etc/ipmasq/rules now conffiles"
+msgstr "Файлы правил теперь содержатся в /etc/ipmasq/rules"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid ""
+"The rules files located in /etc/ipmasq/rules have been placed under package "
+"manager control as of version 3.4.0.  It is safe (and recommended) to allow "
+"dpkg to replace your version."
+msgstr ""
+"Начиная с версии 3.4.0 файлы правил располагаются в каталоге /etc/ipmasq/"
+"rules и управляются менеджером пакета. Теперь безопасно (и рекомендуется) "
+"позволять dpkg заменять вашу версию."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "External interface rules moved; move them?"
+msgstr "Правила для внешнего интерфейса перемещены; переместить их?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The rules files I50external.def and O50external.def have changed position to "
+"I90external.def and O90external.def, respectively.  May I move these rules "
+"files (and their corresponding .rul files) to their new positions?"
+msgstr ""
+"Файлов правил I50external.def и O50external.def перемещены в файлы "
+"I90external.def и O90external.def, соответственно. Перенести эти файлы "
+"правил (и соответствующие им файлы .rul) на новое место?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Delete outdated boot script?"
+msgstr "Удалить устаревший сценарий загрузки?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"Should I delete the old, no longer used /etc/rc.boot/ipmasq boot script?"
+msgstr ""
+"Удалить старый, более не используемый сценарий загрузки /etc/rc.boot/ipmasq?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid "Delete outdated configuration file?"
+msgstr "Удалить устаревший файл настроек?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"The configuration file /etc/ipmasq.conf is no longer used and the "
+"information it contains is determined automatically by ipmasq.  Should I "
+"delete the file /etc/ipmasq.conf?"
+msgstr ""
+"Файл настроек /etc/ipmasq.conf больше не используется и информация, которую "
+"он содержит автоматически определяется ipmasq. Удалить файл /etc/ipmasq.conf?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Move custom rules file to new location?"
+msgstr "Перенести файл пользовательских правил на новое место?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid ""
+"Should I move your /etc/ipmasq.rules into the /etc/ipmasq/rules directory?"
+msgstr "Перенести ваш файл /etc/ipmasq.rules в каталог /etc/ipmasq/rules?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid "Should PPP connections recompute the firewall?"
+msgstr ""
+"Нужно ли изменять настройку межсетевого экрана при установке PPP соединений?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid ""
+"Do you wish to have ipmasq recompute the firewall rules when pppd brings up "
+"or takes down a link?"
+msgstr ""
+"Должен ли ipmasq вычислять заново правила межсетевого экрана, когда pppd "
+"устанавливает или разрывает соединение?"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid "PPP recomputation controlled by file /etc/ipmasq/ppp"
+msgstr "Вычисление заново правил PPP настраивается файлом /etc/ipmasq/ppp"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid ""
+"Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is "
+"present."
+msgstr ""
+"Если файл /etc/ipmasq/ppp существует, ipmasq будет вычислять правила "
+"межсетевого экрана повторно."
+
+#. Type: note
+#. Description
+#: ../templates:7001
+msgid ""
+"Create the file /etc/ipmasq/ppp to have ipmasq recompute the firewall when "
+"pppd brings up or takes down a link."
+msgstr ""
+"Создайте файл /etc/ipmasq/ppp для того, чтобы ipmasq вычислял заново правила "
+"межсетевого экрана, если pppd устанавливает или разрывает соединение."
+
+#. Type: note
+#. Description
+#: ../templates:8001
+msgid ""
+"Delete the file /etc/ipmasq/ppp to stop having ipmasq recompute the firewall "
+"when pppd brings up or takes down a link."
+msgstr ""
+"Удалите файл /etc/ipmasq/ppp, чтобы ipmasq не вычислял заново правила "
+"межсетевого экрана, когда pppd устанавливает или разрывает соединение."
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Start ipmasq?"
+msgstr "Запустить ipmasq?"
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Should I start IP Masquerading?"
+msgstr "Запустить IP Masquerading?"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Disable"
+msgstr "Не запускать"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network interfaces are brought up"
+msgstr "После поднятия сетевых интерфейсов"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network filesystems are mounted"
+msgstr "После монтирования сетевых файловых систем"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network services have been started"
+msgstr "После запуска сетевых сервисов"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Keep current set up"
+msgstr "Сохранить текущую настройку"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid "When should ipmasq be started?"
+msgstr "Когда должен запускаться ipmasq?"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid ""
+"Ipmasq can be told initially to compute the firewall rules at one of a "
+"number of points in the boot process.  This question asks at which point "
+"ipmasq should start."
+msgstr ""
+"Можно указать в какой момент процесса загрузки системы нужно "
+"инициализировать правила межсетевого экрана. Это вопрос о том, в какой точке "
+"должен запускаться ipmasq."
+
+#~ msgid ""
+#~ "Disable, After network interfaces are brought up, After network "
+#~ "filesystems are mounted, After network services have been started, Keep "
+#~ "current set up"
+#~ msgstr ""
+#~ "Не запускать, После поднятия сетевых интерфейсов, После монтирования "
+#~ "сетевых файловых систем, После запуска сетевых сервисов, Сохранить "
+#~ "текущую настройку"

@@ -1,0 +1,45 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Flush all and set default policy of deny on forward, and accept input
+#: and output.
+case $MASQMETHOD in
+ipfwadm)
+    $IPFWADM -I -p accept
+    $IPFWADM -O -p accept
+    $IPFWADM -F -p deny
+    $IPFWADM -I -f
+    $IPFWADM -O -f
+    $IPFWADM -F -f
+    ;;
+ipchains)
+    $IPCHAINS -P input ACCEPT
+    $IPCHAINS -P output ACCEPT
+    $IPCHAINS -P forward DENY
+    $IPCHAINS -F input
+    $IPCHAINS -F output
+    $IPCHAINS -F forward
+    ;;
+netfilter)
+    $IPTABLES -P INPUT ACCEPT
+    $IPTABLES -P OUTPUT ACCEPT
+    $IPTABLES -P FORWARD DROP
+    $IPTABLES -F INPUT
+    $IPTABLES -F OUTPUT
+    $IPTABLES -F FORWARD
+    $IPTABLES -t mangle -P PREROUTING ACCEPT
+    $IPTABLES -t mangle -P OUTPUT ACCEPT
+    $IPTABLES -t mangle -F PREROUTING
+    $IPTABLES -t mangle -F OUTPUT
+    $IPTABLES -t nat -P PREROUTING ACCEPT
+    $IPTABLES -t nat -P POSTROUTING ACCEPT
+    $IPTABLES -t nat -P OUTPUT ACCEPT
+    $IPTABLES -t nat -F PREROUTING
+    $IPTABLES -t nat -F POSTROUTING
+    $IPTABLES -t nat -F OUTPUT
+    ;;
+esac
+

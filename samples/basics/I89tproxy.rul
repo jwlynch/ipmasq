@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# redirect http requests to non-local hosts to the transparent proxy
+# GPL 2.0 or later (C) 2004 Johannes Martin <jmartin@notamusica.com>
+
+# 1. do not redirect http requests to localhost
+case $MASQMETHOD in
+ipfwadm)
+    $IPFWADM -I -a accept -P tcp -D localhost 80
+    ;;
+ipchains)
+    $IPCHAINS -A input -p tcp -d localhost 80 -j ACCEPT
+    ;;
+netfilter)
+    $IPTABLES -A INPUT -p tcp -d localhost --dport 80 -j ACCEPT  
+    ;;
+esac
+
+# 2. do not redirect http request to hosts on the local network
+for i in $INTERNAL; do
+    ipnm_cache $i
+    case $MASQMETHOD in
+    ipfwadm)
+        $IPFWADM -I -a accept -P tcp -D $IPOFIF/$NMOFIF 80
+	;;
+    ipchains)
+	$IPCHAINS -A input -p tcp -d $IPOFIF/$NMOFIF 80 -j ACCEPT
+	;;
+    netfilter)
+	$IPTABLES -A INPUT -p tcp -d $IPOFIF/$NMOFIF --dport 80 -j ACCEPT
+	;;
+    esac
+done
+
+# 3. redirect non-local http requests to transparent proxy
+for i in $INTERNAL; do
+    ipnm_cache $i
+    case $MASQMETHOD in
+    ipfwadm)
+    	$IPFWADM -I -a accept -P tcp -S $IPOFIF/$NMOFIF -D 0.0.0.0/0 80 -r 8081
+	;;
+    ipchains)
+	$IPCHAINS -A input -p tcp -s $IPOFIF/$NMOFIF -d 0.0.0.0/0 80 -j REDIRECT 8081
+	;;
+    netfilter)
+    	$IPTABLES -t nat -A PREROUTING -p tcp -s $IPOFIF/$NMOFIF -d 0.0.0.0/0 --dport 80 -j REDIRECT --to-ports 8081
+	;;
+    esac
+done
+
+# 4. block port 8081 on external interfaces
+for i in $EXTERNAL_IN; do
+    ipnm_cache $i
+    case $MASQMETHOD in
+    ipfwadm)
+        $IPFWADM -I -a deny -P tcp -D $IPOFIF/$NMOFIF 8081
+	;;
+    ipchains)
+	$IPCHAINS -A input -j DENY -p tcp -d $IPOFIF/$NMOFIF 8081 
+	;;
+    netfilter)
+	$IPTABLES -A INPUT -j DROP -p tcp -d $IPOFIF/$NMOFIF --dport 8081
+	;;
+    esac
+done
+

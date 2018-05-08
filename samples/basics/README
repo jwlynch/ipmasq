@@ -1,0 +1,16 @@
+The scriptis in this directory are older basic examples for customization.
+They are mean to be used one by one to address some issues with ipmasq.
+
+  A05clampmss.rul
+  A10dhcpd.rul
+  I89tproxy.rul
+  Z91kerneldynaddr.rul
+  Z93looseudp.rul
+  Z99dhcpd.rul
+  Z99windows-smb-broadcast.rul
+  ZZZ|Lipac.rul
+
+These are not really generic solution for everyone.  Use with caution
+and only after code and routing table checks.
+
+Osamu Aoki <osamu@debian.org>  Sat, 31 Jul 2004 10:49:47 +0200

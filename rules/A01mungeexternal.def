@@ -1,0 +1,15 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+# Properly munge external interface (outbound/inbound distinction) if
+# the old EXTERNAL was specified.
+if [ -n "$EXTERNAL" ]; then
+    EXTERNAL_OUT="$EXTERNAL"
+    EXTERNAL_IN="$EXTERNAL"
+else
+    EXTERNAL=$(echo $EXTERNAL_OUT $EXTERNAL_IN | xargs -n1 | sort -u)
+fi
+

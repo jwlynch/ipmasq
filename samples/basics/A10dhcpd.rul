@@ -1,0 +1,31 @@
+# From Kalle Olavi Niemitalo <tosi@ees2.oulu.fi>:
+
+# Here's my /etc/ipmasq/rules/A10dhcpd.rul file in case you'd
+# like to add it in the examples directory.  It's somewhat
+# stricter than /usr/doc/ipmasq/examples/Z99dhcpd.rul.  Also, I'm
+# using priority A10 rather than Z99 because some of my other
+# rules would reject the packets.
+#
+# This works with dhcp_1.0.2-0.1 and the Windows 95 DHCP client.
+# The ipfwadm invocations are untested.
+
+if [ -n "$INTERNAL" ]; then
+    for i in $INTERNAL; do
+        ipnm_cache $i
+        case $MASQMETHOD in
+        ipfwadm)
+            $IPFWADM -I -i accept -S 0.0.0.0/32 68 -D 255.255.255.255/32 67 -W ${i%%:*} -P udp
+            $IPFWADM -O -i accept -S $IPOFIF/32 67 -D 255.255.255.255/32 68 -W ${i%%:*} -P udp
+            ;;
+        ipchains)
+            $IPCHAINS -A input -j ACCEPT -s 0.0.0.0/32 68 -d 255.255.255.255/32 67 -i ${i%%:*} -p udp
+            $IPCHAINS -A output -j ACCEPT -s $IPOFIF/32 67 -d 255.255.255.255/32 68 -i ${i%%:*} -p udp
+            ;;
+	netfilter)
+	    $IPTABLES -A INPUT -j ACCEPT -s 0.0.0.0/32 68 -d 255.255.255.255/32 67 -i ${i%%:*} -p udp
+	    $IPTABLES -A OUTPUT -j ACCEPT -s $IPOFIF/32 67 -d 255.255.255.255/32 68 -o ${i%%:*} -p udp
+	    ;;
+        esac
+    done
+fi
+

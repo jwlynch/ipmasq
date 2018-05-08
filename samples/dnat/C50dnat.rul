@@ -1,0 +1,54 @@
+#!/bin/sh
+# GPL 2.0
+# Simplified rule to redirect external interface port  to internal 
+# server.  (Based on Milan Kocin <milon@wq.cz>)
+#
+# Assumes single entry for $EXTERNAL 
+# (even if there are many, treat them the same way)
+# GPL 2.0, (c) 2004-07 Osamu Aoki <osamu@debian.org>,
+# (c) 2004-11 Daniel Burrows <dburrows@debian.org>
+#
+# Your settings go at the bottom (see examples)
+#
+# initial mark number
+DNAT_MARK=1
+
+# make DNATs rules and mark packets
+#
+# Usage: forward EXTPORT PROTOCOL INTIP INTPORT
+forward() {
+  DNAT_PROT=$1
+  DNAT_EXTPORT=$2
+  DNAT_INTIP=$3
+  DNAT_INTPORT=$4
+
+  for j in $EXTERNAL; do
+      case $MASQMETHOD in
+	  netfilter)
+	      $IPTABLES -t mangle -A PREROUTING -i $j -p $DNAT_PROT  --dport $DNAT_EXTPORT -j MARK --set-mark $DNAT_MARK
+              $IPTABLES -t nat    -A PREROUTING -i $j -p $DNAT_PROT  --dport $DNAT_EXTPORT -j DNAT --to-destination $DNAT_INTIP:$DNAT_INTPORT
+	      ;;
+      esac
+  done
+
+  # allow marked packets to go through firewall
+  case $MASQMETHOD in
+      netfilter)
+          $IPTABLES -I INPUT -m mark --mark $DNAT_MARK -j ACCEPT
+	  $IPTABLES -I FORWARD -m mark --mark $DNAT_MARK -j ACCEPT
+      ;;
+  esac
+
+  # Advance to the next mark.
+  DNAT_MARK=$(( $DNAT_MARK + 1 ))
+}
+
+
+# Forward port 1234 to an internal web server.
+#forward tcp 1234 192.168.1.64 80
+
+# Forward port 1235 to the same server's ssh daemon.
+#forward tcp 1235 192.168.1.64 80
+
+# Forward udp port 90 directly to an internal server.  Who knows why.
+#forward udp 90 192.168.1.1 90

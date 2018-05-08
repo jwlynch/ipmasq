@@ -1,0 +1,25 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Accept multicast packets (adresses 224.0.0.0) from internal interfaces
+if [ -n "$INTERNAL" ]; then
+    for i in $INTERNAL; do
+        ipnm_cache $i
+        case $MASQMETHOD in
+        ipfwadm)
+            $IPFWADM -I -a accept -W ${i%%:*} -D 224.0.0.0/4 -P 1  #udp
+            $IPFWADM -I -a accept -W ${i%%:*} -D 224.0.0.0/4 -P 17 #icmp
+            ;;
+        ipchains)
+            $IPCHAINS -A input -j ACCEPT -i ${i%%:*} -d 224.0.0.0/4 -p ! 6 #tcp
+            ;;
+	netfilter)
+	    $IPTABLES -A INPUT -j ACCEPT -i ${i%%:*} -d 224.0.0.0/4 -p ! 6 #tcp
+	    ;;
+        esac
+    done
+fi
+

@@ -1,0 +1,27 @@
+#:
+#: **********************************************************
+#: ***                 INTERFACES FOUND                   ***
+#: **********************************************************
+#:
+if [ "$SHOWRULES" = "yes" ]; then
+
+    if [ -n "$INTERNAL" ]; then
+	echo "#: Internal interfaces found:"
+	for i in $INTERNAL; do
+	    ipnm_cache $i
+
+	    echo "#:   $i	$IPOFIF/$NMOFIF"
+
+	done
+    fi
+
+    if [ -n "$EXTERNAL" ]; then
+	echo "#: External interfaces found:"
+	for i in $EXTERNAL; do
+	    ipnm_cache $i
+
+	    echo "#:   $i	$IPOFIF/$NMOFIF"
+
+	done
+    fi
+fi

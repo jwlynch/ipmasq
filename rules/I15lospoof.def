@@ -1,0 +1,25 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Deny and log all packets trying to come in from a 127.0.0.0/8 address
+#: over a non-'lo' interface
+case $MASQMETHOD in
+ipfwadm)
+    if [ -n "$INTERNAL" -o -n "$EXTERNAL" ]; then
+        for i in $INTERNAL $EXTERNAL; do
+	    $IPFWADM -I -a deny -W $i -S 127.0.0.1/255.0.0.0 -o
+	done
+    fi
+    ;;
+ipchains)
+    $IPCHAINS -A input -j DENY -i ! lo -s 127.0.0.1/255.0.0.0 -l
+    ;;
+netfilter)
+    $IPTABLES -A INPUT -j LOG -i ! lo -s 127.0.0.1/255.0.0.0
+    $IPTABLES -A INPUT -j DROP -i ! lo -s 127.0.0.1/255.0.0.0
+    ;;
+esac
+

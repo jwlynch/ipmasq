@@ -1,0 +1,44 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Forward packets among internal networks
+if [ -n "$INTERNAL" ]; then
+    for j in $INTERNAL; do
+        ipnm_cache $j
+        DESTIP=$IPOFIF
+        DESTNM=$NMOFIF
+        for i in $INTERNAL; do
+            if [ "$i" != "$j" ] || echo $i | grep -q "^br"; then
+                # if $i and $j are differnt or start with "br"
+                ipnm_cache $i
+                case $MASQMETHOD in
+                ipfwadm)
+                    if [ -n "$PEEROFIF" ]; then
+                        $IPFWADM -F -a accept -S $PEEROFIF/$NMOFIF -D $DESTIP/$DESTNM
+                        $IPFWADM -F -a accept -D $PEEROFIF/$NMOFIF
+                    fi
+                    $IPFWADM -F -a accept -S $IPOFIF/$NMOFIF -D $DESTIP/$DESTNM
+                    ;;
+                ipchains)
+                    if [ -n "$PEEROFIF" ]; then
+                        $IPCHAINS --no-warnings -A forward -j ACCEPT -s $PEEROFIF/$NMOFIF -d $DESTIP/$DESTNM
+                        $IPCHAINS --no-warnings -A forward -j ACCEPT -d $PEEROFIF/$NMOFIF
+                    fi
+                    $IPCHAINS --no-warnings -A forward -j ACCEPT -s $IPOFIF/$NMOFIF -d $DESTIP/$DESTNM
+                    ;;
+		netfilter)
+                    if [ -n "$PEEROFIF" ]; then
+		    	$IPTABLES -A FORWARD -j ACCEPT -s $PEEROFIF/$NMOFIF -d $DESTIP/$DESTNM
+			$IPTABLES -A FORWARD -j ACCEPT -d $PEEROFIF/$NMOFIF
+		    fi
+		    $IPTABLES -A FORWARD -j ACCEPT -s $IPOFIF/$NMOFIF -d $DESTIP/$DESTNM
+		    ;;
+                esac
+            fi
+        done
+    done
+fi
+

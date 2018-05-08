@@ -1,0 +1,11 @@
+# turn on the kernel's notion of dynamic addressing
+if [ -e /proc/sys/net/ipv4/ip_dynaddr ]; then
+    if [ "$NOACT" != "yes" ]; then
+        echo "1" > /proc/sys/net/ipv4/ip_dynaddr
+    fi
+
+    if [ "$SHOWRULES" = "yes" ]; then
+        echo "echo \"1\" > /proc/sys/net/ipv4/ip_dynaddr"
+    fi
+fi
+

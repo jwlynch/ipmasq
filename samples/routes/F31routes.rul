@@ -1,0 +1,53 @@
+#: Forward packets among internal and routed networks
+if [ -n "$ROUTES" ]; then
+    for route in $ROUTES; do
+	j=${route%%:*}
+	dest=${route##*:}
+	for r in $ROUTES; do 
+	    i=${r%%:*}
+	    src=${r##*:}
+            if [ "$i" != "$j" ]; then
+                case $MASQMETHOD in
+                ipfwadm)
+                    $IPFWADM -F -a accept -S $src -D $dest
+                    ;;
+                ipchains)
+                    $IPCHAINS --no-warnings -A forward -j ACCEPT -s $src -d $dest
+                    ;;
+		netfilter)
+		    $IPTABLES -A FORWARD -j ACCEPT -s $src -d $dest
+		    ;;
+                esac
+            fi
+	done		
+        for i in $INTERNAL; do
+            if [ "$i" != "$j" ]; then
+                ipnm_cache $i
+                case $MASQMETHOD in
+                ipfwadm)
+                    if [ -n "$PEEROFIF" ]; then
+                        $IPFWADM -F -a accept -S $PEEROFIF/$NMOFIF -D $dest
+                    fi
+                    $IPFWADM -F -a accept -S $IPOFIF/$NMOFIF -D $dest
+                    $IPFWADM -F -a accept -S $dest -D $IPOFIF/$NMOFIF
+                    ;;
+                ipchains)
+                    if [ -n "$PEEROFIF" ]; then
+                        $IPCHAINS --no-warnings -A forward -j ACCEPT -s $PEEROFIF/$NMOFIF -d $dest
+                    fi
+                    $IPCHAINS --no-warnings -A forward -j ACCEPT -s $IPOFIF/$NMOFIF -d $dest
+                    $IPCHAINS --no-warnings -A forward -j ACCEPT -s $dest -d $IPOFIF/$NMOFIF
+                    ;;
+		netfilter)
+                    if [ -n "$PEEROFIF" ]; then
+		    	$IPTABLES -A FORWARD -j ACCEPT -s $PEEROFIF/$NMOFIF -d $dest
+		    fi
+		    $IPTABLES -A FORWARD -j ACCEPT -s $IPOFIF/$NMOFIF -d $dest
+		    $IPTABLES -A FORWARD -j ACCEPT -s $dest -d $IPOFIF/$NMOFIF
+		    ;;
+                esac
+            fi
+        done
+    done
+fi
+

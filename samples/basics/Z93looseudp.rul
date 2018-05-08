@@ -1,0 +1,11 @@
+# turn on the Loose UDP patch (useful for some games)
+if [ -e /proc/sys/net/ipv4/ip_masq_udp_dloose ]; then
+    if [ "$NOACT" != "yes" ]; then
+        echo "1" > /proc/sys/net/ipv4/ip_masq_udp_dloose
+    fi
+
+    if [ "$SHOWRULES" = "yes" ]; then
+        echo "echo \"1\" > /proc/sys/net/ipv4/ip_masq_udp_dloose"
+    fi
+fi
+

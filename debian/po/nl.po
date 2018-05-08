@@ -1,0 +1,225 @@
+# Debian ipmasq po-debconf translation,
+# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ipmasq package.
+# Vincent Zweije <zweije@xs4all.nl>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ipmasq 4.0.8-1\n"
+"Report-Msgid-Bugs-To: ipmasq@packages.debian.org\n"
+"POT-Creation-Date: 2008-05-02 07:47+0200\n"
+"PO-Revision-Date: 2006-10-05 21:11+0000\n"
+"Last-Translator: Vincent Zweije <zweije@xs4all.nl>\n"
+"Language-Team: Debian-Dutch <debian-l10n-dutch@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid "/etc/ipmasq/rules now conffiles"
+msgstr "/etc/ipmasq/rules zijn nu conf-bestanden"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid ""
+"The rules files located in /etc/ipmasq/rules have been placed under package "
+"manager control as of version 3.4.0.  It is safe (and recommended) to allow "
+"dpkg to replace your version."
+msgstr ""
+"Vanaf versie 3.4.0 zijn de bestanden met regels in /etc/ipmasq/rules onder "
+"controle van pakketbeheer geplaatst. Het is veilig (en aanbevolen) om dpkg "
+"toe te staan uw versie te vervangen."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "External interface rules moved; move them?"
+msgstr "Uitwendige interface-regels verplaatst; ze verplaatsen?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The rules files I50external.def and O50external.def have changed position to "
+"I90external.def and O90external.def, respectively.  May I move these rules "
+"files (and their corresponding .rul files) to their new positions?"
+msgstr ""
+"De posities van de regel-bestanden I50external.def en O50external.def zijn "
+"gewijzigd naar respectievelijk I90external.def en O90external.def. Mag ik "
+"deze bestanden (en hun corresponderende rul-bestanden) naar hun nieuwe plek "
+"verplaatsen?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Delete outdated boot script?"
+msgstr "Verouderd opstart-script verwijderen?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"Should I delete the old, no longer used /etc/rc.boot/ipmasq boot script?"
+msgstr ""
+"Moet het verouderde en niet langer gebruikte /etc/rc.boot/ipmasq opstart-"
+"script verwijderd worden?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid "Delete outdated configuration file?"
+msgstr "Verouderd configuratiebestand verwijderen?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"The configuration file /etc/ipmasq.conf is no longer used and the "
+"information it contains is determined automatically by ipmasq.  Should I "
+"delete the file /etc/ipmasq.conf?"
+msgstr ""
+"Het configuratiebestand /etc/ipmasq.conf wordt niet meer gebruikt en de "
+"informatie die erin staat wordt nu automatisch door ipmasq vastgesteld. Moet "
+"het bestand /etc/ipmasq.conf verwijderd worden?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Move custom rules file to new location?"
+msgstr "Aangepaste regels naar nieuwe locatie?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid ""
+"Should I move your /etc/ipmasq.rules into the /etc/ipmasq/rules directory?"
+msgstr ""
+"Moeten uw /etc/ipmasq regels verplaatst worden naar de map /etc/ipmasq/rules?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid "Should PPP connections recompute the firewall?"
+msgstr "Moeten PPP-verbindingen de firewall opnieuw herberekenen?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid ""
+"Do you wish to have ipmasq recompute the firewall rules when pppd brings up "
+"or takes down a link?"
+msgstr ""
+"Wilt u dat ipmasq de firewall-regels opnieuw herberekent elke keer dat pppd "
+"een verbinding maakt of verbreekt?"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid "PPP recomputation controlled by file /etc/ipmasq/ppp"
+msgstr "PPP-herberekening onder controle van het bestand /etc/ipmasq/ppp"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid ""
+"Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is "
+"present."
+msgstr ""
+"Ipmasq zal de firewall-regels herberekenen als het bestand /etc/ipmasq/ppp "
+"aanwezig is."
+
+#. Type: note
+#. Description
+#: ../templates:7001
+msgid ""
+"Create the file /etc/ipmasq/ppp to have ipmasq recompute the firewall when "
+"pppd brings up or takes down a link."
+msgstr ""
+"Maak het bestand /etc/ipmasq/ppp aan om ipmasq de firewall opnieuw te laten "
+"herberekenen wanneer pppd een verbinding maakt of verbreekt."
+
+#. Type: note
+#. Description
+#: ../templates:8001
+msgid ""
+"Delete the file /etc/ipmasq/ppp to stop having ipmasq recompute the firewall "
+"when pppd brings up or takes down a link."
+msgstr ""
+"Verwijder het bestand /etc/ipmasq/ppp om ipmasq niet meer de firewall te "
+"laten herberekenen elke keer dat pppd een verbinding maakt of verbreekt."
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Start ipmasq?"
+msgstr "Ipmasq starten?"
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Should I start IP Masquerading?"
+msgstr "Moet ipmasq gestart worden?"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Disable"
+msgstr "Uitschakelen"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network interfaces are brought up"
+msgstr "Nadat de netwerk-interfaces zijn aangemaakt"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network filesystems are mounted"
+msgstr "Nadat de netwerk-bestandssystemen zijn aangekoppeld"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network services have been started"
+msgstr "Nadat de netwerkdiensten zijn gestart"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Keep current set up"
+msgstr "Behoud de huidige instellingen"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid "When should ipmasq be started?"
+msgstr "Wanneer moet ipmasq gestart worden?"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid ""
+"Ipmasq can be told initially to compute the firewall rules at one of a "
+"number of points in the boot process.  This question asks at which point "
+"ipmasq should start."
+msgstr ""
+"Ipmasq can op verschillende momenten tijdens het opstartproces zijn firewall-"
+"regels herberekenen. Hier wordt gevraagd wanneer ipmasq gestart zou moeten "
+"worden."
+
+#~ msgid ""
+#~ "Disable, After network interfaces are brought up, After network "
+#~ "filesystems are mounted, After network services have been started, Keep "
+#~ "current set up"
+#~ msgstr ""
+#~ "Uitschakelen, Nadat de netwerk-interfaces zijn aangemaakt, Nadat de "
+#~ "netwerk-bestandssystemen zijn aangekoppeld, Nadat de netwerkdiensten zijn "
+#~ "gestart, Behoud de huidige instellingen"

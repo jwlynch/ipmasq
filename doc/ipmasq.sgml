@@ -1,0 +1,598 @@
+<!DOCTYPE debiandoc public "-//DebianDoc//DTD DebianDoc//EN">
+
+<book>
+
+<title>Ipmasq User's Manual</>
+<author>
+ <name>Brian Bassett</>
+ <email>brianb@debian.org</>
+</author>
+<author>
+ <name>Osamu Aoki (update)</>
+ <email>osamu@debian.org</>
+</author>
+
+<copyright>
+ <copyrightsummary>Copyright &copy; 1999-2001 Brian Bassett</>
+ <copyrightsummary>Copyright &copy; 2003 Osamu Aoki (small portion)</>
+ <p>
+  This manual is free software; you may redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version
+  2, or (at your option) any later version.
+ <p>
+  This is distributed in the hope that it will be useful, but
+  <em>without any warranty</>; without even the implied
+  warranty of merchantability or fitness for a particular
+  purpose.  See the GNU General Public License for more
+  details.
+ <p>
+  A copy of the GNU General Public License is available as
+  <file>/usr/share/common-licences/GPL</> in the Debian GNU/Linux
+  distribution or on the World Wide Web at 
+  <url id="http://www.gnu.org/copyleft/gpl.html">. You can also
+  obtain it by writing to the Free Software Foundation, Inc., 59 Temple
+  Place - Suite 330, Boston, MA 02111-1307, USA.
+</copyright>
+
+<toc sect>
+    
+<chapt id="intro">
+ <heading>About <package>ipmasq</></>
+ 
+ <sect>
+  <heading>Purpose</>
+ 
+  <p>
+  <package>ipmasq</> is a system to securely initialize IP Masquerade for
+  use as a forwarding firewall.  IP Masquerade is a feature of the Linux
+  kernel that allows an entire network of computers to be connected to
+  another network (usually the Internet) with only one network address on
+  that other network.  IP Masquerade is often referred to as NAT (Network
+  Address Translation) on other platforms.
+ </sect>
+
+<sect>
+  <heading>History</>
+
+  <p>
+  <package>ipmasq</> started life in the author's dorm room as an instance
+  of the strong ruleset described in the
+  <url id="http://ipmasq.cjb.net/ipmasq-HOWTO-1.78.html"
+  name="ipmasq mini-HOWTO">.  This was christened the 1.x series, as it
+  grew it became more robust.  However, it only supported the 2.0 kernels,
+  as it used <prgn>ipfwadm</>, and hardcoded the author's dorm room network.
+
+  <p>
+  The 2.x series of <package>ipmasq</> saw its generalization via a
+  configuration file and its introduction into the Debian distribution.
+  
+  <p>
+  The 3.0 release of <package>ipmasq</> was the first release suitable for
+  use with <prgn>pppd</>.  It received some much needed intelligence about
+  interfaces and routes, which allowed it to cope with changing network
+  connections.  Also, version 3.0 introduced support for the <prgn>ipchains</>
+  interface which appears in the 2.2 and the later 2.1 series kernels.
+  
+  <p>
+  Later releases of the 3.x series added other features.  Version 3.1.0
+  added the flexible rules framework, while version 3.3.0 added
+  infrastructure for loading of <tt>ip_masq_*</tt> kernel modules.
+  
+  <p>
+  This document first appeared in version 3.4.0 of <package>ipmasq</>.
+
+  <p>
+  The 3.5 series of <package>ipmasq</> added support for
+  <package>debconf</>, Debian's next-generation configuration management
+  system.  It also added support for the netfilter kernel interface
+  found in later 2.3 and 2.4 kernels.  For more information about netfilter,
+  please see <url id="http://netfilter.kernelnotes.org/">.
+
+  <p>
+  After Brian orphaned this Debian package, Osamu Aoki took over the 
+  maintenance of this package.  README.Debian was added by Osamu.  It 
+  contains additional information and expected to be read before this 
+  document.
+  
+ </sect>
+
+ <sect>
+  <heading>Target audience and scope of program</>
+  
+  <p>
+  [This is new section added by Osamu Aoki]
+  <p>
+  Although this script is quite versatile and can be used as the nice
+  skeleton for the creation of the dynamically generating elaborate
+  firewall ruleset by the experienced admin, the default install will
+  focus on the newbie admins who set up firewall under simple network
+  configuration.
+
+  <p>
+  Simple network means that one uplink connection and single subnet
+  of LAN hosts all within private network addresses.
+
+  <p>
+  This means no VPN and port forwarding unless I get nice patch from the
+  user.  (Even if I do, I may provide them just as an example.)
+
+  <p>
+  I wanted to support simple port based firewalling using script examples
+  which were written by me and existed in the example section during
+  Brian's maintenance.  Since I got enough people complained for the
+  unexpected change, I decided to put them back to the example for the
+  sake of smooth sarge release.  I will change this after Sarge.  So no
+  more RC bug report nor wishlist bug report please on this subject.
+
+  <p>
+  Also current <package>ipmasq</package> package needs not only 
+  <file>/</file> available locally (no NFS root) but also needs 
+  <file>/usr</file> to function properly.
+ 
+  <p>
+  Considering woody did not ship with any 2.0 series kernel, I will soon
+  erase 2.0 series kernel support after sarge release.  This post-sarge
+  change may only support 2.4 and may include some menu driven
+  configuration tool which can even control firewall and traffic control.
+  So be warned!
+
+  <p>
+  Unless I get someone giving me solid patches, I will not address 2.6
+  series specifics nor use ip program for now.  All bug reports along
+  these topics will be assigned as wishlist.
+
+ </sect>
+
+ <sect>
+  <heading>Kernel Requirements</>
+
+  <p>
+  <package>ipmasq</> requires the kernel be built with masquerading support.
+  Debian kernel-package provided kernels are ready to be used with this
+  package.  You still need to activate module if this package fails to
+  activate them for you somehow during boot process (ipmasq-kmod).
+
+  <p>
+  The specific kernel options for each major kernel revision are listed below.
+  For the detailed guide, please read
+  <url id="http://www.tldp.org/HOWTO/IP-Masquerade-HOWTO/index.html"
+  name="Linux IP Masquerade HOWTO">.
+
+  <p>
+  <strong>Kernel versions 2.0.0 through 2.1.100</>
+   <list compact>
+    <item><tt>CONFIG_FIREWALL</></item>
+    <item><tt>CONFIG_IP_FORWARD</></item>
+    <item><tt>CONFIG_IP_FIREWALL</></item>
+    <item><tt>CONFIG_IP_MASQUERADE</></item>
+    <item><tt>CONFIG_IP_MASQUERADE_ICMP</></item>
+   </list>
+
+  <p>
+  <strong>Kernels 2.1.101 through later 2.3 releases</>
+   <list compact>
+    <item><tt>CONFIG_FIREWALL</></item>
+    <item><tt>CONFIG_IP_FIREWALL</></item>
+    <item><tt>CONFIG_IP_MASQUERADE</></item>
+    <item><tt>CONFIG_IP_MASQUERADE_ICMP</></item>
+   </list>
+
+  <p>
+  <strong>Later 2.3 kernel versions through 2.4</>
+   <list compact>
+    <item><tt>CONFIG_NETFILTER</></item>
+    <item><tt>CONFIG_IP_NF_IPTABLES</></item>
+    <item><tt>CONFIG_IP_NF_CONNTRACK</></item>
+    <item><tt>CONFIG_IP_NF_NAT</></item>
+    <item><tt>CONFIG_IP_NF_TARGET_MASQUERADE</></item>
+    <item><tt>CONFIG_IP_NF_FTP</></item>
+    <item><tt>CONFIG_IP_NF_MATCH_STATE</></item>
+    <item><tt>CONFIG_IP_NF_FILTER</></item>
+    <item><tt>CONFIG_IP_NF_TARGET_REJECT</></item>
+    <item><tt>CONFIG_IP_NF_TARGET_REDIRECT</></item>
+    <item><tt>CONFIG_IP_NF_MANGLE</></item>
+   </list>
+
+  
+ </sect>
+ 
+ <sect>
+  <heading>More Resources</>
+  
+  <p>
+  More information about IP Masquerade can be found at the Linux IP
+  Masquerade Resource, <url id="http://ipmasq.cjb.net/">.
+ </sect>
+</chapt>
+
+<chapt id="design">
+ <heading>Design Issues</>
+ 
+ <p>
+ This section describes rationales for some of the design issues that went
+ into <package>ipmasq</>.
+ 
+ <sect>
+  <heading>File Naming Scheme</>
+  
+  <p>
+  The rules files <package>ipmasq</> utilizes are named according to
+  a common scheme consisting of a capital letter, a two digit number,
+  and a short description of what the rule is doing. As the names of the
+  rules files are run through <prgn>sort</>, the letter and two digit
+  number determine the order in which rules will be run.
+  
+  <p>
+  The capital letter denotes what kind of action the rule takes, according
+  to the following list:
+   <list compact>
+    <item><strong>A</>: preinitialization tasks.  Here is where all the
+     information is gathered for selecting interfaces.  Also initialized
+     here is the convenience infrastructure, such as <tt>$MASQMETHOD</>.
+    </item>
+
+    <item><strong>F</>: forwarding rules.  All rules which cause packets
+     to be transferred from one network segment to another without any
+     kind of header rewriting fall into this category.
+    </item>
+
+    <item><strong>I</>: input rules.  All rules dealing with packets
+     arriving on the <package>ipmasq</> host fall into this category.
+    </item>
+
+    <item><strong>M</>: masquerading rules.  This category contains rules
+     that cause packets to be both transferred between network segments
+     and have their headers rewritten.
+    </item>
+
+    <item><strong>O</>: output rules.  This category includes all rules
+     which deal with packets leaving the <package>ipmasq</> host.
+    </item>
+
+    <item><strong>Z</>: postinitialization tasks.  All tasks which must
+     be performed after all rules are in place are done here.
+    </item>
+   </list>
+
+  <p>
+  More information about the rules files can be found in the comments of
+  the rules files themselves.
+ </sect>
+ 
+ <sect>
+  <heading>Rules Files</>
+ 
+  <p>
+  The rules files supplied with <package>ipmasq</> have been broken down
+  to a fine granularity.  This granularity is designed to allow individual
+  portions to be overridden easily.  For instance, if all input rules were
+  shipped in one rules file, in order to override the input rule for
+  external interfaces, the remaining rules in the file would have to be
+  duplicated.
+
+  <p>
+  New rules files should contain commands suitable for setting up the
+  operation  of one service.  This is to both keep a reasonable level of
+  granularity, and to allow those rules files to be self-contained
+  entities.
+ </sect>
+ 
+ <sect id="assumptions">
+  <heading>Assumptions</>
+  
+  <p>
+  <package>ipmasq</> makes a few assumptions about the networks it is
+  masquerading between (these hold for the majority of cases):
+   <list compact>
+    <item>
+     Only one interface
+<!-- <footnote>
+      Aliased interfaces (i.e. <tt>eth0:0</>, <tt>eth0:1</>, etc.)
+      are considered to be one interface for this purpose, as they all
+      share the same route.
+     </footnote>
+-->  is considered to be external.  This interface is determined by the
+     <prgn>default-if</> program by selecting the interface that contains
+     the system's default route.
+    </item>
+
+    <item>
+     The system's routing table and interfaces remain unchanged after
+     <prgn>ipmasq</> has run.  Should it change, <prgn>ipmasq</> must be
+     re-run.  Please see <ref id="integration"> for more information on the
+     specifics of how to do this for your particular connection method.
+    </item>
+   </list>
+
+  <p>
+  Should any of these assumptions prove false for your specific network,
+  please see <ref id="oddball">.
+ </sect>
+</chapt>
+
+<chapt id="oddball">
+ <heading>Dealing with Oddball Networks</>
+ 
+ <p>
+  An oddball network is a network which fails to meet the assumptions
+  <package>ipmasq</> makes (please see <ref id="assumptions"> for more
+  information).
+ 
+  <p>
+  Should <package>ipmasq</> incorrectly identify interfaces or misclassify
+  them (with respect to being internal or external), create a file
+  <file>/etc/ipmasq/rules/A01interfaces.rul</> that defines the variables
+  <tt>EXTERNAL</> to contain the name of all your external interfaces (i.e.
+  <tt>EXTERNAL="eth0 eth0:0"</>) and <tt>INTERNAL</> containing the names
+  of all interfaces connected to networks you wish to masquerade.  Make
+  sure that the loopback interface (<tt>lo</>) appears in neither
+  <tt>EXTERNAL</> or <tt>INTERNAL</>.
+
+  <p>
+  Should <package>ipmasq</> incorrectly determine the IP address, netmask,
+  or peer IP address of an interface, create a file
+  <file>/etc/ipmasq/rules/A01precompute.rul</> that defines, for all
+  interfaces in <tt>EXTERNAL</> and <tt>INTERNAL</>, the IP address, netmask,
+  peer IP address, and broadcast address.  (If you override the <tt>.def</>
+  to change one value, you <em>must</> specify all values.)  The following
+  shows how to define an interface <tt>foo0</>:
+
+  <example>
+IPOFIF_foo0=10.1.2.3
+NMOFIF_foo0=255.252.0.0
+PEEROFIF_foo0=192.168.1.1
+  </example>
+ 
+  <p>
+  Aliased (i.e. <tt>foo0:0</>) and vlan (i.e. <tt>foo0.0</>) interfaces
+  are mangled before being made into variable names.  The colon in
+  aliased interface names is transformed into an underscore, while the
+  period in vlan interface names is transformed into two underscores.
+
+ <sect>
+  <heading>Asymmetric Routing</>
+
+  <p>
+  Asymmetric routing occurs when the interface on which external packets
+  enter the system is not the same interface on which packets leave the
+  system.  This happens most commonly with a load-balancing setup (i.e.
+  traffic enters the system on <tt>ppp0</> and <tt>ppp1</>, while it
+  "leaves" the system over <tt>eql0</>).
+
+  <p>
+  To correctly indicate the interfaces over which packets enter and leave
+  the system, create a file <file>/etc/ipmasq/rules/A01interfaces.rul</>
+  that defines the variables <tt>EXTERNAL_OUT</> to contain the name of
+  all your outbound external interfaces (i.e. <tt>EXTERNAL_OUT="eql0"</>),
+  <tt>EXTERNAL_IN</> to contain the name of all your inbound external
+  interfaces (i.e. <tt>EXTERNAL_IN="ppp0 ppp1"</>) and <tt>INTERNAL</>
+  containing the names of all interfaces connected to networks you wish
+  to masquerade.  Make sure that the loopback interface (<tt>lo</>)
+  does not appear in any of <tt>EXTERNAL_OUT</>, <tt>EXTERNAL_IN</>, or
+  <tt>INTERNAL</>.
+ </sect>
+</chapt>
+
+<chapt id="integration">
+ <heading>Integrating with Other Systems</>
+ 
+ <p>
+  Integrating <package>ipmasq</> with whatever system you use to connect
+  networks is a simple matter of running <file>/usr/sbin/ipmasq</> when
+  ever the routing changes or an interface goes up or down.
+ 
+ <sect id="config">
+  <heading>Configuration</>
+
+  <p>
+  <package>ipmasq</> utilizes the <package>debconf</> configuration
+  management system for interacting with the administrator during
+  package installation and normal system operations.  <package>Ipmasq</>
+  may be reconfigured at any time by running <tt>dpkg-reconfigure ipmasq</>
+  as root.
+ </sect>
+
+ <sect id="boot">
+  <heading>Boot-time Initialization</>
+  
+  <p>
+  [Below information is Brian's approach.  Osamu's preferred approach
+  is to use ifupdown infrastructure and edit <file>/etc/network/interfaces</>
+  as described in "Debian Reference".]
+
+  <p>
+  <package>ipmasq</> installs a script in the <file>/etc/init.d</> directory,
+  and uses <prgn>update-rc.d</> to install symlinks into <file>/etc/rcX.d</>
+  directories.  The boot-time behavior of <prgn>ipmasq</> may be disabled,
+  started after network interfaces are brought up (in single user runlevel
+  'S',  <prgn>ipmasq</> starts at 41 and <prgn>ipmasq-kmod</> starts at 42),
+  started after network filesystems have been mounted (in single user runlevel
+  'S',  <prgn>ipmasq</> starts at 46 and <prgn>ipmasq-kmod</> starts at 47),
+  or started after network services have been started (in normal runlevels,
+  <prgn>ipmasq</> starts at 21 and <prgn>ipmasq-kmod</> starts at 22).
+  This behavior is controlled through the <package>debconf</> configuration
+  mechanism (see <ref id="config">).
+ </sect>
+ 
+ <sect id="dhcp">
+  <heading>DHCP</>
+
+  <p>
+  [Below information is Brian's approach.  Osamu's preferred approach
+  is to use ifupdown infrastructure and edit <file>/etc/network/interfaces</>
+  as described in "Debian Reference".]
+
+  <p>
+  When a computer using <package>ipmasq</> that gets its networking
+  configuration though DHCP boots, <package>ipmasq</> can start too early
+  in the boot process.  This can cause the generated ruleset to not allow
+  network traffic to flow over the DHCP-configured interfaces.
+
+  <p>
+  To fix this, <package>ipmasq</> should be configured to start
+  &quot;After network services have been started&quot;.
+
+  <p>
+  Also, since DHCP allows for network information to be changed after
+  bot-time initialization (which violates one of <package>ipmasq</>'s
+  assumptions; see <ref id="assumptions">), <prgn>ipmasq</> must be run
+  whenever the IP address assigned to the host is changed.  Please consult
+  the documentation for your DHCP client for information on how to do
+  this.  For the ISC DHCP client (debian package <package>dhcp-client</>),
+  the contents of <file>/usr/share/doc/ipmasq/examples/dhclient-exit-hooks</>
+  must be added to your <file>/etc/dhclient-exit-hooks</> file.
+ </sect>
+ 
+ <sect id="pppd">
+  <heading>PPP</>
+
+  <p>
+  [Below information is Brian's approach.  Osamu's preferred approach
+  is to use ifupdown infrastructure and edit <file>/etc/network/interfaces</>
+  as described in "Debian Reference".]
+  
+  <p>
+  The package <package>ipmasq</> installs scripts into the <prgn>ip-up</> and
+  <prgn>ip-down</> mechanism of <prgn>pppd</>.  These scripts check for the
+  presence of a file (<file>/etc/ipmasq/ppp</>) before running
+  <file>/usr/sbin/ipmasq</>.  Remove this file to not have <prgn>ipmasq</>
+  run when <prgn>pppd</> brings the link up or down.  <em>Please note that
+  doing so is not recommended.</em>
+
+  <p>
+  The <package>debconf</> configuration mechanism (see <ref id="config">)
+  provides a simple mechanism for creating or removing this file.
+ </sect>
+ 
+ <sect>
+  <heading>Diald</>
+  
+  <p>
+  Diald is a system which allows a link to be brought up and down based on
+  network traffic.  Diald accomplishes this bit of routing prestidigitation
+  by setting up a proxy interface to be the system's default route and
+  monitoring traffic on that interface.
+
+  <p>
+  On Debian systems, <prgn>diald</> (by default) starts in runlevel 2, while
+  <prgn>ipmasq</> typically starts during the boot process (technically,
+  runlevel S). [Osamu: if ifupdown is used instead, this is not true.]
+  <prgn>ipmasq</> runs first, and intializes a firewall that does not include
+  the proxy route.  <prgn>diald</> then starts, and creates a new route
+  without informing <package>ipmasq</> that the underlying routing has changed.
+  As a result of the firewall not including the proxy route, no packets
+  will be sent along the proxy, and <prgn>diald</> will not bring the link up.
+
+  <p>
+  To solve this problem, <package>ipmasq</> must be configured (see
+  <ref id="config">) such that boot time initialization is disabled.
+  <footnote>
+    Alternatively, invocations of <file>/usr/sbin/ipmasq</> can be
+    added to two (or four, depending on your underlying connection) scripts.
+    <file>/usr/sbin/ipmasq</> must be added to your <prgn>addroute</> and
+    <prgn>delroute</> scripts.  This will cause <package>ipmasq</> to
+    re-evaluate the firewall when the proxy interface is established and
+    removed.
+  </footnote>
+  Also, if your system does not utilize PPP, invocations of
+  <file>/usr/sbin/ipmasq</> must be added to your <prgn>ipup</> and
+  <prgn>ipdown</> scripts.  (If your system uses PPP, the facilities in
+  place for using <prgn>pppd</> will handle it.  For more information,
+  see <ref id="pppd">.)
+
+  <p>
+  Hopefully, future versions of the Debian <package>diald</> package will
+  use a setup where other packages can drop scripts in a directory to have
+  them run when diald runs a script.  <package>ipmasq</> will support this
+  scheme when implemented.
+ </sect>
+ 
+ <sect>
+  <heading>PCMCIA</>
+  
+  <p>
+  [Below information is Brian's approach.  This is good for most server
+   with fixed IP and easy to understand.  ]
+  <p>
+  [ Osamu's preferred alternative approach 
+  is to use ifupdown infrastructure and edit <file>/etc/network/interfaces</>
+  as described in README.Debian.  This has some negatives.
+  It also requires to edit 
+  <file>/etc/pcmcia/network.opts</> to disable last parts as described in 
+  "Debian Reference".]
+  <p>
+  The <package>pcmcia-cs</> package provides support for <package>ipmasq</>.
+  In the file <file>/etc/pcmcia/network.opts</>, simply
+  define a variable <tt>IPMASQ</> to have a value of <tt>y</>, as shown
+  in the example below:
+
+  <example>
+------ Begin /etc/pcmcia/network.opts snippet -------
+    # Run ipmasq? [y/n]  (see the Debian ipmasq package)
+    IPMASQ="y"
+------- End /etc/pcmcia/network.opts snippet --------
+  </example>
+  
+  <p>
+  Please note that this is needed only if you have a PC Card network card.
+  A PC Card modem will typically use <prgn>pppd</>.  For more information
+  about setting up <prgn>pppd</>, please see <ref id="pppd">.
+
+  <p>
+  Additionally, <package>ipmasq</> should be set to disable the boot-time
+  initialization (see <ref id="boot">).
+ </sect>
+</chapt>
+
+<appendix id="info">
+ <heading>For More Information</>
+ <p>
+  For more information about <package>ipmasq</>, please see the following
+  other resources:
+
+  <list compact>
+   <item>
+    <manref name="ipmasq" section="8">
+   </item>
+
+   <item>
+    <manref name="ipmasq-kmod" section="8">
+   </item>
+
+   <item>
+    <manref name="ipmasq-rule" section="5">
+   </item>
+
+   <item>
+    <manref name="ipmasq-modules" section="5">
+   </item>
+
+   <item>
+    <manref name="default-if" section="8">
+   </item>
+
+   <item>
+    <manref name="enumerate-if" section="8">
+   </item>
+
+   <item>
+    <manref name="ipofif" section="8">
+   </item>
+
+   <item>
+    <manref name="nmofif" section="8">
+   </item>
+
+   <item>
+    <manref name="peerofif" section="8">
+   </item>
+
+   <item>
+    <manref name="bcofif" section="8">
+   </item>
+  </list>
+</appendix>
+
+</book>
+

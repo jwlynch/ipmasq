@@ -1,0 +1,63 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+# This version is for packages that are architecure independant.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export DH_COMPAT=4
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	sed -e s/@VERSION@/`sed -e '1!d' -e 's/^[^(]*(\([^-][^-]*\)-.*$$/\1/' debian/changelog`/g < ipmasq.in > ipmasq
+	sed -e s/@VERSION@/`sed -e '1!d' -e 's/^[^(]*(\([^-][^-]*\)-.*$$/\1/' debian/changelog`/g < ipmasq-kmod.in > ipmasq-kmod
+	make -C doc
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	-rm -f build-stamp
+	-rm -f ipmasq ipmasq-kmod
+	debconf-updatepo
+	-make -C doc clean
+	dh_clean
+
+binary-indep:	build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	install -m 755 ipmasq ipmasq-kmod debian/ipmasq/usr/sbin/
+	install -m 755 init/ipmasq init/ipmasq-kmod debian/ipmasq/etc/init.d/
+	install -m 755 ppp/ip-up debian/ipmasq/etc/ppp/ip-up.d/00ipmasq
+	#install -m 755 ppp/ip-down debian/ipmasq/etc/ppp/ip-down.d/00ipmasq
+	install -m 644 ppp/etc-ipmasq-ppp-message debian/ipmasq/usr/share/ipmasq/
+	install -m 755 `find helper-scripts -maxdepth 1 -type f` debian/ipmasq/usr/sbin/
+	install -m 644 `find rules -maxdepth 1 -type f` debian/ipmasq/etc/ipmasq/rules/
+	install -m 644 `find rules-down -maxdepth 1 -type f` debian/ipmasq/etc/ipmasq/ipmasq-down/
+	install -m 644 modules debian/ipmasq/etc/ipmasq
+	install -m 644 debian/lintian debian/ipmasq/usr/share/lintian/overrides/ipmasq
+	dh_installdocs
+	dh_installexamples -XCVS samples/* dhclient-exit-hooks
+	dh_installmanpages
+	dh_installdebconf
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: build
+# We have nothing to do by default.
+
+source diff:
+	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary
+

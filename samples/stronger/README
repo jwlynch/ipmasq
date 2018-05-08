@@ -1,0 +1,23 @@
+Files for packet filters etc. for ipmasq (Version 3.5.21)
+
+GPL: Osamu Aoki <osamu@debian.org>
+____________________________________
+README          This file
+
+Firewall script examples.  
+  >> These are placed in doc/examples/stronger for woody and sarge
+  >> These will make into main script for post-sarge.
+         --- If you have customized scripts in /etc/ipmasq/rules, 
+             update after sarge release requires extra care.
+
+A80firewall.def configurations. (Blocks nothing)
+I80firewall.def rules for incoming packet
+O80firewall.def rules for outgoing packet
+I79ident.def    sends REJECT for external AUTH requests.
+I79related.def  allows ESTABLISHED and RELATED packets despite firewall
+
+Also here is an optional script:
+M30redirect.def redirect SMTP connection to the masq host.
+
+These can be copied into /etc/ipmasq/rules
+

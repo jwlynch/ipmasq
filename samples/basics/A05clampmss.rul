@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# clamp mss to pmtu to avoid stuck pop3/ssh/... connections to 
+# certain sites (happens on some PPPoE DSL connections)
+# GPL 2.0 or later (C)2004  Johannes Martin <jmartin@notamusica.com>
+
+case $MASQMETHOD in
+netfilter)
+    $IPTABLES -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+esac

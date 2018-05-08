@@ -1,0 +1,19 @@
+#: Allow packets going to routed networks
+if [ -n "$ROUTES" ]; then
+    for route in $ROUTES; do
+	i=${route%%:*}
+	dest=${route##*:}
+        case $MASQMETHOD in
+        ipfwadm)
+            $IPFWADM -O -a accept -W ${i%%:*} -D $dest
+            ;;
+        ipchains)
+            $IPCHAINS -A output -j ACCEPT -i ${i%%:*} -d $dest
+            ;;
+	netfilter)
+	    $IPTABLES -A OUTPUT -j ACCEPT -o ${i%%:*} -d $dest
+	    ;;
+        esac
+    done
+fi
+

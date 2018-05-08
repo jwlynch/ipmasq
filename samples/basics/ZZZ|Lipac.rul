@@ -1,0 +1,12 @@
+# /etc/ipmasq/rules/ZZZ|L_ipac.rul
+#
+# Restarting IP-ACCOUNTING.
+# Very last rule in the ipmasq chain.
+#
+# To speed-up the system start-up don't check at boot time.
+[ ! $runlevel ] && for SCRIPT in /etc/init.d/ipac /etc/init.d/ipac-ng;do
+  test -s $SCRIPT && if [ "$SHOWRULES" = "yes" ]
+    then echo $SCRIPT force-reload;else $SCRIPT force-reload 2> /dev/null
+  fi
+done
+

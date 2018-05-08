@@ -1,0 +1,19 @@
+#: Enable VPN packets
+
+if [ -e "/var/run/vpnc/gateway" ]; then
+    gateway="`cat /var/run/vpnc/gateway`"
+    iface="`cat /var/run/vpnc/defaultroute | cut -d " " -f 5`"
+
+    if [ -n "$INTERNAL" ]; then
+	for i in $INTERNAL; do
+	    if [ "${i%%:*}" == "$iface" ]; then
+        	ipnm_cache $i
+
+#		$IPTABLES -A INPUT -j ACCEPT -i ${i%%:*} -p ESP -s $gateway/32 -d $IPOFIF/32
+#    	        $IPTABLES -A OUTPUT -j ACCEPT -o ${i%%:*} -p ESP -s $IPOFIF/32 -d $gateway/32
+		$IPTABLES -A INPUT -j ACCEPT -i ${i%%:*} -p ALL -s $gateway/32 -d $IPOFIF/32
+    	        $IPTABLES -A OUTPUT -j ACCEPT -o ${i%%:*} -p ALL -d $gateway/32 -s $IPOFIF/32
+	    fi
+        done
+    fi
+fi

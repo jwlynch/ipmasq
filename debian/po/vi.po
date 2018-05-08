@@ -1,0 +1,227 @@
+# Vietnamese Translation for ipmasq.
+# Copyright © 2005 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ipmasq 4.0.2\n"
+"Report-Msgid-Bugs-To: ipmasq@packages.debian.org\n"
+"POT-Creation-Date: 2008-05-02 07:47+0200\n"
+"PO-Revision-Date: 2005-06-05 09:23+0930\n"
+"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid "/etc/ipmasq/rules now conffiles"
+msgstr "«/etc/ipmasq/rules» mới trở thành conffiles (tập tin cấu hình)"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid ""
+"The rules files located in /etc/ipmasq/rules have been placed under package "
+"manager control as of version 3.4.0.  It is safe (and recommended) to allow "
+"dpkg to replace your version."
+msgstr ""
+"Từ phiên bản 3.4.0, những quản trị gói tin điều khiển những tập tin quy tắc "
+"trong «etc/ipmasq/rules». Thay thế phiên bản của bạn là an toàn và được "
+"khuyến khích."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "External interface rules moved; move them?"
+msgstr ""
+"Những quy tắc về giao diện bên ngoại đã di chuyển: di chuyển chúng không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The rules files I50external.def and O50external.def have changed position to "
+"I90external.def and O90external.def, respectively.  May I move these rules "
+"files (and their corresponding .rul files) to their new positions?"
+msgstr ""
+"Những tập tin quy tắc «I50external.def» và «O50external.def» đã di chuyển sang "
+"«I90external.def» và «O90external.def» riêng từng cái. Bạn có muốn di chuyển "
+"hai tập tin quy tắc này (và những tập tin dạng .rul tương ứng) sang ví trị "
+"mới thích hợp không?s"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Delete outdated boot script?"
+msgstr "Xóa bỏ tập lệnh khởi động cũ không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"Should I delete the old, no longer used /etc/rc.boot/ipmasq boot script?"
+msgstr ""
+"Bạn có muốn xóa bỏ tập lệnh khởi động «/etc/rc.boot/ipmasq» cũ mà không còn "
+"được dùng lại không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid "Delete outdated configuration file?"
+msgstr "Xóa bỏ tập lệnh cấu hình cũ không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"The configuration file /etc/ipmasq.conf is no longer used and the "
+"information it contains is determined automatically by ipmasq.  Should I "
+"delete the file /etc/ipmasq.conf?"
+msgstr ""
+"Không còn dùng lại tập tin cấu hình «/etc/ipmasq.conf», và ipmasq tự động "
+"quyết định thông tin trong nó. Bạn có muốn xóa bỏ tập tin «/etc/ipmasq.conf» "
+"không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Move custom rules file to new location?"
+msgstr "Di chuyển tập tin quy tắc tự chọn sang ví trị mới không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid ""
+"Should I move your /etc/ipmasq.rules into the /etc/ipmasq/rules directory?"
+msgstr ""
+"Bạn có muốn di chuyển tập tin «/etc/ipmasq.rules» vào thư mục «/etc/ipmasq/"
+"rules» không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid "Should PPP connections recompute the firewall?"
+msgstr "Nên sự kết nối PPP tính toán lại bức tường lửa không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid ""
+"Do you wish to have ipmasq recompute the firewall rules when pppd brings up "
+"or takes down a link?"
+msgstr ""
+"Bạn có muốn trình ipmasq tính toán lại những quy tắc của bức tường lửa mọi "
+"lúc trình nền pppd bật hay tắt một liên kết không?"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid "PPP recomputation controlled by file /etc/ipmasq/ppp"
+msgstr "Cách tính toán lại PPP do tập tin «/etc/ipmasq/ppp» điều khiển"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid ""
+"Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is "
+"present."
+msgstr ""
+"Trình ipmasq sẽ tính toán lại những quy tắc của bức tường lửa nếu có tập tin "
+"«/etc/ipmasq/ppp»."
+
+#. Type: note
+#. Description
+#: ../templates:7001
+msgid ""
+"Create the file /etc/ipmasq/ppp to have ipmasq recompute the firewall when "
+"pppd brings up or takes down a link."
+msgstr ""
+"Hãy tạo tập tin «/etc/ipmasq/ppp» để làm cho trình ipmasq tính toán lại bức "
+"tường lửa mọi lúc trình nền pppd bật hay tắt một liên kết."
+
+#. Type: note
+#. Description
+#: ../templates:8001
+msgid ""
+"Delete the file /etc/ipmasq/ppp to stop having ipmasq recompute the firewall "
+"when pppd brings up or takes down a link."
+msgstr ""
+"Hãy xóa bỏ tập tin «/etc/ipmasq/ppp» để tránh trình ipmasq sẽ tính toán lại "
+"bức tường lửa mọi lúc trình nền pppd bật hay tắt một liên kết."
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Start ipmasq?"
+msgstr "Khởi chạy trình ipmasq không?"
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Should I start IP Masquerading?"
+msgstr "Nên khởi chạy giả trang IP không?"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Disable"
+msgstr "Vô hiệu hóa"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network interfaces are brought up"
+msgstr "Sau khi hoạt hóa các giao diện mạng"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network filesystems are mounted"
+msgstr "Sau khi gắn kết  cáchệ thống tập tin mạng"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network services have been started"
+msgstr "Sau khi khởi chạy các dịch vụ mạng"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Keep current set up"
+msgstr "Giữ thiết lập hiện thời"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid "When should ipmasq be started?"
+msgstr "Khi nào nên khởi chạy trình ipmasq?"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid ""
+"Ipmasq can be told initially to compute the firewall rules at one of a "
+"number of points in the boot process.  This question asks at which point "
+"ipmasq should start."
+msgstr ""
+"Có thể báo trình ipmasq ban đầu tính toán những quy tắc bức tường lửa tại "
+"một của những điểm thời trong khi tiến trình khởi động hệ thống. Câu hỏi này "
+"hỏi bạn chọn điểm thời mà nên khởi chạy trình ipmasq."
+
+#~ msgid ""
+#~ "Disable, After network interfaces are brought up, After network "
+#~ "filesystems are mounted, After network services have been started, Keep "
+#~ "current set up"
+#~ msgstr ""
+#~ "Vô hiệu hóa, Sau khi hoạt hóa các giao diện mạng, Sau khi gắn kết  cáchệ "
+#~ "thống tập tin mạng, Sau khi khởi chạy các dịch vụ mạng, Giữ thiết lập "
+#~ "hiện thời"

@@ -1,0 +1,20 @@
+From: Paul Miller <pmiller9@users.sourceforge.net>
+Subject: Bug#238810: ipmasq: vpn does not work - routing tables not examined
+To: Osamu Aoki <osamu@debian.org>
+Cc: 238810@bugs.debian.org,
+Date: Fri, 19 Mar 2004 19:22:42 -0600
+
+Hello,
+
+I created a simple script for ipmasq that creates rules for iptables.  It 
+is written specifically for use with the vpnc package, but I believe it 
+could be generalized by analyzing the routing tables.  I have very little 
+experience with network routing and thus can't offer much help.
+
+Until these tables are better understood, I would recommend leaving it as 
+an example.
+
+ath0 is just my wireless interface using the madwifi driver.  I would 
+assume that "ath" is short for the Atheros chipset.
+
+-Paul

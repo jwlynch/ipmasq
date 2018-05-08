@@ -1,0 +1,37 @@
+routed internal network with ipmasq
+ rules by Johannes Martin <jmartin@notamusica.com>
+ modified by Osamu Aoki <osamu@debian.org>  Wed 28 Jul 2004 10:51:55 PM CEST
+ bug fix by Mark Purcell <msp@debian.org> and
+ Frederic Lehobey <Frederic.Lehobey@free.fr> Sat 24 Sep 2005 08:02:20 AM JST
+
+ ipmasq ignores the routing table (except for the default route), and thus
+ prevents traffic from/to routed internal networks to be forwarded.
+
+ Imagine the following setup:
+
+ host1:  (runing ipmasq)
+ eth0: some.ip and default route
+ ppp0: 192.168.1.1 netmask 255.255.255.255
+          |
+          |
+          |
+ host2:   |
+ ppp0: 192.168.1.2 netmask 255.255.255.255
+ eth0: 10.0.0.1 netmask 255.255.255.0
+
+ /sbin/route on host 1 says something like
+ 192.168.1.2     *               255.255.255.255 ppp0
+ 10.0.0.1        192.168.1.2     255.255.255.0   ppp0
+ localnet        *               the.netmask     eth0
+ default         router          0.0.0.0         eth0
+
+
+ ipmasq currently does not read the routing table (except for the default
+ route) and therefore does not setup forwarding rules for the 10.0.0.1
+ network that is attached via the ppp0 line and host2.
+
+ The scripts I have attached take care of adding the necessary routes for
+ this and similar settings. They have been tested with iptables only
+ though.  (Osamu made untested modification.  So read these as starting 
+ point only.)
+

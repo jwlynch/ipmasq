@@ -1,0 +1,74 @@
+Template: ipmasq/dpkg-conffiles
+Type: note
+_Description: /etc/ipmasq/rules now conffiles
+ The rules files located in /etc/ipmasq/rules have been placed under
+ package manager control as of version 3.4.0.  It is safe (and recommended)
+ to allow dpkg to replace your version.
+
+Template: ipmasq/external-rules-moved
+Type: boolean
+Default: true
+_Description: External interface rules moved; move them?
+ The rules files I50external.def and O50external.def have changed position
+ to I90external.def and O90external.def, respectively.  May I move these
+ rules files (and their corresponding .rul files) to their new positions?
+
+Template: ipmasq/old-rc.boot-file
+Type: boolean
+Default: true
+_Description: Delete outdated boot script?
+ Should I delete the old, no longer used /etc/rc.boot/ipmasq boot script?
+
+Template: ipmasq/old-ipmasq.conf
+Type: boolean
+Default: true
+_Description: Delete outdated configuration file?
+ The configuration file /etc/ipmasq.conf is no longer used and the
+ information it contains is determined automatically by ipmasq.  Should I
+ delete the file /etc/ipmasq.conf?
+
+Template: ipmasq/move-ipmasq.rules
+Type: boolean
+Default: true
+_Description: Move custom rules file to new location?
+ Should I move your /etc/ipmasq.rules into the /etc/ipmasq/rules directory?
+
+Template: ipmasq/ppp-recompute
+Type: boolean
+Default: true
+_Description: Should PPP connections recompute the firewall?
+ Do you wish to have ipmasq recompute the firewall rules when pppd brings
+ up or takes down a link?
+
+Template: ipmasq/ppp-turn-on
+Type: note
+_Description: PPP recomputation controlled by file /etc/ipmasq/ppp
+ Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is
+ present.
+ .
+ Create the file /etc/ipmasq/ppp to have ipmasq recompute the firewall when
+ pppd brings up or takes down a link.
+
+Template: ipmasq/ppp-turn-off
+Type: note
+_Description: PPP recomputation controlled by file /etc/ipmasq/ppp
+ Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is
+ present.
+ .
+ Delete the file /etc/ipmasq/ppp to stop having ipmasq recompute the
+ firewall when pppd brings up or takes down a link.
+
+Template: ipmasq/start
+Type: boolean
+Default: false
+_Description: Start ipmasq?
+ Should I start IP Masquerading?
+
+Template: ipmasq/start-location
+Type: select
+__Choices: Disable, After network interfaces are brought up, After network filesystems are mounted, After network services have been started, Keep current set up
+Default: After network interfaces are brought up
+_Description: When should ipmasq be started?
+ Ipmasq can be told initially to compute the firewall rules at one of a
+ number of points in the boot process.  This question asks at which point
+ ipmasq should start.

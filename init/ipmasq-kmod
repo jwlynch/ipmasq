@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# ipmasq-kmod.init	Set up IP Masquerading for Debian systems
+#
+#			v3.3 9 Feb 1999
+
+test -x /usr/sbin/ipmasq-kmod || exit 0
+
+case $1 in
+start|restart|force-reload)
+	# Display 'whaddamidoing?' prompt
+	echo -n "Loading IP Masquerade kernel modules..."
+
+	# Setup ipmasq-kmod
+	/usr/sbin/ipmasq-kmod
+
+	# Display 'whaddamidoing?' prompt
+	echo "done."
+	;;
+stop)
+	;;
+*)
+        echo "Usage /etc/init.d/ipmasq-kmod {start|stop|force-reload|restart}"
+        exit 1
+esac
+

@@ -1,0 +1,17 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Run the deprecated /etc/ipmasq.rules, if present
+if [ -e /etc/ipmasq.rules ]; then
+    if [ "$NOACT" != "yes" ]; then
+        . /etc/ipmasq.rules
+    fi
+
+    if [ "$SHOWRULES" = "yes" ]; then
+        echo ". /etc/ipmasq.rules"
+    fi
+fi
+

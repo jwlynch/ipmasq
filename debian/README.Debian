@@ -1,0 +1,313 @@
+ipmasq: The simple gateway firewall script
+                                 (c) 2004, Osamu Aoki <osamu@debian.org>
+------------------------------------------------------------------------
+
+I describe few additional key information in here.  Please read this 
+first before filing (wishlist) bugs :-)
+
+Hints:
+~~~~~~
+* Console messages
+If you get annoying kernel messages to the console and bothered by it, 
+please consider to modify /etc/init.d/klogd as KLOGD="-c 4" or so.
+
+* Kernel modules tuning
+Although I kept and updated /etc/init.d/ipmasq-kmod script to even support 
+post-2.4 kernels automatically, if you really want to control the kernel 
+behavior, please tune its modules by initiating them from /etc/modules 
+with the appropriate options and disabling ipmasq-kmod script by placing 
+"exit" at the start of the script.
+
+* Starting of ipmasq
+Although I kept /etc/init.d/ipmasq and kept default for debconf template,
+starting method described below using ifupdown infrastructure is preferred.
+
+* Configuring of ipmasq
+/usr/bin/ipmasq is essentially a run-parts type POSIX sh script which 
+sources content files in /etc/ipmasq/rules/*.  I recommend you to install 
+midnight commander (mc package) and use it to configure these files from
+the console.
+
+* Duplicate instance of ipmasq
+This will stop running ipmasq now with exit code set as ERROR.  Wait 
+until the execution terminates and run "ipmasq" from the root shell
+to fix it later.
+
+* Slow machine
+On very slow machine, ipmasq's dynamic nature may not be fun due to 
+slowness.  Use "ipmasq --display >rule" to create pre-calculated rule 
+and edit /etc/init.d/ipmasq to call this script if you are on fixed IP
+network.
+
+* NFS root or shared /usr over network
+Current ipmasq package requires not only root to be local file system 
+but also /usr to be local file system.  If you are considering set up like
+NFS root etc., you can not use this package.  You can still get benefit from 
+this package by using this package on a normal system and get a plain 
+text firewall shell script generated from "ipmasq -v" which will be used
+as a part of init script.
+
+* Use of 'ip' command
+Current ipmasq package uses 'ifconfig' command to obtain the network 
+configuration.  If you set up a fancy network using newer 'ip' command
+from 'iproute' package on a newer kernel (>=2.2), this ipmasq package 
+may not be able to cope with it.  See Bug#309389 for more information.
+
+* Special guide for unstable user
+If you installed ipmasq 3.5.14 or 3.5.15 in from testing/unstable before 
+the Sarge release testing days, read the bottom of this file for "Warning 
+for unstable users".
+
+Customization:
+~~~~~~~~~~~~~~
+The source for the customization is  /usr/share/doc/ipmasq/examples/* .
+Any complication on routing may require manual customization.
+Although great care is taken to accommodate many routing situation, this 
+ipmasq script works out of box when we keep routing simple as something 
+like the following:
+
+        Internet
+	   |
+ DSL modem / Cable modem (PPPoE,DHCP,FixedIP cable/DSL)
+           |
+           |
+	 eth0 = gateway machine = eth1 ---(simple HUB)
+	         (run ipmasq)|\              | | | | |
+                             | |            many LAN hosts
+			     | |
+                             + += eth2 -- another LAN
+			     |
+                             +=== eth3 -- another LAN
+
+         EXTERNAL                 INTERNAL (192.168.*.*, 10.*.*.*, or ...)
+
+ Basic customization with basics/*:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This provide basic customization examples.
+
+ Routing for "internal interface <-> internal interface:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The policy for "internal interface <-> internal interface" can be tuned.
+See /usr/share/doc/ipmasq/examples/internal/*.
+I changed it for 2.4 kernel back to simple FORWARD just like 2.2.
+
+If system has multiple internal network cards, things are interesting.
+
+ 1. FORWARD
+Provide each internal network card to have different network 
+address belonging to different subnet.  Then the default set up 
+will freely forward packets.
+
+ 2. BRIDGE
+Alternative arrangement is to set up all internal network cards
+with the same IP using the bridge interface.  For example, if eth1,
+eth2, and eth3 exist as internal interfaces as above example, you 
+can install "bridge-utils" package and add to /etc/network/interfaces 
+as follow:
+
+auto br0
+iface br0 inet static
+        address 192.168.3.1
+        netmask 255.255.255.0
+        bridge_ports eth1 eth2 eth3
+
+(Assuming eth0 being external interface)
+
+ Routing for "gateway <-> ppp connected internal network":
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For the routing for "gateway <-> ppp connected internal network",
+see /usr/share/doc/ipmasq/examples/routes/*.
+
+ Routing for "connection to gateway -> internal host with DNAT":
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+See /usr/share/doc/ipmasq/examples/dnat/*.
+
+ Working with VPN:
+ ~~~~~~~~~~~~~~~~~
+See /usr/share/doc/ipmasq/examples/vpn/*.
+
+ Packet based firewall with stronger/*:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * REJECT
+You may wonder why "REJECT" internal packet going outbound and
+"DROP" external packet coming inbound.  This is because LAN is 
+friendly world and we want to tell what we do to internal hosts; 
+but Internet is hostile world and we want to as little information 
+as possible.  Only exception may be "AUTH (for identd)" which is sent
+from your external mail server.  This is good assumption home and small
+company but if you are more public LAN, you may reconsider this policy.
+
+ * AUTH:
+This service is needed by the IRC clients.  Run "oidentd" on firewall
+and some "identd" on the IRC client host and keep this port open on 
+firewall if you want IRC to function properly.
+
+Some mail servers will send you AUTH when you access it from behind 
+ipmasq hosts.  DROPing these packets slows mail transaction.  This can 
+be avoided as IRC by responding to the AUTH or simply REJECTing the 
+AUTH packets using I79ident.def in the example.
+
+* Versions after Sarge release:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Considering maturing of 2.4/2.6 kernel and maintainable simplicity, I
+may likely to drop support for non-iptable rules.  If you are running
+2.0 or 2.2 kernel, please use apt_preferences (5) tricks etc. to hold
+this package before upgrading from Sarge version.
+
+I will likely to move packet type firewalling script from example in
+  /usr/share/doc/ipmasq/examples/stronger/*
+to the main rule which will be moved to
+  /etc/ipmasq/up/*
+If you have any custom scripts which interfere with these new entries,
+you need to adopt it to this new one or hold package before upgrading
+your whole system to the post-Sarge version.
+
+===========================================================================
+
+Key facts:
+~~~~~~~~~~
+IP masquerading is an application of Network Address Translation (NAT).
+A network of machines "masquerades" as a single machine on a second
+network (usually the Internet).  All connections going out from the first
+network are changed so that they appear to come from a single address.
+
+This package contains scripts to initialize IP masquerading.  By default,
+it configures the system as a basic forwarding firewall with IP spoofing
+and stuffed routing protection.  The firewall will allow hosts behind the
+firewall to access the Internet but will not allow connections from hosts
+on the Internet to reach the hosts behind the firewall.  There is a
+flexible framework that allows default rules to be overridden.
+
+Since ipmasq command itself is a simple variant of run-parts command, 
+actual commands are nothing but sourced files in /etc/ipmasq/rules.  
+Read manual page of ipmasq for the details.  Many typical customization
+examples are already located under /usr/share/doc/ipmasq/examples/. 
+If you have nice scripts to address some issues, please file wishlist bug 
+with your scripts.
+
+Note that this package should be installed on the firewall host and not on
+the hosts behind the firewall.
+
+The package installs a pppd hook script that causes the rules to be
+reapplied after pppd brings a PPP interface up or down.
+
+IP Masquerade requires the kernel to be compiled with masquerading support.
+(Please see kernel documentation for the specific kernel options required.)
+In standard Debian kernel packages masquerading support is provided in
+kernel modules.[1]
+
+[1] http://www.debian.org/doc/manuals/reference/ch-kernel.en.html#s-kernel-net
+
+Since people hate surprises I have decided not to implement new features that
+could result in RC bugs.  Here is a list of needed changes that won't be 
+fixed for Sarge:
+
+ * use of /etc/init.d/ipmasq
+ * configuration data in /etc/init.d/ipmasq-kmod script.
+ * /etc/init.d/modules format is messy
+ * no port based firewalling as default
+ * not using ifupdown infrastructures (Beside Brian's recommended 
+   procedure in the document is good only for non-ifupdown centric 
+   arrangement.  I prefer ifupdown as described below.)
+ * Since these script always use "sort" and "uniq" from "/usr/bin", 
+   and "ipmasq" itself is in "/usr/sbin", I decided to use "xargs".  
+   If you have fancy remote "/usr", please move these commands to 
+   root file system and edit ipmasq accordingly.  This script needs 
+   "/usr/bin" now:-)  But it is easier to read. Since this is 
+   documented here, http://bugs.debian.org/227284 is closed.
+
+Unless I can find a backward-compatible way of fixing these I will address
+them only after Sarge ships.
+
+I strongly recommend reading chapter 10 of the latest "Debian Reference" 
+which describes network configuration in Debian.  If the version of 
+chapter 10 in your language is still entitled "Gateway" then please 
+read the English version.[2]
+
+[2]  http://www.debian.org/doc/manuals/reference/ch-gateway.en.html
+     or "sudo apt-get install debian-reference-en" and read it from
+     the Debian menu by following "Help" in the X Window.
+
+Background:
+~~~~~~~~~~~
+I have inherited this ipmasq package from the original author Brian Bassett
+<brianb@debian.org>.  I thank him for his previous work.
+
+Although this package is quite versatile and can be used by an experienced
+administrator as the basis for an elaborate system of dynamically generated
+firewall rule-sets, the default configuration will remain simple in order to
+make things easy for the newbie admin who needs to set up a firewall for a
+simple network.  "Simple network" here means one Ethernet-like uplink
+connection and a single subnet of LAN hosts with private network addresses.
+This means no out-of-box support for VPN and no port forwarding unless I 
+get better patches from someone.  (And even if I do get better patches, 
+I may provide them only as examples as done now.)  
+
+ifupdown:
+~~~~~~~~~
+Since Brian's approach focused on starting ipmasq from init script, his 
+documentation in /usr/share/doc/ipmasq/ipmasq.html/ describes it.  
+(This is default mode.)
+
+Considering today's dynamic IP connection environment, I prefer to use 
+ifupdown infrastructure as described and edit /etc/network/interfaces
+instead.  (This is not default behavior and need extensive user
+modification.)
+
+You can use ipmasq using following method:
+ 1. Since /etc/init.d/ipmasq is conffile, user can place "exit" at the 
+    first line of it.  (or select not to install it during install or
+    by running dpkg-reconfigure.)
+ 2. Add "up" stanza to the /etc/network/interfaces to the interfaces
+    which require ipmasq updates. For example:
+---
+# primary uplink to external
+iface eth0 inet static
+        address 192.168.0.3
+        netmask 255.255.255.0
+        network 192.168.0.0
+        broadcast 192.168.0.255
+        gateway 192.168.0.1
+        up /usr/sbin/ipmasq
+        down /usr/sbin/ipmasq
+
+# secondary uplink external
+iface eth1 inet dhcp
+        up /usr/sbin/ipmasq
+        down /usr/sbin/ipmasq
+
+# LAN connection
+iface eth2 inet static
+        address 192.168.0.1
+        netmask 255.255.255.0
+        network 192.168.0.0
+        broadcast 192.168.0.255
+        up /usr/sbin/ipmasq
+        down /usr/sbin/ipmasq -r /etc/ipmasq/ipmasq-down
+
+---
+  Here, use of /etc/network/if-up.d is another way to achieve similar result
+  but this reduces chance for detailed tuning of rules and for avoiding
+  un-needed ipmasq runs.  If you use PCMCIA, you may need to edit
+  /etc/pcmcia/network.opts and disable /sbin/ifup and /sbin/ifdown
+  commands at the bottom of script as described in the "Debian Reference"
+  Chapter 9.
+
+Warning for unstabe users:
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Upgrade for the unstable users: (Sarge pre-release version issues)
+If you installed ipmasq 3.5.14 or 3.5.15 in unstable, please erase
+  /etc/ipmasq/rules/A80firewall.def
+  /etc/ipmasq/rules/I80firewall.def
+  /etc/ipmasq/rules/O80firewall.def
+or copy the following latest examples over these to enable this extra
+firewalling capability properly:
+  /usr/share/doc/ipmasq/examples/stronger/A80firewall.def
+  /usr/share/doc/ipmasq/examples/stronger/I80firewall.def
+  /usr/share/doc/ipmasq/examples/stronger/O80firewall.def
+
+If you created corresponding *.rul files, please update them or remove them.
+
+(The upgrade is only guaranteed from stable to next release per policy.)
+
+ -- Osamu Aoki <osamu@debian.org>  Tue, 27 Jul 2004 21:09:24 +0200

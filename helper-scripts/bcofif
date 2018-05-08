@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# bcofif	Determines the IP broadcast address of the interface
+#		given on the commandline
+#
+# v1.0	15 July 1999
+# v1.1	10 Feb 2001
+# v2.0  2004-01-04T16:29:38 CET Osamu Aoki
+#####
+
+export LC_ALL="C"
+export LANG="C"
+export LANGUAGE="C"
+
+( /sbin/ifconfig $1 | sed -n -e'/Bcast:/s/^.*Bcast:\([0-9.]*\).*$/\1/p' ) 2>/dev/null
+true

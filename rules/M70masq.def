@@ -1,0 +1,48 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+#: Masquerade packets from internal networks
+if [ -n "$INTERNAL" -a -n "$EXTERNAL_OUT" ]; then
+    for j in $EXTERNAL_OUT; do
+        for i in $INTERNAL; do
+            ipnm_cache $i
+            case $MASQMETHOD in
+            ipfwadm)
+                $IPFWADM -F -a masq -W ${j%%:*} -S $IPOFIF/$NMOFIF
+                ;;
+            ipchains)
+                if [ -n "$PEEROFIF" ]; then
+                    $IPCHAINS --no-warnings -A forward -j MASQ -i ${j%%:*} -s $PEEROFIF/$NMOFIF
+                else
+                    $IPCHAINS --no-warnings -A forward -j MASQ -i ${j%%:*} -s $IPOFIF/$NMOFIF
+                fi
+                ;;
+	    netfilter)
+                # Since most of user of this script are on dynamic IP,
+                # I use -j MASQUERADE instead of -j SNAT
+                # See also example script Z91kerneldynaddr.rul
+		if [ -n "$PEEROFIF" ]; then
+		    $IPTABLES -t nat -A POSTROUTING -o ${j%%:*} -s $PEEROFIF/$NMOFIF -j MASQUERADE
+		    $IPTABLES -A FORWARD -i ${i%%:*} -o ${j%%:*} -s $PEEROFIF/$NMOFIF -j ACCEPT
+		else
+		    $IPTABLES -t nat -A POSTROUTING -o ${j%%:*} -s $IPOFIF/$NMOFIF -j MASQUERADE
+		    $IPTABLES -A FORWARD -i ${i%%:*} -o ${j%%:*} -s $IPOFIF/$NMOFIF -j ACCEPT
+		fi
+	        ;;
+            esac
+        done
+    done
+#
+case $MASQMETHOD in
+    netfilter)
+        #
+        # Continue forwarding for RELATED or ESTABLISHED packets
+        #
+        $IPTABLES -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+        ;;
+esac
+fi
+#

@@ -1,0 +1,34 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+
+# Packet filter firewall script for ipmasq (GPL)
+#                   By Osamu Aoki <osamu@aokiconsulting.com>
+#
+# Firewall is set for external network connection ports listed in $EXTERNAL_IN
+# Little consideration taken for shared port.
+#
+#echo "# Firewall for incoming AUTH (ident) packets"
+###############################################################################
+# DENY INPUT AUTH(IDENT) TCP RULES
+if [ -n "$EXTERNAL_IN" ]; then
+    for i in $EXTERNAL_IN; do
+        ipnm_cache $i
+        for j in 113 ; do # AUTH=113
+	    case $MASQMETHOD in
+	    ipfwadm)
+	        $IPFWADM -I -a reject -W ${i%%:*} -D $IPOFIF/32 $j -P tcp
+	        ;;
+	    ipchains)
+	        $IPCHAINS --no-warnings -A input -j REJECT -i ${i%%:*} -d $IPOFIF/32 $j -p tcp
+	        ;;
+	    netfilter)
+	        $IPTABLES -A PREROUTING -t nat -j REJECT -i ${i%%:*} -d $IPOFIF/32 -p tcp --destination-port $j
+	        ;;
+	    esac
+        done
+    done
+fi
+#echo "#"

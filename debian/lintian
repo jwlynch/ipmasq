@@ -1,0 +1,3 @@
+ipmasq binary: duplicate-updaterc.d-calls-in-postinst ipmasq
+ipmasq binary: duplicate-updaterc.d-calls-in-postinst ipmasq-kmod
+ipmasq binary: manpage-has-errors-from-man usr/share/man/man5/ipmasq-rule.5.gz 39: warning [p 1, 4.3i]: cannot adjust line

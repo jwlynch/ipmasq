@@ -1,0 +1,226 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ipmasq\n"
+"Report-Msgid-Bugs-To: ipmasq@packages.debian.org\n"
+"POT-Creation-Date: 2008-05-02 07:47+0200\n"
+"PO-Revision-Date: 2005-02-19 13:03+0100\n"
+"Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
+"Language-Team: Czech <debian-l10n-czech@debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid "/etc/ipmasq/rules now conffiles"
+msgstr "/etc/ipmasq/rules je nyní brán jako konfiguraèní soubor"
+
+#. Type: note
+#. Description
+#: ../templates:1001
+msgid ""
+"The rules files located in /etc/ipmasq/rules have been placed under package "
+"manager control as of version 3.4.0.  It is safe (and recommended) to allow "
+"dpkg to replace your version."
+msgstr ""
+"Soubory pravidel umístìné v /etc/ipmasq/rules jsou od verze 3.4.0 pod "
+"správou balíèkovacího systému. Je bezpeèné (a doporuèované) povolit dpkg, "
+"aby nahradil va¹i verzi."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "External interface rules moved; move them?"
+msgstr "Pravidla pro externí rozhraní se pøesunula; pøesunout?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"The rules files I50external.def and O50external.def have changed position to "
+"I90external.def and O90external.def, respectively.  May I move these rules "
+"files (and their corresponding .rul files) to their new positions?"
+msgstr ""
+"Soubory I50external.def a O50external.def se pøejmenovaly na I90external.def "
+"a O90external.def. Mám tyto soubory (a jejich odpovídající soubory .rul) "
+"pøejmenovat dle nových názvù?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid "Delete outdated boot script?"
+msgstr "Smazat zastaralý zavádìcí skript?"
+
+#. Type: boolean
+#. Description
+#: ../templates:3001
+msgid ""
+"Should I delete the old, no longer used /etc/rc.boot/ipmasq boot script?"
+msgstr "Mám smazat starý, nepou¾ívaný skript /etc/rc.boot/ipmasq?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid "Delete outdated configuration file?"
+msgstr "Smazat zastaralý konfiguraèní soubor?"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"The configuration file /etc/ipmasq.conf is no longer used and the "
+"information it contains is determined automatically by ipmasq.  Should I "
+"delete the file /etc/ipmasq.conf?"
+msgstr ""
+"Konfiguraèní soubor /etc/ipmasq.conf se ji¾ nepou¾ívá a informace v nìm "
+"obsa¾ené si ipmasq zji¹»uje automaticky. Mám smazat soubor /etc/ipmasq.conf?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Move custom rules file to new location?"
+msgstr "Pøesunout soubor s u¾ivatelskými pravidly na nové místo?"
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid ""
+"Should I move your /etc/ipmasq.rules into the /etc/ipmasq/rules directory?"
+msgstr "Mám pøesunout soubor /etc/ipmasq.rules do adresáøe /etc/ipmasq/rules?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid "Should PPP connections recompute the firewall?"
+msgstr "Mají PPP spojení mìnit firewall?"
+
+#. Type: boolean
+#. Description
+#: ../templates:6001
+msgid ""
+"Do you wish to have ipmasq recompute the firewall rules when pppd brings up "
+"or takes down a link?"
+msgstr ""
+"Chcete, aby ipmasq mìnil pravidla firewallu v¾dy, kdy¾ pppd navá¾e nebo "
+"shodí spojení?"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid "PPP recomputation controlled by file /etc/ipmasq/ppp"
+msgstr "Zmìna pravidel firewallu se øídí souborem /etc/ipmasq/ppp"
+
+#. Type: note
+#. Description
+#. Type: note
+#. Description
+#: ../templates:7001 ../templates:8001
+msgid ""
+"Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is "
+"present."
+msgstr ""
+"Ipmasq upraví pravidla firewallu pouze v pøípadì, ¾e je pøítomen soubor /etc/"
+"ipmasq/ppp."
+
+#. Type: note
+#. Description
+#: ../templates:7001
+msgid ""
+"Create the file /etc/ipmasq/ppp to have ipmasq recompute the firewall when "
+"pppd brings up or takes down a link."
+msgstr ""
+"Aby ipmasq mohl mìnit pravidla firewallu pøi nahození nebo shození ppp "
+"spojení, musíte vytvoøit soubor /etc/ipmasq/ppp."
+
+#. Type: note
+#. Description
+#: ../templates:8001
+msgid ""
+"Delete the file /etc/ipmasq/ppp to stop having ipmasq recompute the firewall "
+"when pppd brings up or takes down a link."
+msgstr ""
+"Chcete-li, aby ipmasq pøestal mìnit pravidla firewallu podle stavu ppp "
+"spojení, soubor /etc/ipmasq/ppp sma¾te."
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Start ipmasq?"
+msgstr "Spustit ipmasq?"
+
+#. Type: boolean
+#. Description
+#: ../templates:9001
+msgid "Should I start IP Masquerading?"
+msgstr "Mám spustit IP Ma¹karádu?"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Disable"
+msgstr "Zakázat"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network interfaces are brought up"
+msgstr "Po nahození sí»ových rozhraní"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network filesystems are mounted"
+msgstr "Po pøipojení sí»ových souborových systémù"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "After network services have been started"
+msgstr "Po spu¹tìní sí»ových slu¾eb"
+
+#. Type: select
+#. Choices
+#: ../templates:10001
+msgid "Keep current set up"
+msgstr "POnechat stávající nastavení"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid "When should ipmasq be started?"
+msgstr "Kdy se má ipmasq spou¹tìt?"
+
+#. Type: select
+#. Description
+#: ../templates:10002
+msgid ""
+"Ipmasq can be told initially to compute the firewall rules at one of a "
+"number of points in the boot process.  This question asks at which point "
+"ipmasq should start."
+msgstr ""
+"Ipmasq umí vypoèítat pravidla firewallu na jednom z nìkolika bodù "
+"zavádìcícho procesu. Tato otázka se ptá, kdy se má ipmasq spustit."
+
+#~ msgid ""
+#~ "Disable, After network interfaces are brought up, After network "
+#~ "filesystems are mounted, After network services have been started, Keep "
+#~ "current set up"
+#~ msgstr ""
+#~ "Zakázat, Po nahození sí»ových rozhraní, Po pøipojení sí»ových souborových "
+#~ "systémù, Po spu¹tìní sí»ových slu¾eb, POnechat stávající nastavení"

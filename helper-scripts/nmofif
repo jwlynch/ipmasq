@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# nmofif	Determines the netmask of the interface given on the
+#		commandline
+#
+# v1.0	19 July 1998
+# v1.1  12 June 1999
+# v1.2	8 Jan 2000
+# v1.3	10 Feb 2001
+# v2.0  2004-01-04T16:29:38 CET Osamu Aoki
+#####
+
+export LC_ALL="C"
+export LANG="C"
+export LANGUAGE="C"
+
+( /sbin/ifconfig $1 | sed -n -e'/Mask:/s/^.*Mask:\([0-9.]*\).*$/\1/p' ) 2>/dev/null
+true

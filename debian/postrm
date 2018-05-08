@@ -1,0 +1,15 @@
+#!/bin/bash -e
+if [ "$1" = "purge" ] ; then
+	update-rc.d ipmasq remove >/dev/null
+	update-rc.d ipmasq-kmod remove >/dev/null
+	
+	if [ -e /etc/ipmasq.rules ]; then
+		rm -f /etc/ipmasq.rules
+	fi
+	if [ -e /etc/ipmasq/ppp ]; then
+		rm -f /etc/ipmasq/ppp
+	fi
+fi
+
+#DEBHELPER#
+

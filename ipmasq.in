@@ -1,0 +1,104 @@
+#!/bin/sh
+#
+# ipmasq	Set up IP Masquerading for Debian systems
+#
+#		v3.0   19 July 1998
+#		v3.1   8 August 1998
+#		v3.1.3 29 August 1998
+#		v3.3.0 26 January 1999
+#		v3.3.5 13 June 1999
+#		v3.4.0 10 October 1999
+#		v3.5.2 4 February 2001
+# v3.5.19 2004-01-03, OA: Applied patch by Alexander Zangerl <az@debian.org>
+# v3.5.28 2004-01-08, OA: exit if /usr is not available
+# v3.5.34 2004-04-10, OA: exit always with 0
+##########
+# Options
+
+RULESDIR=/etc/ipmasq/rules
+
+# exit if /usr/bin is not accessible 
+# This should not happen but ...
+if [ ! -e /usr/bin ]; then
+    exit 0
+fi
+
+
+##########
+# Parse commandline options
+
+while [ $# -gt 0 ]; do
+	case $1 in
+	-d|--display)
+		export SHOWRULES=yes
+                export NOACT=yes
+		;;
+        -v|--verbose)
+		export SHOWRULES=yes
+                ;;
+	-n|--no-act)
+		export NOACT=yes
+		;;
+	-g|--debug)
+		export DEBUG=yes
+		;;
+	-r|--rules)
+		shift
+		if [ $# -gt 0 ]; then
+			RULESDIR=$1
+		else
+			echo "No rules directory specified with --rules switch" 1>&2
+			exit 1
+		fi
+		;;
+	-V|--version)
+		echo @VERSION@
+		exit 0
+		;;
+	-h|--help)
+		echo "ipmasq @VERSION@ (c) 1997-2001 Brian Bassett"
+		echo "Usage:"
+		echo "  ipmasq                      recompute IP Masquerade forwarding firewall rules"
+		echo "  ipmasq --verbose            show what rules are being run"
+		echo "  ipmasq --no-act             do not actually run any rules"
+		echo "  ipmasq --display            show what rules would be run"
+		echo "  ipmasq --debug              show what rules files are being run"
+		echo "  ipmasq --rules <rules-dir>  read rules from rules-dir"
+		echo "  ipmasq --version            print version number and exit"
+		echo "  ipmasq --help               show this help message and exit"
+		exit 0
+		;;
+	esac
+	shift
+done
+##########
+# Make sure that only one instance is currently running $$
+# nor parent of this script $PPID (It could be /etc/init.d/ipmasq)
+#
+# Variable substitution occurs before subshell execution
+#
+XPID=`pidof -x -o $PPID -o $$ ipmasq`; 
+if [ -n "$XPID" ];
+then
+    echo "error: another ipmasq instance with PID $XPID is running!";
+    exit 0;
+fi
+##########
+# Do the rules
+
+RULENAMES=$(cd $RULESDIR; ls *.rul *.def 2>/dev/null | sed -e 's/\.def//g' -e 's/\.rul//g' | sort -u)
+
+for i in $RULENAMES; do
+	if [ -f "$RULESDIR/$i.rul" ]; then
+		file=$RULESDIR/$i.rul
+	else
+		file=$RULESDIR/$i.def
+	fi
+	[ -n "$DEBUG" ] && echo "#: $file"
+	[ -n "$SHOWRULES" -a -n "$NOACT" ] && grep '^#:' $file
+	. $file
+done
+
+##########
+# End of ipmasq
+

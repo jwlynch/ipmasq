@@ -1,0 +1,2 @@
+ipmasq source: duplicate-updaterc.d-calls-in-postinst ipmasq
+ipmasq source: duplicate-updaterc.d-calls-in-postinst ipmasq-kmod

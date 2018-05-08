@@ -1,0 +1,40 @@
+# You should not edit this file.  Instead, create a file with the same
+# name as this one, but with a .rul extension instead of .def.  The
+# .rul file will override this one.
+#
+# However, any changes you make to this file will be preserved.
+ 
+# This F30bridge.def is needed if alternative F30internal.def for MSASQ 
+# is used or no F30internal.def is used.
+
+#: Forward packets back to bridges
+if [ -n "$INTERNAL" ]; then
+    for j in $INTERNAL; do
+        if echo $j | grep -q "^br"; then
+                ipnm_cache $j
+                case $MASQMETHOD in
+                ipfwadm)
+                    if [ -n "$PEEROFIF" ]; then
+                        $IPFWADM -F -a accept -S $PEEROFIF/$NMOFIF -D $DESTIP/$DESTNM
+                        $IPFWADM -F -a accept -D $PEEROFIF/$NMOFIF
+                    fi
+                    $IPFWADM -F -a accept -S $IPOFIF/$NMOFIF -D $DESTIP/$DESTNM
+                    ;;
+                ipchains)
+                    if [ -n "$PEEROFIF" ]; then
+                        $IPCHAINS --no-warnings -A forward -j ACCEPT -s $PEEROFIF/$NMOFIF -d $DESTIP/$DESTNM
+                        $IPCHAINS --no-warnings -A forward -j ACCEPT -d $PEEROFIF/$NMOFIF
+                    fi
+                    $IPCHAINS --no-warnings -A forward -j ACCEPT -s $IPOFIF/$NMOFIF -d $DESTIP/$DESTNM
+                    ;;
+                netfilter)
+                    if [ -n "$PEEROFIF" ]; then
+                        $IPTABLES -A FORWARD -j ACCEPT -s $PEEROFIF/$NMOFIF -d $DESTIP/$DESTNM
+                        $IPTABLES -A FORWARD -j ACCEPT -d $PEEROFIF/$NMOFIF
+                    fi
+                    $IPTABLES -A FORWARD -j ACCEPT -s $IPOFIF/$NMOFIF -d $DESTIP/$DESTNM
+                    ;;
+                esac
+            fi
+    done
+fi
