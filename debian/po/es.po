@@ -38,6 +38,7 @@ msgstr ""
 "PO-Revision-Date: 2007-03-05 22:57+0100\n"
 "Last-Translator: Manuel Porras Peralta «Venturi» <venturi.debian@gmail.com>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -56,9 +57,9 @@ msgid ""
 "manager control as of version 3.4.0.  It is safe (and recommended) to allow "
 "dpkg to replace your version."
 msgstr ""
-"Los archivos de reglas que están en «/etc/ipmasq/rules» se han puesto bajo el "
-"control del gestor de paquetes a partir de la versión 3.4.0.  Es seguro (y "
-"recomendado) permitir a dpkg reemplazar su versión."
+"Los archivos de reglas que están en «/etc/ipmasq/rules» se han puesto bajo "
+"el control del gestor de paquetes a partir de la versión 3.4.0.  Es seguro "
+"(y recomendado) permitir a dpkg reemplazar su versión."
 
 #. Type: boolean
 #. Description
@@ -76,10 +77,10 @@ msgid ""
 "I90external.def and O90external.def, respectively.  May I move these rules "
 "files (and their corresponding .rul files) to their new positions?"
 msgstr ""
-"Los archivos de reglas «I50external.def» y «O50external.def» se han renombrado "
-"a «I90external.def» y «O90external.def», respectivamente. ¿Se pueden mover "
-"estos archivos de reglas (y sus correspondientes archivos «.rul») a su nueva "
-"ubicación?"
+"Los archivos de reglas «I50external.def» y «O50external.def» se han "
+"renombrado a «I90external.def» y «O90external.def», respectivamente. ¿Se "
+"pueden mover estos archivos de reglas (y sus correspondientes archivos «."
+"rul») a su nueva ubicación?"
 
 #. Type: boolean
 #. Description
@@ -161,8 +162,8 @@ msgid ""
 "Ipmasq will recompute the firewall rules if the file /etc/ipmasq/ppp is "
 "present."
 msgstr ""
-"Ipmasq recalculará las reglas del cortafuegos si el archivo «/etc/ipmasq/ppp» "
-"existe."
+"Ipmasq recalculará las reglas del cortafuegos si el archivo «/etc/ipmasq/"
+"ppp» existe."
 
 #. Type: note
 #. Description
