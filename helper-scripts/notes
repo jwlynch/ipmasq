@@ -1,0 +1,7 @@
+in this directory, are reimplementations of the ipmasq tools:
+
+  bcofif  default-if  enumerate-if  ipofif  nmofif  peerofif
+
+using the info in /sys/class/net
+
+TODO: default-if peerofif

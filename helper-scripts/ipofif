@@ -1,17 +1,11 @@
-#!/bin/sh
-#
-# ipofif	Determines the IP address of the interface given on the
-#		commandline
-#
-# v1.0	19 July 1998
-# v1.1  12 June 1999
-# v1.2	10 Feb 2001
-# v2.0  2004-01-04T16:29:38 CET Osamu Aoki
-#####
+#!/bin/bash
 
-export LC_ALL="C"
-export LANG="C"
-export LANGUAGE="C"
+# written by Jim Lynch, copyright (c) 2018
 
-( /sbin/ifconfig $1 | sed -n -e'/inet addr:/s/^.*inet addr:\([0-9.]*\).*$/\1/p' ) 2>/dev/null
-true
+if [ -n "$1" ]
+then
+    source inetofif $1
+    result=$(cut -d '/' -f 1 <<< $ip)
+    echo $result
+fi
+

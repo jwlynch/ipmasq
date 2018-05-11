@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# written by Jim Lynch, copyright (c) 2018
+
+if [ -z "$1" ]
+then
+    echo "missing interface argument" 1>&2
+    echo "usage: $0 <name of interface>" 1>&2
+    exit 1
+else
+  result=$(ip -o -4 a show dev $1)
+fi
+
+read -r _ _ _ ip _ bcast _ <<< $result
+
+#echo $result

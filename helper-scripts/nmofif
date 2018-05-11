@@ -1,18 +1,13 @@
-#!/bin/sh
-#
-# nmofif	Determines the netmask of the interface given on the
-#		commandline
-#
-# v1.0	19 July 1998
-# v1.1  12 June 1999
-# v1.2	8 Jan 2000
-# v1.3	10 Feb 2001
-# v2.0  2004-01-04T16:29:38 CET Osamu Aoki
-#####
+#!/bin/bash
 
-export LC_ALL="C"
-export LANG="C"
-export LANGUAGE="C"
+# written by Jim Lynch, copyright (c) 2018
 
-( /sbin/ifconfig $1 | sed -n -e'/Mask:/s/^.*Mask:\([0-9.]*\).*$/\1/p' ) 2>/dev/null
-true
+nms=(0.0.0.0 128.0.0.0 192.0.0.0 224.0.0.0 240.0.0.0 248.0.0.0 252.0.0.0 254.0.0.0 255.0.0.0 255.128.0.0 255.192.0.0 255.224.0.0 255.240.0.0 255.248.0.0 255.252.0.0 255.254.0.0 255.255.0.0 255.255.128.0 255.255.192.0 255.255.224.0 255.255.240.0 255.255.248.0 255.255.252.0 255.255.254.0 255.255.255.0 255.255.255.128 255.255.255.192 255.255.255.224 255.255.255.240 255.255.255.248 255.255.255.252 255.255.255.254 255.255.255.255)
+
+if [ -n "$1" ]
+then
+    source inetofif $1
+    result=$(cut -d '/' -f 2 <<< $ip)
+    echo ${nms[$result]}
+fi
+
