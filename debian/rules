@@ -33,6 +33,7 @@ binary-indep:	build
 	#install -m 755 ppp/ip-down debian/ipmasq/etc/ppp/ip-down.d/00ipmasq
 	install -m 644 ppp/etc-ipmasq-ppp-message debian/ipmasq/usr/share/ipmasq/
 	install -m 755 `find helper-scripts -maxdepth 1 -type f` debian/ipmasq/usr/sbin/
+	install -m 644 helper-scripts/include/inetofif debian/ipmasq/usr/share/ipmasq/
 	install -m 644 `find rules -maxdepth 1 -type f` debian/ipmasq/etc/ipmasq/rules/
 	install -m 644 `find rules-down -maxdepth 1 -type f` debian/ipmasq/etc/ipmasq/ipmasq-down/
 	install -m 644 modules debian/ipmasq/etc/ipmasq

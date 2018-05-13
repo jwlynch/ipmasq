@@ -4,7 +4,7 @@
 
 if [ -n "$1" ]
 then
-    source inetofif $1
+    source /usr/share/ipmasq/inetofif $1
     result=$(cut -d '/' -f 1 <<< $ip)
     echo $result
 fi
