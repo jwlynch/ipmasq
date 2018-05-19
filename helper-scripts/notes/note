@@ -5,3 +5,15 @@ in this directory, are reimplementations of the ipmasq tools:
 using the info in /sys/class/net
 
 TODO: default-if peerofif
+
+just discovered that the new ip in the kernel.org version of iproute2 has a more complete
+version of ip, and the json stuff works with ip route.
+
+it's at git://git.kernel.org/pub/scm/network/iproute2/iproute2.git
+
+also, there is a cli program jq in the debian package of the same name, that parses json.
+
+for example, "which device is the default route" can be answered using:
+
+  ip -json route show exact 0.0.0.0/0 | jq .[0].dev
+
